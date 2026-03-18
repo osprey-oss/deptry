@@ -2,6 +2,10 @@
 
 ## 0.25.0 - 2025-03-14
 
+### Repository moved to Osprey OSS
+
+deptry has moved from [fpgmaas/deptry](https://github.com/fpgmaas/deptry) to [osprey-oss/deptry](https://github.com/osprey-oss/deptry) under the new Osprey OSS organisation. This ensures the project is not tied to a single account and makes it easier to manage contributors and access as the project grows.
+
 ### Features
 
 * Support inline `# deptry: ignore` comments to suppress violations ([#1473](https://github.com/fpgmaas/deptry/pull/1473))
