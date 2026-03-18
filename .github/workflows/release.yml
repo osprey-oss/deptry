@@ -75,8 +75,8 @@ jobs:
         python: ['3.14', 'pypy3.11']
         # PyPy doesn't support Windows ARM64.
         include:
-          - python: '3.14'
-            target: aarch64
+          - target: aarch64
+            python: '3.14'
     steps:
       - name: Check out
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
@@ -98,7 +98,7 @@ jobs:
         uses: PyO3/maturin-action@04ac600d27cdf7a9a280dadf7147097c42b757ad # v1.50.1
         with:
           target: ${{ matrix.target }}
-          args: --release --out dist --interpreter ${{ steps.setup-python.outputs.python-path }}
+          args: --release --out dist --interpreter ${{ startsWith(matrix.python, 'pypy') && matrix.python || format('python{0}', matrix.python) }}
           sccache: 'true'
 
       - name: Upload wheels
