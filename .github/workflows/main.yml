@@ -13,120 +13,30 @@ concurrency:
 permissions: {}
 
 jobs:
-  quality:
-    runs-on: ubuntu-24.04
-    steps:
-      - name: Check out
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-        with:
-          persist-credentials: false
-
-      - name: Install uv
-        uses: astral-sh/setup-uv@e06108dd0aef18192324c70427afc47652e63a82 # v7.5.0
-        with:
-          version: '0.10.10'
-          enable-cache: true
-          cache-dependency-glob: 'uv.lock'
-
-      - name: Install Python
-        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
-        with:
-          python-version: '3.14'
-
-      - name: Install Python dependencies
-        # We want to install all groups here to make sure that deptry has access to all dependencies for the inspection,
-        # even development ones.
-        run: uv sync --frozen
-
-      - name: Setup Rust toolchain
-        run: rustup component add clippy rustfmt
-
-      - uses: j178/prek-action@0bb87d7f00b0c99306c8bcb8b8beba1eb581c037 # v1.1.1
-        with:
-          # We skip mypy hook because it runs in "tests" job.
-          extra-args: '--all-files --skip mypy'
-
-      - name: Inspect dependencies with deptry
-        run: uv run deptry python
-
-  tests:
+  debug-wondoz:
+    runs-on: windows-2025
     strategy:
       matrix:
-        os:
-          - name: linux
-            image: ubuntu-24.04
-          - name: macos
-            image: macos-26
-          - name: windows
-            image: windows-2025
-        python-version:
-          - '3.10'
-          - '3.11'
-          - '3.12'
-          - '3.13'
-          - '3.14'
-          - 'pypy3.11'
-      fail-fast: false
-    runs-on: ${{ matrix.os.image }}
-    name: ${{ matrix.os.name }} (${{ matrix.python-version }})
+        target: [ x64 ]
+        python: [ '3.14', 'pypy3.11' ]
+        # PyPy doesn't support Windows ARM64.
+        include:
+          - target: aarch64
+            python: '3.14'
     steps:
       - name: Check out
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           persist-credentials: false
 
-      - name: Install uv
-        uses: astral-sh/setup-uv@e06108dd0aef18192324c70427afc47652e63a82 # v7.5.0
-        with:
-          version: '0.10.10'
-          enable-cache: true
-          cache-dependency-glob: 'uv.lock'
-          cache-suffix: ${{ matrix.python-version }}
-
       - name: Install Python
         uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
         with:
-          python-version: ${{ matrix.python-version }}
+          python-version: ${{ matrix.python }}
 
-      - name: Install Python dependencies
-        run: uv sync --frozen --no-default-groups --group test --group typing
-
-      - name: Check typing
-        run: uv run --no-default-groups mypy
-        if: ${{ matrix.os.name == 'linux' && !startsWith(matrix.python-version, 'pypy') }}
-
-      - name: Run unit tests
-        run: uv run --no-default-groups pytest tests/unit --cov --cov-config=pyproject.toml --cov-report=xml
-
-      - name: Run functional tests
-        run: uv run --no-default-groups pytest tests/functional -n auto --dist loadgroup
-        env:
-          PYTHONIOENCODING: 'utf-8'
-
-      - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@671740ac38dd9b0130fbe1cec585b89eea48d3de # v5.5.2
-        env:
-          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-        if: ${{ matrix.os.name == 'linux' && matrix.python-version == '3.14' }}
-
-  check-docs:
-    runs-on: ubuntu-24.04
-    steps:
-      - name: Check out
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - name: Build wheels
+        uses: PyO3/maturin-action@04ac600d27cdf7a9a280dadf7147097c42b757ad # v1.50.1
         with:
-          persist-credentials: false
-
-      - name: Install uv
-        uses: astral-sh/setup-uv@e06108dd0aef18192324c70427afc47652e63a82 # v7.5.0
-        with:
-          version: '0.10.10'
-          enable-cache: true
-          cache-dependency-glob: 'uv.lock'
-
-      - name: Install Python
-        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
-        with:
-          python-version: '3.14'
-      - name: Check if documentation can be built
-        run: uv run --only-group docs mkdocs build --strict
+          target: ${{ matrix.target }}
+          args: --release --out dist --interpreter ${{ startsWith(matrix.python, 'pypy') && matrix.python || format('python{0}', matrix.python) }}
+          sccache: 'true'
