@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.25.0 - 2025-03-14
+## 0.25.0 - 2025-03-18
 
 ### Repository moved to Osprey OSS
 
