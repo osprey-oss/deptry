@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.25.1 - 2025-03-18
+
+Release 0.25.0 was yanked in PyPI because of a failure during the release. 0.25.1 is identical, but includes a fix in the release process.
+
 ## 0.25.0 - 2025-03-18
 
 ### Repository moved to Osprey OSS
