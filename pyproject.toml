@@ -55,9 +55,9 @@ typing = [
 
 [project.urls]
 homepage = "https://deptry.com"
-repository = "https://github.com/fpgmaas/deptry"
+repository = "https://github.com/osprey-oss/deptry"
 documentation = "https://deptry.com"
-changelog = "https://github.com/fpgmaas/deptry/blob/main/CHANGELOG.md"
+changelog = "https://github.com/osprey-oss/deptry/blob/main/CHANGELOG.md"
 
 [project.scripts]
 deptry = "deptry.cli:deptry"

@@ -14,37 +14,37 @@ Support for PyPy 3.10 has been dropped, since it is unsupported. We now only tes
 
 ### Features
 
-* Add GitHub Actions annotations reporter ([#1059](https://github.com/fpgmaas/deptry/pull/1059))
-* Add support for Python 3.14 ([#1224](https://github.com/fpgmaas/deptry/pull/1224))
-* Drop support for Python 3.9 ([#1328](https://github.com/fpgmaas/deptry/pull/1328))
-* Publish wheels for PyPy 3.11 and drop 3.10 ([#1227](https://github.com/fpgmaas/deptry/pull/1227))
+* Add GitHub Actions annotations reporter ([#1059](https://github.com/osprey-oss/deptry/pull/1059))
+* Add support for Python 3.14 ([#1224](https://github.com/osprey-oss/deptry/pull/1224))
+* Drop support for Python 3.9 ([#1328](https://github.com/osprey-oss/deptry/pull/1328))
+* Publish wheels for PyPy 3.11 and drop 3.10 ([#1227](https://github.com/osprey-oss/deptry/pull/1227))
 
 ### Full Changelog
 
-https://github.com/fpgmaas/deptry/compare/0.23.1...0.24.0
+https://github.com/osprey-oss/deptry/compare/0.23.1...0.24.0
 
 
 ## 0.23.1 - 2025-07-30
 
 ### Bug Fixes
 
-* Improve handling of `TYPE_CHECKING` blocks by supporting `import typing as t` and checking `t.TYPE_CHECKING` ([#1218](https://github.com/fpgmaas/deptry/pull/1218))
-* Fix missing hyperlink in report output ([#1162](https://github.com/fpgmaas/deptry/pull/1162))
+* Improve handling of `TYPE_CHECKING` blocks by supporting `import typing as t` and checking `t.TYPE_CHECKING` ([#1218](https://github.com/osprey-oss/deptry/pull/1218))
+* Fix missing hyperlink in report output ([#1162](https://github.com/osprey-oss/deptry/pull/1162))
 
 ### Full Changelog
 
-https://github.com/fpgmaas/deptry/compare/0.23.0...0.23.1
+https://github.com/osprey-oss/deptry/compare/0.23.0...0.23.1
 
 
 ## 0.23.0 - 2025-01-25
 
 ### Features
 
-* Correctly detect transitive dependencies with different module names ([#1033](https://github.com/fpgmaas/deptry/pull/1033))
+* Correctly detect transitive dependencies with different module names ([#1033](https://github.com/osprey-oss/deptry/pull/1033))
 
 ### Full Changelog
 
-https://github.com/fpgmaas/deptry/compare/0.22.0...0.23.0
+https://github.com/osprey-oss/deptry/compare/0.22.0...0.23.0
 
 
 ## 0.22.0 - 2025-01-10
@@ -56,22 +56,22 @@ detail _deptry_'s behavior.
 
 ### Features
 
-* Support PEP 621 in Poetry 2.0+ ([#1003](https://github.com/fpgmaas/deptry/pull/1003))
+* Support PEP 621 in Poetry 2.0+ ([#1003](https://github.com/osprey-oss/deptry/pull/1003))
 
 ### Full Changelog
 
-https://github.com/fpgmaas/deptry/compare/0.21.2...0.22.0
+https://github.com/osprey-oss/deptry/compare/0.21.2...0.22.0
 
 
 ## 0.21.2 - 2024-12-19
 
 ### Miscellaneous
 
-* Provide wheels for musllinux ([#979](https://github.com/fpgmaas/deptry/pull/979))
+* Provide wheels for musllinux ([#979](https://github.com/osprey-oss/deptry/pull/979))
 
 ### Full Changelog
 
-https://github.com/fpgmaas/deptry/compare/0.21.1...0.21.2
+https://github.com/osprey-oss/deptry/compare/0.21.1...0.21.2
 
 
 ## 0.21.1 - 2024-11-15
@@ -79,11 +79,11 @@ https://github.com/fpgmaas/deptry/compare/0.21.1...0.21.2
 ### Bug Fixes
 
 * Handle string requirements files for `setuptools` dynamic
-  dependencies ([#945](https://github.com/fpgmaas/deptry/pull/945))
+  dependencies ([#945](https://github.com/osprey-oss/deptry/pull/945))
 
 ### Full Changelog
 
-https://github.com/fpgmaas/deptry/compare/0.21.0...0.21.1
+https://github.com/osprey-oss/deptry/compare/0.21.0...0.21.1
 
 
 ## 0.21.0 - 2024-11-08
@@ -136,25 +136,25 @@ Support for Python 3.8 has been dropped, as it has reached its end of life.
 ### Features
 
 * _deptry_ now detects development dependencies from `[dependency-groups]` section, introduced
-  by [PEP 735](https://peps.python.org/pep-0735/) ([#892](https://github.com/fpgmaas/deptry/pull/892))
+  by [PEP 735](https://peps.python.org/pep-0735/) ([#892](https://github.com/osprey-oss/deptry/pull/892))
 * _deptry_ now supports `setuptools` dynamic dependencies set in `[tool.setuptools.dynamic]` section,
   see https://deptry.com/supported-dependency-managers/#setuptools for more
-  details ([#894](https://github.com/fpgmaas/deptry/pull/894), [#724](https://github.com/fpgmaas/deptry/pull/724))
-* Drop support for Python 3.8 ([#874](https://github.com/fpgmaas/deptry/pull/874))
-* Improve ignore handling ([#908](https://github.com/fpgmaas/deptry/pull/908))
+  details ([#894](https://github.com/osprey-oss/deptry/pull/894), [#724](https://github.com/osprey-oss/deptry/pull/724))
+* Drop support for Python 3.8 ([#874](https://github.com/osprey-oss/deptry/pull/874))
+* Improve ignore handling ([#908](https://github.com/osprey-oss/deptry/pull/908))
 * Parse requirements files with `requirements-parser`, adding support for parsing nested requirements
-  files referenced with `-r <requirement_file>` ([#913](https://github.com/fpgmaas/deptry/pull/913))
+  files referenced with `-r <requirement_file>` ([#913](https://github.com/osprey-oss/deptry/pull/913))
 
 ### Full Changelog
 
-https://github.com/fpgmaas/deptry/compare/0.20.0...0.21.0
+https://github.com/osprey-oss/deptry/compare/0.20.0...0.21.0
 
 
 ## 0.20.0 - 2024-08-27
 
 ### Breaking changes
 
-In release [0.15.0](https://github.com/fpgmaas/deptry/releases/tag/0.15.0), we announced the deprecation of the
+In release [0.15.0](https://github.com/osprey-oss/deptry/releases/tag/0.15.0), we announced the deprecation of the
 following flags:
 
 * `--requirements-txt` (and its `requirements_txt` setting counterpart in `pyproject.toml`)
@@ -168,15 +168,15 @@ Those flags have now been removed. If you relied on them, you should now use, re
 ### Features
 
 * deptry now detects [uv](https://github.com/astral-sh/uv) and reads development dependencies from
-  `[uv.tool.dev-dependencies]` section ([#816](https://github.com/fpgmaas/deptry/pull/816))
+  `[uv.tool.dev-dependencies]` section ([#816](https://github.com/osprey-oss/deptry/pull/816))
 * Dynamically set max terminal width for better readability when displaying
-  help ([#817](https://github.com/fpgmaas/deptry/pull/817))
+  help ([#817](https://github.com/osprey-oss/deptry/pull/817))
 * Remove deprecated `--requirements-txt`/`--requirements-txt-dev`
-  flags ([#819](https://github.com/fpgmaas/deptry/pull/819))
+  flags ([#819](https://github.com/osprey-oss/deptry/pull/819))
 
 ### Full Changelog
 
-https://github.com/fpgmaas/deptry/compare/0.19.1...0.20.0
+https://github.com/osprey-oss/deptry/compare/0.19.1...0.20.0
 
 
 ## 0.19.1 - 2024-08-10
@@ -184,88 +184,88 @@ https://github.com/fpgmaas/deptry/compare/0.19.1...0.20.0
 ### Features
 
 * Add back PEP 420 support behind `--experimental-namespace-package` feature
-  flag ([#808](https://github.com/fpgmaas/deptry/pull/808))
-* Add support for Python 3.13 ([#713](https://github.com/fpgmaas/deptry/pull/713), [#809](https://github.com/fpgmaas/deptry/pull/809))
+  flag ([#808](https://github.com/osprey-oss/deptry/pull/808))
+* Add support for Python 3.13 ([#713](https://github.com/osprey-oss/deptry/pull/713), [#809](https://github.com/osprey-oss/deptry/pull/809))
 
 ### Miscellaneous
 
-* Provide Windows ARM64 wheels for Python ([#807](https://github.com/fpgmaas/deptry/pull/807))
+* Provide Windows ARM64 wheels for Python ([#807](https://github.com/osprey-oss/deptry/pull/807))
 
 ### Full Changelog
 
-https://github.com/fpgmaas/deptry/compare/0.19.0...0.19.1
+https://github.com/osprey-oss/deptry/compare/0.19.0...0.19.1
 
 
 ## 0.19.0 - 2024-08-08
 
-This release reverts https://github.com/fpgmaas/deptry/pull/753 that caused a noticeable performance regression on large
+This release reverts https://github.com/osprey-oss/deptry/pull/753 that caused a noticeable performance regression on large
 codebases. The intent of the initial PR was to support projects following PEP 420, so if your project currently relies
-on this behaviour, feel free to manifest your interest in https://github.com/fpgmaas/deptry/issues/740.
+on this behaviour, feel free to manifest your interest in https://github.com/osprey-oss/deptry/issues/740.
 
 ### Bug Fixes
 
-* Revert "fix(core): use `rglob` to guess local Python modules (#753)" ([#798](https://github.com/fpgmaas/deptry/pull/798))
+* Revert "fix(core): use `rglob` to guess local Python modules (#753)" ([#798](https://github.com/osprey-oss/deptry/pull/798))
 
 ### New Contributors
 
-* @huisman made their first contribution in [#796](https://github.com/fpgmaas/deptry/pull/796)
+* @huisman made their first contribution in [#796](https://github.com/osprey-oss/deptry/pull/796)
 
 ### Full Changelog
 
-https://github.com/fpgmaas/deptry/compare/0.18.0...0.19.0
+https://github.com/osprey-oss/deptry/compare/0.18.0...0.19.0
 
 
 ## 0.18.0 - 2024-07-31
 
 ### Features
 
-* Support imports using `importlib.import_module` ([#782](https://github.com/fpgmaas/deptry/pull/782))
+* Support imports using `importlib.import_module` ([#782](https://github.com/osprey-oss/deptry/pull/782))
 
 ### New Contributors
 
-* @lmmx made their first contribution in [#782](https://github.com/fpgmaas/deptry/pull/782)
+* @lmmx made their first contribution in [#782](https://github.com/osprey-oss/deptry/pull/782)
 
 ### Full Changelog
 
-https://github.com/fpgmaas/deptry/compare/0.17.0...0.18.0
+https://github.com/osprey-oss/deptry/compare/0.17.0...0.18.0
 
 
 ## 0.17.0 - 2024-07-20
 
 ### Features
 
-* Add a new rule `DEP005` to detect project dependencies that are in the standard library. ([#761](https://github.com/fpgmaas/deptry/pull/761))
+* Add a new rule `DEP005` to detect project dependencies that are in the standard library. ([#761](https://github.com/osprey-oss/deptry/pull/761))
 
 ### Full Changelog
 
-https://github.com/fpgmaas/deptry/compare/0.16.2...0.17.0
+https://github.com/osprey-oss/deptry/compare/0.16.2...0.17.0
 
 
 ## 0.16.2 - 2024-07-05
 
 ### Bug Fixes
 
-* Avoid crashing on PEP 621 and Poetry projects with no dependencies ([#752](https://github.com/fpgmaas/deptry/pull/752))
-* Recursively search for Python files to detect local modules, to better support namespace packages ([#753](https://github.com/fpgmaas/deptry/pull/753))
+* Avoid crashing on PEP 621 and Poetry projects with no dependencies ([#752](https://github.com/osprey-oss/deptry/pull/752))
+* Recursively search for Python files to detect local modules, to better support namespace packages ([#753](https://github.com/osprey-oss/deptry/pull/753))
 
 ### Miscellaneous
 
-* Provide macOS ARM wheels for PyPy ([#691](https://github.com/fpgmaas/deptry/pull/691))
+* Provide macOS ARM wheels for PyPy ([#691](https://github.com/osprey-oss/deptry/pull/691))
 
 ### Full Changelog
 
-https://github.com/fpgmaas/deptry/compare/0.16.1...0.16.2
+https://github.com/osprey-oss/deptry/compare/0.16.1...0.16.2
 
 
 ## 0.16.1 - 2024-04-06
 
 ### Bug Fixes
 
-* Skip type checking blocks whether future annotations are used ([#662](https://github.com/fpgmaas/deptry/pull/662))
+* Skip type checking blocks whether future annotations are used ([#662](https://github.com/osprey-oss/deptry/pull/662))
 
 ### Full Changelog
 
-https://github.com/fpgmaas/deptry/compare/0.16.0...0.16.1
+https://github.com/osprey-oss/deptry/compare/0.16.0...0.16.1
 
 
 ## 0.16.0 - 2024-04-04
@@ -304,26 +304,26 @@ requirements_files = ["requirements.txt"]
 
 ### Features
 
-* Skip type checking blocks when parsing imports ([#652](https://github.com/fpgmaas/deptry/pull/652))
+* Skip type checking blocks when parsing imports ([#652](https://github.com/osprey-oss/deptry/pull/652))
 * Search for `requirements.in` before `requirements.txt` on projects using `pip` requirements format for
-  dependencies ([#641](https://github.com/fpgmaas/deptry/pull/641))
+  dependencies ([#641](https://github.com/osprey-oss/deptry/pull/641))
 
 ### Bug Fixes
 
-* Show module name instead of library name when reporting DEP003 ([#644](https://github.com/fpgmaas/deptry/pull/644)
+* Show module name instead of library name when reporting DEP003 ([#644](https://github.com/osprey-oss/deptry/pull/644)
 * Better support for notebooks by handling magic commands and line
-  continuations ([#656](https://github.com/fpgmaas/deptry/pull/656))
+  continuations ([#656](https://github.com/osprey-oss/deptry/pull/656))
 
 ### Full Changelog
 
-https://github.com/fpgmaas/deptry/compare/0.15.0...0.16.0
+https://github.com/osprey-oss/deptry/compare/0.15.0...0.16.0
 
 
 ## 0.15.0 - 2024-03-24
 
 ### Breaking changes
 
-* In release [0.12.0](https://github.com/fpgmaas/deptry/releases/tag/0.12.0), we announced the deprecation of the following flags:
+* In release [0.12.0](https://github.com/osprey-oss/deptry/releases/tag/0.12.0), we announced the deprecation of the following flags:
   * `--ignore-unused`
   * `--ignore-obsolete`
   * `--ignore-missing`
@@ -335,64 +335,64 @@ https://github.com/fpgmaas/deptry/compare/0.15.0...0.16.0
   * `--skip-misplaced-dev`
   * `--skip-transitive`
 
-  These flags are now no longer supported. If you are still using these flags and are planning to upgrade to this release, please refer to the release notes of [0.12.0](https://github.com/fpgmaas/deptry/releases/tag/0.12.0) for instructions on how to migrate to the new method of configuration. ([#596](https://github.com/fpgmaas/deptry/pull/596))
+  These flags are now no longer supported. If you are still using these flags and are planning to upgrade to this release, please refer to the release notes of [0.12.0](https://github.com/osprey-oss/deptry/releases/tag/0.12.0) for instructions on how to migrate to the new method of configuration. ([#596](https://github.com/osprey-oss/deptry/pull/596))
 
 ### Deprecations
 
-* The options `requirements-txt` and `requirements-txt-dev` are replaced with `requirements-files` and `requirements-files-dev`, respectively, to provide better support for projects that use both a `requirements.in` and a `requirements.txt`. The legacy options will still be usable for the time being, with a warning being shown in the terminal, but they will be removed in a future release, so you are advised to migrate to the new ones. ([#609](https://github.com/fpgmaas/deptry/pull/609))
+* The options `requirements-txt` and `requirements-txt-dev` are replaced with `requirements-files` and `requirements-files-dev`, respectively, to provide better support for projects that use both a `requirements.in` and a `requirements.txt`. The legacy options will still be usable for the time being, with a warning being shown in the terminal, but they will be removed in a future release, so you are advised to migrate to the new ones. ([#609](https://github.com/osprey-oss/deptry/pull/609))
 
 ### Features
 
-* Implement the collection of all Python files to be scanned by *deptry* in Rust ([#591](https://github.com/fpgmaas/deptry/pull/591))
-* Implement import extraction for notebooks in Rust ([#606](https://github.com/fpgmaas/deptry/pull/606))
-* Use ruff's AST parser for import extraction from Python files. This also adds support for files with Python 3.12 f-string syntax, see [PEP 701](https://docs.python.org/3/whatsnew/3.12.html#pep-701-syntactic-formalization-of-f-strings). ([#615](https://github.com/fpgmaas/deptry/pull/615))
-* Improved logging of the detected imports and their locations when *deptry* is run in verbose mode ([#627](https://github.com/fpgmaas/deptry/pull/627))
-* Introduce the `--pep621-dev-dependency-groups` flag that allows users to specify which groups under `[project.optional-dependencies]` are considered development dependencies ([#628](https://github.com/fpgmaas/deptry/pull/628))
+* Implement the collection of all Python files to be scanned by *deptry* in Rust ([#591](https://github.com/osprey-oss/deptry/pull/591))
+* Implement import extraction for notebooks in Rust ([#606](https://github.com/osprey-oss/deptry/pull/606))
+* Use ruff's AST parser for import extraction from Python files. This also adds support for files with Python 3.12 f-string syntax, see [PEP 701](https://docs.python.org/3/whatsnew/3.12.html#pep-701-syntactic-formalization-of-f-strings). ([#615](https://github.com/osprey-oss/deptry/pull/615))
+* Improved logging of the detected imports and their locations when *deptry* is run in verbose mode ([#627](https://github.com/osprey-oss/deptry/pull/627))
+* Introduce the `--pep621-dev-dependency-groups` flag that allows users to specify which groups under `[project.optional-dependencies]` are considered development dependencies ([#628](https://github.com/osprey-oss/deptry/pull/628))
 
 ### Bug Fixes
 
-* Add back the license classifier, which was lost during the transition from Poetry to PDM in ([#624](https://github.com/fpgmaas/deptry/pull/624))
+* Add back the license classifier, which was lost during the transition from Poetry to PDM in ([#624](https://github.com/osprey-oss/deptry/pull/624))
 
 ### Miscellaneous
 
-* Remove upper bound on `requires-python` ([#621](https://github.com/fpgmaas/deptry/pull/621))
-* Moved the documentation to [deptry.com](https://deptry.com) ([#630](https://github.com/fpgmaas/deptry/pull/630))
+* Remove upper bound on `requires-python` ([#621](https://github.com/osprey-oss/deptry/pull/621))
+* Moved the documentation to [deptry.com](https://deptry.com) ([#630](https://github.com/osprey-oss/deptry/pull/630))
 
 ### Full Changelog
 
-https://github.com/fpgmaas/deptry/compare/0.14.2...0.15.0
+https://github.com/osprey-oss/deptry/compare/0.14.2...0.15.0
 
 
 ## 0.14.2 - 2024-03-19
 
-This release adds back MIT license classifier in package metadata, that was lost when changing the build backend ([#623](https://github.com/fpgmaas/deptry/pull/623)).
+This release adds back MIT license classifier in package metadata, that was lost when changing the build backend ([#623](https://github.com/osprey-oss/deptry/pull/623)).
 
 ### Full Changelog
 
-https://github.com/fpgmaas/deptry/compare/0.14.1...0.14.2
+https://github.com/osprey-oss/deptry/compare/0.14.1...0.14.2
 
 
 ## 0.14.1 - 2024-03-18
 
-This release improves runtime performance of built wheels by about 5%, and reduces their size ([#594](https://github.com/fpgmaas/deptry/pull/594)).
+This release improves runtime performance of built wheels by about 5%, and reduces their size ([#594](https://github.com/osprey-oss/deptry/pull/594)).
 
-PyPy wheels are now also published on PyPI ([#612](https://github.com/fpgmaas/deptry/pull/612)).
+PyPy wheels are now also published on PyPI ([#612](https://github.com/osprey-oss/deptry/pull/612)).
 
 ### Bug Fixes
 
-* Improve handling of comments in `requirements.txt` files ([#588](https://github.com/fpgmaas/deptry/pull/588))
-* Avoid process hanging on error when parsing Python files ([#619](https://github.com/fpgmaas/deptry/pull/619))
+* Improve handling of comments in `requirements.txt` files ([#588](https://github.com/osprey-oss/deptry/pull/588))
+* Avoid process hanging on error when parsing Python files ([#619](https://github.com/osprey-oss/deptry/pull/619))
 
 ### Full Changelog
 
-https://github.com/fpgmaas/deptry/compare/0.14.0...0.14.1
+https://github.com/osprey-oss/deptry/compare/0.14.0...0.14.1
 
 
 ## 0.14.0 - 2024-03-14
 
 This release significantly improves the speed of `deptry`, particularly for large projects, by utilizing Rust to manage the parsing of Abstract Syntax Trees (AST) from `.py` files and to extract the import statements. For some benchmarks, see below:
 
-<img src="https://github.com/fpgmaas/deptry/assets/12008199/4f045622-7566-4cc3-a589-dbc6ea12ea5f" width="70%" />
+<img src="https://github.com/osprey-oss/deptry/assets/12008199/4f045622-7566-4cc3-a589-dbc6ea12ea5f" width="70%" />
 
 Since the changes are all in the back-end, little has changed for the user other than the execution speed. The two minor notable changes are:
 
@@ -410,27 +410,27 @@ Alongside the ABI3 wheels, we provide a source distribution (sdist) package.
 
 ### Full Changelog
 
-https://github.com/fpgmaas/deptry/compare/0.13.0...0.14.0
+https://github.com/osprey-oss/deptry/compare/0.13.0...0.14.0
 
 
 ## 0.13.0 - 2024-03-12
 
 ### Features
 
-* _deptry_ will now report invalid configuration options defined in `pyproject.toml` ([#571](https://github.com/fpgmaas/deptry/pull/571))
+* _deptry_ will now report invalid configuration options defined in `pyproject.toml` ([#571](https://github.com/osprey-oss/deptry/pull/571))
 
 ### Bug Fixes
 
-* Stricten URL detection to avoid flagging libraries like `httpx` as URLs ([#570](https://github.com/fpgmaas/deptry/pull/570))
+* Stricten URL detection to avoid flagging libraries like `httpx` as URLs ([#570](https://github.com/osprey-oss/deptry/pull/570))
 
 ### Full Changelog
 
-https://github.com/fpgmaas/deptry/compare/0.12.0...0.13.0
+https://github.com/osprey-oss/deptry/compare/0.12.0...0.13.0
 
 
 ## 0.12.0 - 2023-06-18
 
-This release introduces a significant change to the command-line flags and configuration options to make use of the error codes introduced in release [0.10.0](https://github.com/fpgmaas/deptry/releases/tag/0.10.0).
+This release introduces a significant change to the command-line flags and configuration options to make use of the error codes introduced in release [0.10.0](https://github.com/osprey-oss/deptry/releases/tag/0.10.0).
 
 | Code   | Issue                            |
 |--------|----------------------------------|
@@ -480,15 +480,15 @@ DEP002 = ["pandas", "numpy"]
 Please note that while the legacy arguments are still functional as of Deptry 0.12.0, we do plan to remove them in a future 1.0.0 release.
 
 
-* Consider all groups for dev dependencies ([#392](https://github.com/fpgmaas/deptry/pull/392))
+* Consider all groups for dev dependencies ([#392](https://github.com/osprey-oss/deptry/pull/392))
 
 ### Bug Fixes
 
-* Handle `SyntaxError` raised by `ast.parse` ([#426](https://github.com/fpgmaas/deptry/pull/426))
+* Handle `SyntaxError` raised by `ast.parse` ([#426](https://github.com/osprey-oss/deptry/pull/426))
 
 ### Full Changelog
 
-https://github.com/fpgmaas/deptry/compare/0.11.0...0.12.0
+https://github.com/osprey-oss/deptry/compare/0.11.0...0.12.0
 
 
 ## 0.11.0 - 2023-05-10
@@ -504,37 +504,37 @@ The legacy options will still be usable for the time being, with a warning being
 
 ### Features
 
-* Add ability to pass multiple source directories ([#381](https://github.com/fpgmaas/deptry/pull/381))
-* Replace the word `obsolete` with `unused` ([#373](https://github.com/fpgmaas/deptry/pull/373))
+* Add ability to pass multiple source directories ([#381](https://github.com/osprey-oss/deptry/pull/381))
+* Replace the word `obsolete` with `unused` ([#373](https://github.com/osprey-oss/deptry/pull/373))
 
 ### Bug Fixes
 
-* Load gitignore from where CLI is invoked ([#380](https://github.com/fpgmaas/deptry/pull/380))
+* Load gitignore from where CLI is invoked ([#380](https://github.com/osprey-oss/deptry/pull/380))
 
 ### Full Changelog
 
-https://github.com/fpgmaas/deptry/compare/0.10.1...0.11.0
+https://github.com/osprey-oss/deptry/compare/0.10.1...0.11.0
 
 
 ## 0.10.1 - 2023-05-09
 
 ### Bug Fixes
 
-* Fix terminal output when only a single file is scanned ([#372](https://github.com/fpgmaas/deptry/pull/372))
-* Fix issue with `DEP004` being raised incorrectly when a dependency is defined both as a dev one and non-dev one ([#376](https://github.com/fpgmaas/deptry/pull/376))
+* Fix terminal output when only a single file is scanned ([#372](https://github.com/osprey-oss/deptry/pull/372))
+* Fix issue with `DEP004` being raised incorrectly when a dependency is defined both as a dev one and non-dev one ([#376](https://github.com/osprey-oss/deptry/pull/376))
 
 ### Full Changelog
 
-[0.10.0...0.10.1](https://github.com/fpgmaas/deptry/compare/0.10.0...0.10.1)
+[0.10.0...0.10.1](https://github.com/osprey-oss/deptry/compare/0.10.0...0.10.1)
 
 
 ## 0.10.0 - 2023-05-08
 
 ### Breaking Changes
 
-Release `0.10.0` of deptry brings a significant improvement to the way in which issues are reported. Previously, issues were reported in a summarized format, making it difficult for users to pinpoint exactly where in the code the issue was occurring. This is resolved by https://github.com/fpgmaas/deptry/pull/357, which adds location information to the detected issues.
+Release `0.10.0` of deptry brings a significant improvement to the way in which issues are reported. Previously, issues were reported in a summarized format, making it difficult for users to pinpoint exactly where in the code the issue was occurring. This is resolved by https://github.com/osprey-oss/deptry/pull/357, which adds location information to the detected issues.
 
-https://github.com/fpgmaas/deptry/pull/367 adds error codes to identify the different issue types:
+https://github.com/osprey-oss/deptry/pull/367 adds error codes to identify the different issue types:
 
 | Code   | Issue                            |
 |--------|----------------------------------|
@@ -571,12 +571,12 @@ The json output generated by using the `-o` or `--json-output` is also modified 
 
 ### Features
 
-* Add location to error reports by ([#357](https://github.com/fpgmaas/deptry/pull/357))
-* Add colours to text output by ([#368](https://github.com/fpgmaas/deptry/pull/368))
+* Add location to error reports by ([#357](https://github.com/osprey-oss/deptry/pull/357))
+* Add colours to text output by ([#368](https://github.com/osprey-oss/deptry/pull/368))
 
 ### Full Changelog
 
-[0.9.0...0.10.0](https://github.com/fpgmaas/deptry/compare/0.9.0...0.10.0)
+[0.9.0...0.10.0](https://github.com/osprey-oss/deptry/compare/0.9.0...0.10.0)
 
 
 ## 0.9.0 - 2023-05-06
@@ -585,15 +585,15 @@ The json output generated by using the `-o` or `--json-output` is also modified 
 
 #### Python 3.7 support dropped
 
-Support for Python 3.7 has been dropped in https://github.com/fpgmaas/deptry/pull/352, given that it will reach end of life soon, and that PyPI stats show a really low usage of it. If you are using `deptry` on Python 3.7, consider upgrading to 3.8, or staying on `<0.9.0`.
+Support for Python 3.7 has been dropped in https://github.com/osprey-oss/deptry/pull/352, given that it will reach end of life soon, and that PyPI stats show a really low usage of it. If you are using `deptry` on Python 3.7, consider upgrading to 3.8, or staying on `<0.9.0`.
 
 #### Behaviour changes in package name guessing
 
-In case packages don't provide the Python modules they expose, `deptry` tries to guess the package name by converting `-` to `_`, as a best effort, and warns about it in the logs. Before https://github.com/fpgmaas/deptry/pull/337, `deptry` always guessed the module name, regardless of if the package provided the necessary information or not. Now, it will only guess the module name if the package does not provide the information and no mapping has been provided using the new `--package-module-name-map` flag (or `package_module_name_map` option in `pyproject.toml`).
+In case packages don't provide the Python modules they expose, `deptry` tries to guess the package name by converting `-` to `_`, as a best effort, and warns about it in the logs. Before https://github.com/osprey-oss/deptry/pull/337, `deptry` always guessed the module name, regardless of if the package provided the necessary information or not. Now, it will only guess the module name if the package does not provide the information and no mapping has been provided using the new `--package-module-name-map` flag (or `package_module_name_map` option in `pyproject.toml`).
 
 #### Handling modules without `__init__.py`
 
-With https://github.com/fpgmaas/deptry/pull/285, `deptry` will now consider the following things as local modules:
+With https://github.com/osprey-oss/deptry/pull/285, `deptry` will now consider the following things as local modules:
 - directories without `__init__.py` (and at least one Python file)
 - single Python files
 
@@ -601,52 +601,52 @@ Previously, `deptry` only considered directories as local modules if an `__init_
 
 ### Features
 
-* Drop support for Python 3.7 ([#352](https://github.com/fpgmaas/deptry/pull/352))
-* Only try to guess module associated to a dependency as a fallback for when the package doesn't provide such information ([#337](https://github.com/fpgmaas/deptry/pull/337))
-* Handle local modules without `__init__.py` ([#285](https://github.com/fpgmaas/deptry/pull/285))
-* Ability to configure a map of package names to module names ([#333](https://github.com/fpgmaas/deptry/pull/333))
+* Drop support for Python 3.7 ([#352](https://github.com/osprey-oss/deptry/pull/352))
+* Only try to guess module associated to a dependency as a fallback for when the package doesn't provide such information ([#337](https://github.com/osprey-oss/deptry/pull/337))
+* Handle local modules without `__init__.py` ([#285](https://github.com/osprey-oss/deptry/pull/285))
+* Ability to configure a map of package names to module names ([#333](https://github.com/osprey-oss/deptry/pull/333))
 
 ### Bug Fixes
 
-* Replace 'PDM' with 'poetry' in log ([#294](https://github.com/fpgmaas/deptry/pull/294))
-* Account for Windows in code and tests ([#343](https://github.com/fpgmaas/deptry/pull/343))
+* Replace 'PDM' with 'poetry' in log ([#294](https://github.com/osprey-oss/deptry/pull/294))
+* Account for Windows in code and tests ([#343](https://github.com/osprey-oss/deptry/pull/343))
 
 ### Miscellaneous
 
-* Run tests on macOS and Windows on CI ([#342](https://github.com/fpgmaas/deptry/pull/342))
+* Run tests on macOS and Windows on CI ([#342](https://github.com/osprey-oss/deptry/pull/342))
 
 ### Full Changelog
 
-[0.8.0...0.9.0](https://github.com/fpgmaas/deptry/compare/0.9.0...0.10.0)
+[0.8.0...0.9.0](https://github.com/osprey-oss/deptry/compare/0.9.0...0.10.0)
 
 
 ## 0.8.0 - 2023-01-24
 
 ### Features
 
-* Don't filter out `setuptools` ([#262](https://github.com/fpgmaas/deptry/pull/262))
-* Use `sys.stdlib_module_names` to get stdlibs in Python >= 3.10 ([#275](https://github.com/fpgmaas/deptry/pull/275))
+* Don't filter out `setuptools` ([#262](https://github.com/osprey-oss/deptry/pull/262))
+* Use `sys.stdlib_module_names` to get stdlibs in Python >= 3.10 ([#275](https://github.com/osprey-oss/deptry/pull/275))
 
 ### Miscellaneous
 
-* Drop `flake8` to only use `ruff` ([#268](https://github.com/fpgmaas/deptry/pull/268))
-* Use more `ruff` rules and replace `pyupgrade` and `pygrep-hooks` usages ([#276](https://github.com/fpgmaas/deptry/pull/276))
+* Drop `flake8` to only use `ruff` ([#268](https://github.com/osprey-oss/deptry/pull/268))
+* Use more `ruff` rules and replace `pyupgrade` and `pygrep-hooks` usages ([#276](https://github.com/osprey-oss/deptry/pull/276))
 
 ### Full Changelog
 
-[0.7.1...0.8.0](https://github.com/fpgmaas/deptry/compare/0.7.1...0.8.0)
+[0.7.1...0.8.0](https://github.com/osprey-oss/deptry/compare/0.7.1...0.8.0)
 
 
 ## 0.7.1 - 2023-01-07
 
 ### Features
 
-* Exclude files from `.gitignore` [#248](https://github.com/fpgmaas/deptry/pull/248))
-* Add support for known first party modules [#257](https://github.com/fpgmaas/deptry/pull/257))
+* Exclude files from `.gitignore` [#248](https://github.com/osprey-oss/deptry/pull/248))
+* Add support for known first party modules [#257](https://github.com/osprey-oss/deptry/pull/257))
 
 ### Full Changelog
 
-[0.7.0...0.7.1](https://github.com/fpgmaas/deptry/compare/0.7.0...0.7.1)
+[0.7.0...0.7.1](https://github.com/osprey-oss/deptry/compare/0.7.0...0.7.1)
 
 
 ## 0.7.0 - 2022-12-27
@@ -675,33 +675,33 @@ The downside of the changes outlined above, is that this could break some projec
 
 ### Features
 
-* Separate `pyproject.toml` location from `root` argument ([#244](https://github.com/fpgmaas/deptry/pull/244))
-* Expose and handle `--config` argument ([#245](https://github.com/fpgmaas/deptry/pull/245))
+* Separate `pyproject.toml` location from `root` argument ([#244](https://github.com/osprey-oss/deptry/pull/244))
+* Expose and handle `--config` argument ([#245](https://github.com/osprey-oss/deptry/pull/245))
 
 ### Miscellaneous
 
-* Only load local modules once by ([#242](https://github.com/fpgmaas/deptry/pull/242))
-* More efficient Python files retrieval ([#243](https://github.com/fpgmaas/deptry/pull/243))
+* Only load local modules once by ([#242](https://github.com/osprey-oss/deptry/pull/242))
+* More efficient Python files retrieval ([#243](https://github.com/osprey-oss/deptry/pull/243))
 
 ### Full Changelog
 
-[0.6.6...0.7.0](https://github.com/fpgmaas/deptry/compare/0.6.6...0.7.0)
+[0.6.6...0.7.0](https://github.com/osprey-oss/deptry/compare/0.6.6...0.7.0)
 
 
 ## 0.6.6 - 2022-11-22
 
 ### Features
 
-* Add .direnv to default exclude argument ([#197](https://github.com/fpgmaas/deptry/pull/197))
-* Add logic to `NotebookImportExtractor` to guess the encoding on initial `UnicodeDecodeError` ([#216](https://github.com/fpgmaas/deptry/pull/216))
+* Add .direnv to default exclude argument ([#197](https://github.com/osprey-oss/deptry/pull/197))
+* Add logic to `NotebookImportExtractor` to guess the encoding on initial `UnicodeDecodeError` ([#216](https://github.com/osprey-oss/deptry/pull/216))
 
 ### Miscellaneous
 
-* Decrease lower bound of `chardet` dependency to `4.0.0` ([#205](https://github.com/fpgmaas/deptry/pull/205))
+* Decrease lower bound of `chardet` dependency to `4.0.0` ([#205](https://github.com/osprey-oss/deptry/pull/205))
 
 ### Full Changelog
 
-[0.6.5...0.6.6](https://github.com/fpgmaas/deptry/compare/0.6.5...0.6.6)
+[0.6.5...0.6.6](https://github.com/osprey-oss/deptry/compare/0.6.5...0.6.6)
 
 
 ## 0.6.5 - 2022-11-14
@@ -710,88 +710,88 @@ No user facing change.
 
 ### Full Changelog
 
-[0.6.4...0.6.5](https://github.com/fpgmaas/deptry/compare/0.6.4...0.6.5)
+[0.6.4...0.6.5](https://github.com/osprey-oss/deptry/compare/0.6.4...0.6.5)
 
 
 ## 0.6.4 - 2022-11-09
 
 ### Features
 
-* Add support for PEP 621 ([#166](https://github.com/fpgmaas/deptry/pull/166))
+* Add support for PEP 621 ([#166](https://github.com/osprey-oss/deptry/pull/166))
 
 ### Bug Fixes
 
-* Remove obsolete duplicated local import detection ([#172](https://github.com/fpgmaas/deptry/pull/172))
+* Remove obsolete duplicated local import detection ([#172](https://github.com/osprey-oss/deptry/pull/172))
 
 ### Full Changelog
 
-[0.6.3...0.6.4](https://github.com/fpgmaas/deptry/compare/0.6.3...0.6.4)
+[0.6.3...0.6.4](https://github.com/osprey-oss/deptry/compare/0.6.3...0.6.4)
 
 
 ## 0.6.3 - 2022-10-23
 
 ### Features
 
-* Add hook for usage with `pre-commit` ([#157](https://github.com/fpgmaas/deptry/pull/157))
+* Add hook for usage with `pre-commit` ([#157](https://github.com/osprey-oss/deptry/pull/157))
 
 ### Full Changelog
 
-[0.6.2...0.6.3](https://github.com/fpgmaas/deptry/compare/0.6.2...0.6.3)
+[0.6.2...0.6.3](https://github.com/osprey-oss/deptry/compare/0.6.2...0.6.3)
 
 
 ## 0.6.2 - 2022-10-22
 
 ### Bug Fixes
 
-* Solve issue with importing from local files ([#163](https://github.com/fpgmaas/deptry/pull/163))
+* Solve issue with importing from local files ([#163](https://github.com/osprey-oss/deptry/pull/163))
 
 ### Full Changelog
 
-[0.6.1...0.6.2](https://github.com/fpgmaas/deptry/compare/0.6.1...0.6.2)
+[0.6.1...0.6.2](https://github.com/osprey-oss/deptry/compare/0.6.1...0.6.2)
 
 
 ## 0.6.1 - 2022-10-08
 
 ### Features
 
-* Add support for PEP621 with PDM ([#155](https://github.com/fpgmaas/deptry/pull/155))
+* Add support for PEP621 with PDM ([#155](https://github.com/osprey-oss/deptry/pull/155))
 
 ### Full Changelog
 
-[0.5.13...0.6.1](https://github.com/fpgmaas/deptry/compare/0.5.13...0.6.1)
+[0.5.13...0.6.1](https://github.com/osprey-oss/deptry/compare/0.5.13...0.6.1)
 
 
 ## 0.5.13 - 2022-10-02
 
 ### Features
 
-* Add support for Python 3.11 ([#152](https://github.com/fpgmaas/deptry/pull/152))
+* Add support for Python 3.11 ([#152](https://github.com/osprey-oss/deptry/pull/152))
 
 ### Full Changelog
 
-[0.5.12...0.5.13](https://github.com/fpgmaas/deptry/compare/0.5.12...0.5.13)
+[0.5.12...0.5.13](https://github.com/osprey-oss/deptry/compare/0.5.12...0.5.13)
 
 
 ## 0.5.12 - 2022-10-01
 
 ### Features
 
-* Accept multiple `requirements.txt` ([#141](https://github.com/fpgmaas/deptry/pull/141))
+* Accept multiple `requirements.txt` ([#141](https://github.com/osprey-oss/deptry/pull/141))
 
 ### Full Changelog
 
-[0.5.11...0.5.12](https://github.com/fpgmaas/deptry/compare/0.5.11...0.5.12)
+[0.5.11...0.5.12](https://github.com/osprey-oss/deptry/compare/0.5.11...0.5.12)
 
 
 ## 0.5.11 - 2022-09-30
 
 ### Miscellaneous
 
-* Remove dependency on `isort` ([#140](https://github.com/fpgmaas/deptry/pull/140))
+* Remove dependency on `isort` ([#140](https://github.com/osprey-oss/deptry/pull/140))
 
 ### Full Changelog
 
-[0.5.10...0.5.11](https://github.com/fpgmaas/deptry/compare/0.5.10...0.5.11)
+[0.5.10...0.5.11](https://github.com/osprey-oss/deptry/compare/0.5.10...0.5.11)
 
 
 ## 0.5.10 - 2022-09-27
@@ -800,18 +800,18 @@ No user facing change.
 
 ### Full Changelog
 
-[0.5.9...0.5.10](https://github.com/fpgmaas/deptry/compare/0.5.9...0.5.10)
+[0.5.9...0.5.10](https://github.com/osprey-oss/deptry/compare/0.5.9...0.5.10)
 
 
 ## 0.5.9 - 2022-09-26
 
 ### Bug Fixes
 
-* Fix issue with logging if no `[tool.deptry]` section was found in `pyproject.toml` ([#134](https://github.com/fpgmaas/deptry/pull/134))
+* Fix issue with logging if no `[tool.deptry]` section was found in `pyproject.toml` ([#134](https://github.com/osprey-oss/deptry/pull/134))
 
 ### Full Changelog
 
-[0.5.8...0.5.9](https://github.com/fpgmaas/deptry/compare/0.5.8...0.5.9)
+[0.5.8...0.5.9](https://github.com/osprey-oss/deptry/compare/0.5.8...0.5.9)
 
 
 ## 0.5.8 - 2022-09-26
@@ -820,117 +820,117 @@ No user facing change.
 
 ### Full Changelog
 
-[0.5.7...0.5.8](https://github.com/fpgmaas/deptry/compare/0.5.7...0.5.8)
+[0.5.7...0.5.8](https://github.com/osprey-oss/deptry/compare/0.5.7...0.5.8)
 
 
 ## 0.5.7 - 2022-09-24
 
 ### Features
 
-* Add option to write output to JSON file ([#125](https://github.com/fpgmaas/deptry/pull/125))
+* Add option to write output to JSON file ([#125](https://github.com/osprey-oss/deptry/pull/125))
 
 ### Full Changelog
 
-[0.5.6...0.5.7](https://github.com/fpgmaas/deptry/compare/0.5.6...0.5.7)
+[0.5.6...0.5.7](https://github.com/osprey-oss/deptry/compare/0.5.6...0.5.7)
 
 
 ## 0.5.6 - 2022-09-22
 
 ### Miscellaneous
 
-* Replace `toml` with `tomli`/`tomllib` for parsing TOML ([#123](https://github.com/fpgmaas/deptry/pull/123))
+* Replace `toml` with `tomli`/`tomllib` for parsing TOML ([#123](https://github.com/osprey-oss/deptry/pull/123))
 
 ### Full Changelog
 
-[0.5.5...0.5.6](https://github.com/fpgmaas/deptry/compare/0.5.5...0.5.6)
+[0.5.5...0.5.6](https://github.com/osprey-oss/deptry/compare/0.5.5...0.5.6)
 
 
 ## 0.5.5 - 2022-09-20
 
 ### Miscellaneous
 
-* Rename `DIRECTORY` argument to `ROOT` ([#121](https://github.com/fpgmaas/deptry/pull/121))
+* Rename `DIRECTORY` argument to `ROOT` ([#121](https://github.com/osprey-oss/deptry/pull/121))
 
 ### Full Changelog
 
-[0.5.4...0.5.5](https://github.com/fpgmaas/deptry/compare/0.5.4...0.5.5)
+[0.5.4...0.5.5](https://github.com/osprey-oss/deptry/compare/0.5.4...0.5.5)
 
 
 ## 0.5.4 - 2022-09-19
 
 ### Miscellaneous
 
-* Add a summary line to the logging ([#120](https://github.com/fpgmaas/deptry/pull/120))
+* Add a summary line to the logging ([#120](https://github.com/osprey-oss/deptry/pull/120))
 
 ### Full Changelog
 
-[0.5.3...0.5.4](https://github.com/fpgmaas/deptry/compare/0.5.3...0.5.4)
+[0.5.3...0.5.4](https://github.com/osprey-oss/deptry/compare/0.5.3...0.5.4)
 
 
 ## 0.5.3 - 2022-09-18
 
 ### Miscellaneous
 
-* Set Python version upper range to `<4.0` ([#117](https://github.com/fpgmaas/deptry/pull/117))
+* Set Python version upper range to `<4.0` ([#117](https://github.com/osprey-oss/deptry/pull/117))
 
 ### Full Changelog
 
-[0.5.2...0.5.3](https://github.com/fpgmaas/deptry/compare/0.5.2...0.5.3)
+[0.5.2...0.5.3](https://github.com/osprey-oss/deptry/compare/0.5.2...0.5.3)
 
 
 ## 0.5.2 - 2022-09-18
 
 ### Features
 
-* Extract top level module names from `RECORD` ([#116](https://github.com/fpgmaas/deptry/pull/116))
+* Extract top level module names from `RECORD` ([#116](https://github.com/osprey-oss/deptry/pull/116))
 
 ### Full Changelog
 
-[0.5.1...0.5.2](https://github.com/fpgmaas/deptry/compare/0.5.1...0.5.2)
+[0.5.1...0.5.2](https://github.com/osprey-oss/deptry/compare/0.5.1...0.5.2)
 
 
 ## 0.5.1 - 2022-09-18
 
 ### Features
 
-* Parse `egg=...` in urls for `requirements.txt` ([#115](https://github.com/fpgmaas/deptry/pull/115))
+* Parse `egg=...` in urls for `requirements.txt` ([#115](https://github.com/osprey-oss/deptry/pull/115))
 
 ### Full Changelog
 
-[0.5.0...0.5.1](https://github.com/fpgmaas/deptry/compare/0.5.0...0.5.1)
+[0.5.0...0.5.1](https://github.com/osprey-oss/deptry/compare/0.5.0...0.5.1)
 
 
 ## 0.5.0 - 2022-09-17
 
 ### Features
 
-* Support regexes for file exclusions ([#111](https://github.com/fpgmaas/deptry/pull/111))
+* Support regexes for file exclusions ([#111](https://github.com/osprey-oss/deptry/pull/111))
 
 ### Full Changelog
 
-[0.4.7...0.5.0](https://github.com/fpgmaas/deptry/compare/0.4.7...0.5.0)
+[0.4.7...0.5.0](https://github.com/osprey-oss/deptry/compare/0.4.7...0.5.0)
 
 
 ## 0.4.7 - 2022-09-15
 
 ### Miscellaneous
 
-* Only decode files if initial decoding failed ([#105](https://github.com/fpgmaas/deptry/pull/105))
+* Only decode files if initial decoding failed ([#105](https://github.com/osprey-oss/deptry/pull/105))
 
 ### Full Changelog
 
-[0.4.6...0.4.7](https://github.com/fpgmaas/deptry/compare/0.4.6...0.4.7)
+[0.4.6...0.4.7](https://github.com/osprey-oss/deptry/compare/0.4.6...0.4.7)
 
 
 ## 0.4.6 - 2022-09-14
 
 ### Features
 
-* Detect file encoding with `chardet` before parsing Python files ([#103](https://github.com/fpgmaas/deptry/pull/103))
+* Detect file encoding with `chardet` before parsing Python files ([#103](https://github.com/osprey-oss/deptry/pull/103))
 
 ### Full Changelog
 
-[0.4.5...0.4.6](https://github.com/fpgmaas/deptry/compare/0.4.5...0.4.6)
+[0.4.5...0.4.6](https://github.com/osprey-oss/deptry/compare/0.4.5...0.4.6)
 
 
 ## 0.4.5 - 2022-09-13
@@ -939,66 +939,66 @@ No user facing change.
 
 ### Full Changelog
 
-[0.4.4...0.4.5](https://github.com/fpgmaas/deptry/compare/0.4.4...0.4.5)
+[0.4.4...0.4.5](https://github.com/osprey-oss/deptry/compare/0.4.4...0.4.5)
 
 
 ## 0.4.4 - 2022-09-13
 
 ### Features
 
-* Add support for reading dependencies form urls in `requirements.txt` ([#100](https://github.com/fpgmaas/deptry/pull/100))
+* Add support for reading dependencies form urls in `requirements.txt` ([#100](https://github.com/osprey-oss/deptry/pull/100))
 
 ### Full Changelog
 
-[0.4.3...0.4.4](https://github.com/fpgmaas/deptry/compare/0.4.3...0.4.4)
+[0.4.3...0.4.4](https://github.com/osprey-oss/deptry/compare/0.4.3...0.4.4)
 
 
 ## 0.4.3 - 2022-09-13
 
 ### Bug Fixes
 
-* Solve an issue where missing dev dependencies were added to the list as `None` ([#99](https://github.com/fpgmaas/deptry/pull/99))
+* Solve an issue where missing dev dependencies were added to the list as `None` ([#99](https://github.com/osprey-oss/deptry/pull/99))
 
 ### Full Changelog
 
-[0.4.2...0.4.3](https://github.com/fpgmaas/deptry/compare/0.4.2...0.4.3)
+[0.4.2...0.4.3](https://github.com/osprey-oss/deptry/compare/0.4.2...0.4.3)
 
 
 ## 0.4.2 - 2022-09-12
 
 ### Features
 
-* Add a warning to not install `deptry` globally, but within virtual environment ([#93](https://github.com/fpgmaas/deptry/pull/93))
+* Add a warning to not install `deptry` globally, but within virtual environment ([#93](https://github.com/osprey-oss/deptry/pull/93))
 
 ### Bug Fixes
 
-* Fix an issue with `requirements.txt` not being found if not in root dir ([#94](https://github.com/fpgmaas/deptry/pull/94))
+* Fix an issue with `requirements.txt` not being found if not in root dir ([#94](https://github.com/osprey-oss/deptry/pull/94))
 
 ### Full Changelog
 
-[0.4.1...0.4.2](https://github.com/fpgmaas/deptry/compare/0.4.1...0.4.2)
+[0.4.1...0.4.2](https://github.com/osprey-oss/deptry/compare/0.4.1...0.4.2)
 
 
 ## 0.4.1 - 2022-09-11
 
 ### Features
 
-* Ignore `setuptools` and `setup.py` by default ([#88](https://github.com/fpgmaas/deptry/pull/88))
+* Ignore `setuptools` and `setup.py` by default ([#88](https://github.com/osprey-oss/deptry/pull/88))
 
 ### Full Changelog
 
-[0.4.0...0.4.1](https://github.com/fpgmaas/deptry/compare/0.4.0...0.4.1)
+[0.4.0...0.4.1](https://github.com/osprey-oss/deptry/compare/0.4.0...0.4.1)
 
 
 ## 0.4.0 - 2022-09-11
 
 ### Features
 
-* Add support for `requirements.txt` ([#87](https://github.com/fpgmaas/deptry/pull/87))
+* Add support for `requirements.txt` ([#87](https://github.com/osprey-oss/deptry/pull/87))
 
 ### Full Changelog
 
-[0.3.2...0.4.0](https://github.com/fpgmaas/deptry/compare/0.3.2...0.4.0)
+[0.3.2...0.4.0](https://github.com/osprey-oss/deptry/compare/0.3.2...0.4.0)
 
 
 ## 0.3.2 - 2022-09-10
@@ -1007,29 +1007,29 @@ No user facing change.
 
 ### Full Changelog
 
-[0.3.1...0.3.2](https://github.com/fpgmaas/deptry/compare/0.3.1...0.3.2)
+[0.3.1...0.3.2](https://github.com/osprey-oss/deptry/compare/0.3.1...0.3.2)
 
 
 ## 0.3.1 - 2022-09-10
 
 ### Features
 
-* Use commas to separate items in CLI arguments ([#87](https://github.com/fpgmaas/deptry/pull/87))
+* Use commas to separate items in CLI arguments ([#87](https://github.com/osprey-oss/deptry/pull/87))
 
 ### Full Changelog
 
-[0.2.16...0.3.1](https://github.com/fpgmaas/deptry/compare/0.2.16...0.3.1)
+[0.2.16...0.3.1](https://github.com/osprey-oss/deptry/compare/0.2.16...0.3.1)
 
 
 ## 0.2.17 - 2022-09-10
 
 ### Features
 
-* Add `--extend-exclude` option ([#76](https://github.com/fpgmaas/deptry/pull/76))
+* Add `--extend-exclude` option ([#76](https://github.com/osprey-oss/deptry/pull/76))
 
 ### Full Changelog
 
-[0.2.16...0.2.17](https://github.com/fpgmaas/deptry/compare/0.2.16...0.2.17)
+[0.2.16...0.2.17](https://github.com/osprey-oss/deptry/compare/0.2.16...0.2.17)
 
 
 ## 0.2.16 - 2022-09-09
@@ -1038,33 +1038,33 @@ No user facing change.
 
 ### Full Changelog
 
-[0.2.15...0.2.16](https://github.com/fpgmaas/deptry/compare/0.2.15...0.2.16)
+[0.2.15...0.2.16](https://github.com/osprey-oss/deptry/compare/0.2.15...0.2.16)
 
 
 ## 0.2.15 - 2022-09-09
 
 ### Features
 
-* Guess top level name of modules by replacing `-` with `_` ([#73](https://github.com/fpgmaas/deptry/pull/73))
+* Guess top level name of modules by replacing `-` with `_` ([#73](https://github.com/osprey-oss/deptry/pull/73))
 
 ### Full Changelog
 
-[0.2.14...0.2.15](https://github.com/fpgmaas/deptry/compare/0.2.14...0.2.15)
+[0.2.14...0.2.15](https://github.com/osprey-oss/deptry/compare/0.2.14...0.2.15)
 
 
 ## 0.2.14 - 2022-09-09
 
 ### Features
 
-* Handle conditional dependencies ([#65](https://github.com/fpgmaas/deptry/pull/65))
+* Handle conditional dependencies ([#65](https://github.com/osprey-oss/deptry/pull/65))
 
 ### Miscellaneous
 
-* Decrease lower bound of `click` dependency to `8.0.0` ([#205](https://github.com/fpgmaas/deptry/pull/205))
+* Decrease lower bound of `click` dependency to `8.0.0` ([#205](https://github.com/osprey-oss/deptry/pull/205))
 
 ### Full Changelog
 
-[0.2.13...0.2.14](https://github.com/fpgmaas/deptry/compare/0.2.13...0.2.14)
+[0.2.13...0.2.14](https://github.com/osprey-oss/deptry/compare/0.2.13...0.2.14)
 
 
 ## 0.2.13 - 2022-09-09
@@ -1073,7 +1073,7 @@ No user facing change.
 
 ### Full Changelog
 
-[0.2.12...0.2.13](https://github.com/fpgmaas/deptry/compare/0.2.12...0.2.13)
+[0.2.12...0.2.13](https://github.com/osprey-oss/deptry/compare/0.2.12...0.2.13)
 
 
 ## 0.2.12 - 2022-09-09
@@ -1082,7 +1082,7 @@ No user facing change.
 
 ### Full Changelog
 
-[0.2.11...0.2.12](https://github.com/fpgmaas/deptry/compare/0.2.11...0.2.12)
+[0.2.11...0.2.12](https://github.com/osprey-oss/deptry/compare/0.2.11...0.2.12)
 
 
 ## 0.2.11 - 2022-09-09
@@ -1091,7 +1091,7 @@ No user facing change.
 
 ### Full Changelog
 
-[0.2.10...0.2.11](https://github.com/fpgmaas/deptry/compare/0.2.10...0.2.11)
+[0.2.10...0.2.11](https://github.com/osprey-oss/deptry/compare/0.2.10...0.2.11)
 
 
 ## 0.2.10 - 2022-09-08
@@ -1100,29 +1100,29 @@ No user facing change.
 
 ### Full Changelog
 
-[0.2.9...0.2.10](https://github.com/fpgmaas/deptry/compare/0.2.9...0.2.10)
+[0.2.9...0.2.10](https://github.com/osprey-oss/deptry/compare/0.2.9...0.2.10)
 
 
 ## 0.2.9 - 2022-09-08
 
 ### Bug Fixes
 
-* Fix issue with relative imports ([#54](https://github.com/fpgmaas/deptry/pull/54))
+* Fix issue with relative imports ([#54](https://github.com/osprey-oss/deptry/pull/54))
 
 ### Full Changelog
 
-[0.2.8...0.2.9](https://github.com/fpgmaas/deptry/compare/0.2.8...0.2.9)
+[0.2.8...0.2.9](https://github.com/osprey-oss/deptry/compare/0.2.8...0.2.9)
 
 
 ## 0.2.8 - 2022-09-08
 
 ### Features
 
-* Add check for misplaced development dependencies ([#51](https://github.com/fpgmaas/deptry/pull/51))
+* Add check for misplaced development dependencies ([#51](https://github.com/osprey-oss/deptry/pull/51))
 
 ### Full Changelog
 
-[0.2.7...0.2.8](https://github.com/fpgmaas/deptry/compare/0.2.7...0.2.8)
+[0.2.7...0.2.8](https://github.com/osprey-oss/deptry/compare/0.2.7...0.2.8)
 
 
 ## 0.2.7 - 2022-09-07
@@ -1131,29 +1131,29 @@ No user facing change.
 
 ### Full Changelog
 
-[0.2.6...0.2.7](https://github.com/fpgmaas/deptry/compare/0.2.6...0.2.7)
+[0.2.6...0.2.7](https://github.com/osprey-oss/deptry/compare/0.2.6...0.2.7)
 
 
 ## 0.2.6 - 2022-09-07
 
 ### Features
 
-* Add `--version` argument to the CLI to display `deptry`'s version ([#47](https://github.com/fpgmaas/deptry/pull/47))
+* Add `--version` argument to the CLI to display `deptry`'s version ([#47](https://github.com/osprey-oss/deptry/pull/47))
 
 ### Full Changelog
 
-[0.2.5...0.2.6](https://github.com/fpgmaas/deptry/compare/0.2.5...0.2.6)
+[0.2.5...0.2.6](https://github.com/osprey-oss/deptry/compare/0.2.5...0.2.6)
 
 
 ## 0.2.5 - 2022-09-07
 
 ### Features
 
-* Add check for missing and transitive dependencies ([#43](https://github.com/fpgmaas/deptry/pull/43))
+* Add check for missing and transitive dependencies ([#43](https://github.com/osprey-oss/deptry/pull/43))
 
 ### Full Changelog
 
-[0.2.3...0.2.5](https://github.com/fpgmaas/deptry/compare/0.2.3...0.2.5)
+[0.2.3...0.2.5](https://github.com/osprey-oss/deptry/compare/0.2.3...0.2.5)
 
 
 ## 0.2.3 - 2022-09-06
@@ -1162,65 +1162,65 @@ No user facing change.
 
 ### Full Changelog
 
-[0.2.2...0.2.3](https://github.com/fpgmaas/deptry/compare/0.2.2...0.2.3)
+[0.2.2...0.2.3](https://github.com/osprey-oss/deptry/compare/0.2.2...0.2.3)
 
 
 ## 0.2.2 - 2022-09-06
 
 ### Full Changelog
 
-[0.2.1...0.2.2](https://github.com/fpgmaas/deptry/compare/0.2.1...0.2.2)
+[0.2.1...0.2.2](https://github.com/osprey-oss/deptry/compare/0.2.1...0.2.2)
 
 
 ## 0.2.1 - 2022-09-05
 
 ### Full Changelog
 
-[0.2.0...0.2.1](https://github.com/fpgmaas/deptry/compare/0.2.0...0.2.1)
+[0.2.0...0.2.1](https://github.com/osprey-oss/deptry/compare/0.2.0...0.2.1)
 
 
 ## 0.2.0 - 2022-09-05
 
 ### Features
 
-* Add support for Python 3.7 ([#27](https://github.com/fpgmaas/deptry/pull/27))
+* Add support for Python 3.7 ([#27](https://github.com/osprey-oss/deptry/pull/27))
 
 ### Full Changelog
 
-[0.1.5...0.2.0](https://github.com/fpgmaas/deptry/compare/0.1.5...0.2.0)
+[0.1.5...0.2.0](https://github.com/osprey-oss/deptry/compare/0.1.5...0.2.0)
 
 
 ## 0.1.5 - 2022-09-04
 
 ### Miscellaneous
 
-* Improve logging statements ([#25](https://github.com/fpgmaas/deptry/pull/25))
+* Improve logging statements ([#25](https://github.com/osprey-oss/deptry/pull/25))
 
 ### Full Changelog
 
-[0.1.4...0.1.5](https://github.com/fpgmaas/deptry/compare/0.1.4...0.1.5)
+[0.1.4...0.1.5](https://github.com/osprey-oss/deptry/compare/0.1.4...0.1.5)
 
 
 ## 0.1.4 - 2022-09-04
 
 ### Miscellaneous
 
-* Improve logging when package name is not found ([#25](https://github.com/fpgmaas/deptry/pull/25))
+* Improve logging when package name is not found ([#25](https://github.com/osprey-oss/deptry/pull/25))
 
 ### Full Changelog
 
-[0.1.3...0.1.4](https://github.com/fpgmaas/deptry/compare/0.1.3...0.1.4)
+[0.1.3...0.1.4](https://github.com/osprey-oss/deptry/compare/0.1.3...0.1.4)
 
 
 ## 0.1.3 - 2022-09-04
 
 ### Features
 
-* Parse imports within `if`/`else` statements ([#23](https://github.com/fpgmaas/deptry/pull/23))
+* Parse imports within `if`/`else` statements ([#23](https://github.com/osprey-oss/deptry/pull/23))
 
 ### Full Changelog
 
-[0.1.2...0.1.3](https://github.com/fpgmaas/deptry/compare/0.1.2...0.1.3)
+[0.1.2...0.1.3](https://github.com/osprey-oss/deptry/compare/0.1.2...0.1.3)
 
 
 ## 0.1.2 - 2022-09-04
@@ -1229,51 +1229,51 @@ No use facing change.
 
 ### Full Changelog
 
-[0.1.1...0.1.2](https://github.com/fpgmaas/deptry/compare/0.1.1...0.1.2)
+[0.1.1...0.1.2](https://github.com/osprey-oss/deptry/compare/0.1.1...0.1.2)
 
 
 ## 0.1.1 - 2022-09-04
 
 ### Features
 
-* Replace `deptry check` command with `deptry` ([#21](https://github.com/fpgmaas/deptry/pull/21))
+* Replace `deptry check` command with `deptry` ([#21](https://github.com/osprey-oss/deptry/pull/21))
 
 ### Full Changelog
 
-[0.0.4...0.1.1](https://github.com/fpgmaas/deptry/compare/0.0.4...0.1.1)
+[0.0.4...0.1.1](https://github.com/osprey-oss/deptry/compare/0.0.4...0.1.1)
 
 
 ## 0.0.4 - 2022-09-03
 
 ### Features
 
-* Add ability to specify the root directory ([#13](https://github.com/fpgmaas/deptry/pull/13))
+* Add ability to specify the root directory ([#13](https://github.com/osprey-oss/deptry/pull/13))
 
 ### Full Changelog
 
-[0.0.3...0.0.4](https://github.com/fpgmaas/deptry/compare/0.0.3...0.0.4)
+[0.0.3...0.0.4](https://github.com/osprey-oss/deptry/compare/0.0.3...0.0.4)
 
 
 ## 0.0.3 - 2022-09-03
 
 ### Features
 
-* Add support for Jupyter Notebooks ([#11](https://github.com/fpgmaas/deptry/pull/11))
+* Add support for Jupyter Notebooks ([#11](https://github.com/osprey-oss/deptry/pull/11))
 
 ### Full Changelog
 
-[0.0.2...0.0.3](https://github.com/fpgmaas/deptry/compare/0.0.2...0.0.3)
+[0.0.2...0.0.3](https://github.com/osprey-oss/deptry/compare/0.0.2...0.0.3)
 
 
 ## 0.0.2 - 2022-09-02
 
 ### Features
 
-* Add mapping for common packages without metadata ([#1](https://github.com/fpgmaas/deptry/pull/1))
+* Add mapping for common packages without metadata ([#1](https://github.com/osprey-oss/deptry/pull/1))
 
 ### Full Changelog
 
-[0.0.1...0.0.2](https://github.com/fpgmaas/deptry/compare/0.0.1...0.0.2)
+[0.0.1...0.0.2](https://github.com/osprey-oss/deptry/compare/0.0.1...0.0.2)
 
 
 ## 0.0.1 - 2022-09-02
