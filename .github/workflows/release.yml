@@ -179,34 +179,25 @@ jobs:
   publish:
     name: Publish
     runs-on: ubuntu-24.04
-    needs:
-      - linux
-      - windows
-      - macos
-      - sdist
+    needs: [linux, windows, macos, sdist]
+    environment: pypi
+    permissions:
+      id-token: write
     steps:
       - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
 
-      - name: Install Python
-        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
+      - name: Install uv
+        uses: astral-sh/setup-uv@6ee6290f1cbc4156c0bdd66691b2c144ef8df19a # v7.4.0
         with:
-          python-version: '3.14'
+          version: '0.10.9'
 
       - name: Publish to PyPI
         if: ${{ github.event_name == 'release' }}
-        uses: PyO3/maturin-action@04ac600d27cdf7a9a280dadf7147097c42b757ad # v1.50.1
-        env:
-          MATURIN_PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
-        with:
-          command: upload
-          args: --non-interactive --skip-existing wheels-*/*
+        run: uv publish --trusted-publishing always wheels-*/*
 
       - name: '[dry-run] Publish to PyPI'
         if: ${{ github.event_name != 'release' }}
-        uses: PyO3/maturin-action@04ac600d27cdf7a9a280dadf7147097c42b757ad # v1.50.1
-        with:
-          command: upload
-          args: --help
+        run: uv publish --trusted-publishing always --dry-run wheels-*/*
 
   publish-docs:
     runs-on: ubuntu-24.04
