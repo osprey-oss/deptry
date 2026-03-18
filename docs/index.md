@@ -10,12 +10,12 @@
 
 ---
 
-[![Release](https://img.shields.io/github/v/release/fpgmaas/deptry)](https://pypi.org/project/deptry/)
-[![Build status](https://github.com/fpgmaas/deptry/actions/workflows/main.yml/badge.svg?branch=main)](https://github.com/fpgmaas/deptry/actions/workflows/main.yml)
+[![Release](https://img.shields.io/github/v/release/osprey-oss/deptry)](https://pypi.org/project/deptry/)
+[![Build status](https://github.com/osprey-oss/deptry/actions/workflows/main.yml/badge.svg?branch=main)](https://github.com/osprey-oss/deptry/actions/workflows/main.yml)
 [![Supported Python versions](https://img.shields.io/pypi/pyversions/deptry)](https://pypi.org/project/deptry/)
-[![codecov](https://codecov.io/gh/fpgmaas/deptry/branch/main/graph/badge.svg)](https://codecov.io/gh/fpgmaas/deptry)
+[![codecov](https://codecov.io/gh/osprey-oss/deptry/branch/main/graph/badge.svg)](https://codecov.io/gh/osprey-oss/deptry)
 [![PyPI - Downloads](https://img.shields.io/pypi/dm/deptry)](https://pypistats.org/packages/deptry)
-[![License](https://img.shields.io/github/license/fpgmaas/deptry)](https://img.shields.io/github/license/fpgmaas/deptry)
+[![License](https://img.shields.io/github/license/osprey-oss/deptry)](https://img.shields.io/github/license/osprey-oss/deptry)
 
 _deptry_ is a command line tool to check for issues with dependencies in a Python project, such as unused or missing
 dependencies. It supports projects

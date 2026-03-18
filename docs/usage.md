@@ -133,14 +133,14 @@ _deptry_ can be added to your [pre-commit](https://pre-commit.com/) rules. Here 
 an example config for your `.pre-commit-config.yaml` file:
 
 ```yaml
-- repo: https://github.com/fpgmaas/deptry.git
+- repo: https://github.com/osprey-oss/deptry.git
   rev: "<tag>"
   hooks:
     - id: deptry
       args: ["--ignore", "DEP001"]
 ```
 
-Replace `<tag>` with one of the [tags](https://github.com/fpgmaas/deptry/tags) from the
+Replace `<tag>` with one of the [tags](https://github.com/osprey-oss/deptry/tags) from the
 project or a specific commit hash.
 
 !!! important
