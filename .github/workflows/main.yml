@@ -65,6 +65,8 @@ jobs:
           - '3.12'
           - '3.13'
           - '3.14'
+          - '3.13t'
+          - '3.14t'
           - 'pypy3.11'
       fail-fast: false
     runs-on: ${{ matrix.os.image }}
@@ -90,10 +92,15 @@ jobs:
 
       - name: Install Python dependencies
         run: uv sync --frozen --no-default-groups --group test --group typing
+        if: ${{ !endsWith(matrix.python-version, 't') }}
+
+      - name: Install Python dependencies (free-threaded)
+        run: uv sync --frozen --no-default-groups --group test
+        if: ${{ endsWith(matrix.python-version, 't') }}
 
       - name: Check typing
         run: uv run --no-default-groups mypy
-        if: ${{ matrix.os.name == 'linux' && !startsWith(matrix.python-version, 'pypy') }}
+        if: ${{ matrix.os.name == 'linux' && !startsWith(matrix.python-version, 'pypy') && !endsWith(matrix.python-version, 't') }}
 
       - name: Run unit tests
         run: uv run --no-default-groups pytest tests/unit --cov --cov-config=pyproject.toml --cov-report=xml
