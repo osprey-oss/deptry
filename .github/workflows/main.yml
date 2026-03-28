@@ -24,7 +24,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@e06108dd0aef18192324c70427afc47652e63a82 # v7.5.0
         with:
-          version: '0.10.10'
+          version: '0.10.12'
           enable-cache: true
           cache-dependency-glob: 'uv.lock'
 
@@ -78,7 +78,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@e06108dd0aef18192324c70427afc47652e63a82 # v7.5.0
         with:
-          version: '0.10.10'
+          version: '0.10.12'
           enable-cache: true
           cache-dependency-glob: 'uv.lock'
           cache-suffix: ${{ matrix.python-version }}
@@ -120,7 +120,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@e06108dd0aef18192324c70427afc47652e63a82 # v7.5.0
         with:
-          version: '0.10.10'
+          version: '0.10.12'
           enable-cache: true
           cache-dependency-glob: 'uv.lock'
 
