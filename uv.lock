@@ -546,7 +546,7 @@ docs = [
 ]
 test = [
     { name = "inline-snapshot", specifier = "==0.32.5" },
-    { name = "pdm", specifier = "==2.26.6" },
+    { name = "pdm", specifier = "==2.26.7" },
     { name = "poetry", specifier = "==2.3.2" },
     { name = "pytest", specifier = "==9.0.2" },
     { name = "pytest-cov", specifier = "==7.1.0" },
@@ -1340,7 +1340,7 @@ install = [
 
 [[package]]
 name = "pdm"
-version = "2.26.6"
+version = "2.26.7"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "blinker" },
@@ -1367,9 +1367,9 @@ dependencies = [
     { name = "unearth" },
     { name = "virtualenv" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/6e/47/4da1270646d95411aecae80aff32493d7da456c7b11fbb21b4a17e68ddba/pdm-2.26.6.tar.gz", hash = "sha256:771f95b9a484f9eb34dcf8d851be6ff95333e4f3c46189f9004cfd5cc2e925f9", size = 2674295, upload-time = "2026-01-22T09:47:34.589Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/3e/93/351311786812737232e8a218cc9f095e48f65f7cb7b075b447e833efe5f3/pdm-2.26.7.tar.gz", hash = "sha256:0a96a6fb4d60dfeacc1f68bf77efda39503833f6c01866cc8700ea403f0183b7", size = 2679303, upload-time = "2026-03-24T07:22:09.534Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/9c/75/565456bbbbf24bdbe59a976944a91a86bee0d39175dbf9de36d9a3daaff7/pdm-2.26.6-py3-none-any.whl", hash = "sha256:39583edee738cc62b9ec2d5b4e434f44e501b55f609401a89732b5e8a451944f", size = 301127, upload-time = "2026-01-22T09:47:32.667Z" },
+    { url = "https://files.pythonhosted.org/packages/44/81/4d47fd45948da2f8c5b1f1f976df0dd331123ed0e185fb6a82889bfa836c/pdm-2.26.7-py3-none-any.whl", hash = "sha256:f463847135b55a8c1b490a95ba944420609512d3a4d8f5661d42760a3dae0fbf", size = 301888, upload-time = "2026-03-24T07:22:07.847Z" },
 ]
 
 [[package]]

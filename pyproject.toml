@@ -41,7 +41,7 @@ docs = [
 ]
 test = [
     "inline-snapshot==0.32.5",
-    "pdm==2.26.6",
+    "pdm==2.26.7",
     "poetry==2.3.2",
     "pytest==9.0.2",
     "pytest-cov==7.1.0",
