@@ -121,7 +121,6 @@ local_partial_types = true
 strict = true
 warn_unreachable = true
 pretty = true
-fixed_format_cache = true
 
 [[tool.mypy.overrides]]
 module = ["xdist.*"]
