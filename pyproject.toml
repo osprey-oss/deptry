@@ -48,8 +48,7 @@ test = [
     "pytest-xdist[psutil]==3.8.0",
 ]
 typing = [
-    # `librt` that `mypy` depends on does not compile on PyPy (https://github.com/mypyc/librt/issues/16).
-    "mypy==1.19.1; implementation_name == 'cpython'",
+    "mypy==1.20.0",
     "types-colorama==0.4.15.20250801; sys_platform == 'win32'",
 ]
 
