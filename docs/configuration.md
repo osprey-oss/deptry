@@ -1,3 +1,6 @@
+---
+icon: lucide/wrench
+---
 # Configuration
 
 _deptry_ can be configured with command line arguments or by adding a `[tool.deptry]` section to `pyproject.toml`.

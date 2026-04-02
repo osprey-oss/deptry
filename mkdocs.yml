@@ -13,7 +13,7 @@ nav:
   - Configuration: configuration.md
   - Rules and Violations: rules-violations.md
   - Supported dependency managers: supported-dependency-managers.md
-  - Changelog: CHANGELOG.md
+  - Changelog: changelog.md
   - Contributing: contributing.md
 
 plugins:

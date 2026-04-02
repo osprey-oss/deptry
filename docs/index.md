@@ -1,3 +1,6 @@
+---
+icon: lucide/house
+---
 <style>
   .md-typeset h1 {
     display: none;

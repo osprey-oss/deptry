@@ -1,3 +1,6 @@
+---
+icon: lucide/play
+---
 # Usage
 
 ## Basic Usage

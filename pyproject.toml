@@ -35,10 +35,7 @@ dependencies = [
 ]
 
 [dependency-groups]
-docs = [
-    "mkdocs==1.6.1",
-    "mkdocs-material==9.7.6",
-]
+docs = ["zensical==0.0.31"]
 test = [
     "inline-snapshot==0.32.5",
     "pdm==2.26.7",

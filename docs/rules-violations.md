@@ -1,3 +1,6 @@
+---
+icon: lucide/shield
+---
 # Rules and Violations
 
 _deptry_ checks your project against the following rules related to dependencies:

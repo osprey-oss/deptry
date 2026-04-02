@@ -1,3 +1,6 @@
+---
+icon: lucide/package
+---
 # Supported dependency managers
 
 While most dependency managers support the

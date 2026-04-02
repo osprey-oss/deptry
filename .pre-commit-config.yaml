@@ -1,4 +1,13 @@
 repos:
+  - repo: local
+    hooks:
+      - id: copy-changelog-docs
+        name: copy changelog to docs
+        entry: ./scripts/copy-changelog.sh
+        language: system
+        pass_filenames: false
+        files: ^CHANGELOG\.md$
+
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: "v6.0.0"
     hooks:

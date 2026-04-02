@@ -30,11 +30,11 @@ build: ## Build wheel and sdist files using maturin.
 
 .PHONY: docs-test
 docs-test: ## Test if documentation can be built without warnings or errors.
-	@uv run mkdocs build -s
+	@uv run zensical build --strict
 
 .PHONY: docs
 docs: ## Build and serve the documentation.
-	@uv run mkdocs serve
+	@uv run zensical serve
 
 .PHONY: help
 help: ## Show help for the commands.

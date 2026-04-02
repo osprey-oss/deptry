@@ -133,4 +133,4 @@ jobs:
         with:
           python-version: '3.14'
       - name: Check if documentation can be built
-        run: uv run --only-group docs mkdocs build --strict
+        run: uv run --only-group docs zensical build --strict
