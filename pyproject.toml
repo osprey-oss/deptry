@@ -117,6 +117,7 @@ enable_error_code = [
     "redundant-expr",
     "truthy-bool",
 ]
+local_partial_types = true
 strict = true
 warn_unreachable = true
 pretty = true
