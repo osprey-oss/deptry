@@ -57,20 +57,20 @@
     {
       matchManagers: ["cargo"],
       groupName: "Rust dependencies",
-      minimumReleaseAge: "5 days",
+      minimumReleaseAge: "2 days",
     },
     // Group all Python dependencies (runtime, docs, typing, dev) into a single PR.
     {
       matchManagers: ["pep621"],
       matchFileNames: ["pyproject.toml"],
       groupName: "Python dependencies",
-      minimumReleaseAge: "5 days",
+      minimumReleaseAge: "2 days",
     },
     // Group all CI/infra (GitHub Actions + pre-commit) into a single PR.
     {
       matchManagers: ["github-actions", "github-releases", "github-tags", "pre-commit"],
       groupName: "CI and dev tooling",
-      minimumReleaseAge: "5 days",
+      minimumReleaseAge: "2 days",
     },
     // Create dedicated branch to update dependencies in tests.
     {
@@ -87,7 +87,7 @@
         enabled: false,
       },
       automerge: true,
-      minimumReleaseAge: "5 days",
+      minimumReleaseAge: "2 days",
     },
     {
       matchFileNames: ["tests/**"],
