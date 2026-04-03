@@ -7,7 +7,8 @@ authors = [
     { name = "Mathieu Kniewallner", email = "mathieu.kniewallner@gmail.com" }
 ]
 requires-python = ">=3.10"
-license = { file = "LICENSE" }
+license = "MIT"
+license-files = ["LICENSE"]
 readme = "README.md"
 classifiers = [
     "Development Status :: 3 - Alpha",
@@ -24,7 +25,6 @@ classifiers = [
     "Programming Language :: Rust",
     "Programming Language :: Python :: Implementation :: CPython",
     "Programming Language :: Python :: Implementation :: PyPy",
-    "License :: OSI Approved :: MIT License",
 ]
 dependencies = [
     "click>=8.0.0,<9",
@@ -37,27 +37,26 @@ dependencies = [
 [dependency-groups]
 docs = [
     "mkdocs==1.6.1",
-    "mkdocs-material==9.7.4",
+    "mkdocs-material==9.7.5",
 ]
 test = [
     "inline-snapshot==0.32.5",
-    "pdm==2.26.6",
-    "poetry==2.3.2",
+    "pdm==2.26.7",
+    "poetry==2.3.3",
     "pytest==9.0.2",
-    "pytest-cov==7.0.0",
+    "pytest-cov==7.1.0",
     "pytest-xdist[psutil]==3.8.0",
 ]
 typing = [
-    # `librt` that `mypy` depends on does not compile on PyPy (https://github.com/mypyc/librt/issues/16).
-    "mypy==1.19.1; implementation_name == 'cpython'",
+    "mypy==1.20.0",
     "types-colorama==0.4.15.20250801; sys_platform == 'win32'",
 ]
 
 [project.urls]
 homepage = "https://deptry.com"
-repository = "https://github.com/fpgmaas/deptry"
+repository = "https://github.com/osprey-oss/deptry"
 documentation = "https://deptry.com"
-changelog = "https://github.com/fpgmaas/deptry/blob/main/CHANGELOG.md"
+changelog = "https://github.com/osprey-oss/deptry/blob/main/CHANGELOG.md"
 
 [project.scripts]
 deptry = "deptry.cli:deptry"
@@ -118,10 +117,10 @@ enable_error_code = [
     "redundant-expr",
     "truthy-bool",
 ]
+local_partial_types = true
 strict = true
 warn_unreachable = true
 pretty = true
-fixed_format_cache = true
 
 [[tool.mypy.overrides]]
 module = ["xdist.*"]
