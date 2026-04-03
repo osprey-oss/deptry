@@ -57,7 +57,6 @@
     {
       matchManagers: ["cargo"],
       groupName: "Rust dependencies",
-      separateMajorMinor: false,
       minimumReleaseAge: "5 days",
     },
     // Group all Python dependencies (runtime, docs, typing, dev) into a single PR.
@@ -65,14 +64,12 @@
       matchManagers: ["pep621"],
       matchFileNames: ["pyproject.toml"],
       groupName: "Python dependencies",
-      separateMajorMinor: false,
       minimumReleaseAge: "5 days",
     },
     // Group all CI/infra (GitHub Actions + pre-commit) into a single PR.
     {
       matchManagers: ["github-actions", "pre-commit"],
       groupName: "CI and dev tooling",
-      separateMajorMinor: false,
       minimumReleaseAge: "5 days",
     },
     // Create dedicated branch to update dependencies in tests.
