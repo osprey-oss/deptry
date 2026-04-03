@@ -68,7 +68,7 @@
     },
     // Group all CI/infra (GitHub Actions + pre-commit) into a single PR.
     {
-      matchManagers: ["github-actions", "pre-commit"],
+      matchManagers: ["github-actions", "github-releases", "github-tags", "pre-commit"],
       groupName: "CI and dev tooling",
       minimumReleaseAge: "5 days",
     },
