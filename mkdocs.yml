@@ -1,7 +1,7 @@
 site_name: deptry
 edit_uri: edit/main/docs/
-repo_name: fpgmaas/deptry
-repo_url: https://github.com/fpgmaas/deptry
+repo_name: osprey-oss/deptry
+repo_url: https://github.com/osprey-oss/deptry
 site_url: https://deptry.com
 site_description: A command line utility to check for unused, missing and transitive dependencies in a Python project.
 site_author: Florian Maas
@@ -49,7 +49,7 @@ theme:
 extra:
   social:
     - icon: fontawesome/brands/github
-      link: https://github.com/fpgmaas/deptry
+      link: https://github.com/osprey-oss/deptry
     - icon: fontawesome/brands/python
       link: https://pypi.org/project/deptry/
 
