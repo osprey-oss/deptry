@@ -27,7 +27,7 @@ repos:
         require_serial: true
 
   - repo: https://github.com/astral-sh/uv-pre-commit
-    rev: "0.10.12"
+    rev: "0.11.3"
     hooks:
       - id: uv-lock
         name: check uv lock file consistency
