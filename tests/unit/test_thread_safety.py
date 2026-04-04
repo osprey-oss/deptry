@@ -2,16 +2,19 @@ from __future__ import annotations
 
 import concurrent.futures
 from pathlib import Path
+from typing import TYPE_CHECKING
 
 from deptry.imports.extract import get_imported_modules_from_list_of_files
 
+if TYPE_CHECKING:
+    from deptry.imports.location import Location
 
 ITERATIONS = 50
 WORKERS = 8
 FIXTURE_FILE = Path("tests/fixtures/some_imports.py")
 
 
-def _extract_imports() -> dict:
+def _extract_imports() -> dict[str, list[Location]]:
     return get_imported_modules_from_list_of_files([FIXTURE_FILE])
 
 
