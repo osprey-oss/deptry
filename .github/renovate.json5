@@ -33,6 +33,8 @@
     ":ignoreModulesAndTests",
   ],
 
+  minimumReleaseAge: "2 days",
+
   // https://docs.renovatebot.com/configuration-options/#labels
   labels: ["dependencies"],
 
@@ -57,26 +59,22 @@
     {
       matchManagers: ["cargo"],
       groupName: "Rust dependencies",
-      minimumReleaseAge: "2 days",
     },
     // Group all Python dependencies (runtime, docs, typing, dev) into a single PR.
     {
       matchManagers: ["pep621"],
       matchFileNames: ["pyproject.toml"],
       groupName: "Python dependencies",
-      minimumReleaseAge: "2 days",
     },
     // Group all CI/infra (GitHub Actions + pre-commit) into a single PR.
     {
       matchManagers: ["github-actions", "pre-commit"],
       groupName: "CI and dev tooling",
-      minimumReleaseAge: "2 days",
     },
     {
       matchDatasources: ["github-releases", "github-tags"],
       matchPackageNames: ["astral-sh/uv", "astral-sh/uv-pre-commit"],
       groupName: "CI and dev tooling",
-      minimumReleaseAge: "2 days",
     },
     // Create dedicated branch to update dependencies in tests.
     {
@@ -93,7 +91,6 @@
         enabled: false,
       },
       automerge: true,
-      minimumReleaseAge: "2 days",
     },
     {
       matchFileNames: ["tests/**"],
