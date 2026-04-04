@@ -68,7 +68,13 @@
     },
     // Group all CI/infra (GitHub Actions + pre-commit) into a single PR.
     {
-      matchManagers: ["github-actions", "github-releases", "github-tags", "pre-commit"],
+      matchManagers: ["github-actions", "pre-commit"],
+      groupName: "CI and dev tooling",
+      minimumReleaseAge: "2 days",
+    },
+    {
+      matchDatasources: ["github-releases", "github-tags"],
+      matchPackageNames: ["astral-sh/uv", "astral-sh/uv-pre-commit"],
       groupName: "CI and dev tooling",
       minimumReleaseAge: "2 days",
     },
