@@ -37,19 +37,18 @@ dependencies = [
 [dependency-groups]
 docs = [
     "mkdocs==1.6.1",
-    "mkdocs-material==9.7.5",
+    "mkdocs-material==9.7.6",
 ]
 test = [
     "inline-snapshot==0.32.5",
-    "pdm==2.26.6",
-    "poetry==2.3.2",
+    "pdm==2.26.7",
+    "poetry==2.3.3",
     "pytest==9.0.2",
-    "pytest-cov==7.0.0",
+    "pytest-cov==7.1.0",
     "pytest-xdist[psutil]==3.8.0",
 ]
 typing = [
-    # `librt` that `mypy` depends on does not compile on PyPy (https://github.com/mypyc/librt/issues/16).
-    "mypy==1.19.1; implementation_name == 'cpython'",
+    "mypy==1.20.0",
     "types-colorama==0.4.15.20250801; sys_platform == 'win32'",
 ]
 
@@ -118,10 +117,10 @@ enable_error_code = [
     "redundant-expr",
     "truthy-bool",
 ]
+local_partial_types = true
 strict = true
 warn_unreachable = true
 pretty = true
-fixed_format_cache = true
 
 [[tool.mypy.overrides]]
 module = ["xdist.*"]

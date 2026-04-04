@@ -22,9 +22,9 @@ jobs:
           persist-credentials: false
 
       - name: Install uv
-        uses: astral-sh/setup-uv@e06108dd0aef18192324c70427afc47652e63a82 # v7.5.0
+        uses: astral-sh/setup-uv@cec208311dfd045dd5311c1add060b2062131d57 # v8.0.0
         with:
-          version: '0.10.10'
+          version: '0.11.3'
           enable-cache: true
           cache-dependency-glob: 'uv.lock'
 
@@ -71,6 +71,9 @@ jobs:
       fail-fast: false
     runs-on: ${{ matrix.os.image }}
     name: ${{ matrix.os.name }} (${{ matrix.python-version }})
+    environment:
+      name: tests
+      deployment: false
     steps:
       - name: Check out
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
@@ -78,9 +81,9 @@ jobs:
           persist-credentials: false
 
       - name: Install uv
-        uses: astral-sh/setup-uv@e06108dd0aef18192324c70427afc47652e63a82 # v7.5.0
+        uses: astral-sh/setup-uv@cec208311dfd045dd5311c1add060b2062131d57 # v8.0.0
         with:
-          version: '0.10.10'
+          version: '0.11.3'
           enable-cache: true
           cache-dependency-glob: 'uv.lock'
           cache-suffix: ${{ matrix.python-version }}
@@ -111,7 +114,7 @@ jobs:
           PYTHONIOENCODING: 'utf-8'
 
       - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@671740ac38dd9b0130fbe1cec585b89eea48d3de # v5.5.2
+        uses: codecov/codecov-action@57e3a136b779b570ffcdbf80b3bdc90e7fab3de2 # v6.0.0
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
         if: ${{ matrix.os.name == 'linux' && matrix.python-version == '3.14' }}
@@ -125,9 +128,9 @@ jobs:
           persist-credentials: false
 
       - name: Install uv
-        uses: astral-sh/setup-uv@e06108dd0aef18192324c70427afc47652e63a82 # v7.5.0
+        uses: astral-sh/setup-uv@cec208311dfd045dd5311c1add060b2062131d57 # v8.0.0
         with:
-          version: '0.10.10'
+          version: '0.11.3'
           enable-cache: true
           cache-dependency-glob: 'uv.lock'
 
