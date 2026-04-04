@@ -70,4 +70,5 @@ Found 3 dependency issues.
 ### Configuration
 
 _deptry_ can be configured by using additional command line arguments, or
-by adding a `[tool.deptry]` section in `pyproject.toml`. For more information, see [Usage and Configuration](./usage.md)
+by adding a `[tool.deptry]` section in `pyproject.toml`. For more information, see [Usage](./usage.md) and
+[Configuration](./configuration.md) documentations.

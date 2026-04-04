@@ -9,7 +9,8 @@ copyright: Maintained by <a href="https://fpgmaas.com">Florian</a>.
 
 nav:
   - Home: index.md
-  - Usage and Configuration: usage.md
+  - Usage: usage.md
+  - Configuration: configuration.md
   - Rules and Violations: rules-violations.md
   - Supported dependency managers: supported-dependency-managers.md
   - Changelog: CHANGELOG.md

@@ -54,7 +54,7 @@ the following dependencies will be extracted:
 !!! note
 
     Groups under `[project.optional-dependencies]` can be flagged as development dependency groups by
-    using [`--optional-dependencies-dev-groups`](usage.md#optional-dependencies-dev-groups) argument (or its
+    using [`--optional-dependencies-dev-groups`](configuration.md#optional-dependencies-dev-groups) argument (or its
     `optional_dependencies_dev_groups` equivalent in `pyproject.toml`).
 
 ### uv
@@ -190,7 +190,7 @@ In this example, regular dependencies will be extracted from both `requirements.
 !!! note
 
     Groups under `[tool.setuptools.dynamic.optional-dependencies]` can be flagged as development dependency groups by
-    using [`--pep621-dev-dependency-groups`](usage.md#pep-621-dev-dependency-groups) argument (or its
+    using [`--pep621-dev-dependency-groups`](configuration.md#pep-621-dev-dependency-groups) argument (or its
     `pep_621_dev_dependency_groups` equivalent in `pyproject.toml`).
 
 ## `requirements.txt` (pip, pip-tools)
@@ -230,7 +230,8 @@ for instance with `-r other-requirements.txt`, _deptry_ will also include the de
 
 !!! note
 
-    If using different files for regular dependencies, [`--requirements-files`](usage.md#requirements-files) (or its
-    `requirements_files` equivalent in `pyproject.toml`) can be used to instruct _deptry_ about the requirements files
-    locations. Similarly, [`--requirements-files-dev`](usage.md#requirements-files-dev) (or its `requirements_files_dev`
-    equivalent in `pyproject.toml`) can be used for requirements files containing development dependencies.
+    If using different files for regular dependencies, [`--requirements-files`](configuration.md#requirements-files)
+    (or its `requirements_files` equivalent in `pyproject.toml`) can be used to instruct _deptry_ about the
+    requirements files locations. Similarly, [`--requirements-files-dev`](configuration.md#requirements-files-dev) (or
+    its `requirements_files_dev` equivalent in `pyproject.toml`) can be used for requirements files containing
+    development dependencies.
