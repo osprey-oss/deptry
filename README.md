@@ -31,8 +31,11 @@ subdirectories, and comparing those to the dependencies listed in the project's 
 To add _deptry_ to your project, run one of the following commands:
 
 ```shell
+# Install with uv
+uv add --dev deptry
+
 # Install with poetry
-poetry add --group dev deptry
+poetry add --dev deptry
 
 # Install with pip
 pip install deptry
