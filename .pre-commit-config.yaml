@@ -10,7 +10,7 @@ repos:
       - id: trailing-whitespace
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: "v0.15.8"
+    rev: "v0.15.9"
     hooks:
       - id: ruff-check
         args: [--exit-non-zero-on-fix]
@@ -27,7 +27,7 @@ repos:
         require_serial: true
 
   - repo: https://github.com/astral-sh/uv-pre-commit
-    rev: "0.10.12"
+    rev: "0.11.3"
     hooks:
       - id: uv-lock
         name: check uv lock file consistency
@@ -63,6 +63,6 @@ repos:
         pass_filenames: false
 
   - repo: https://github.com/woodruffw/zizmor-pre-commit
-    rev: "v1.22.0"
+    rev: "v1.23.1"
     hooks:
       - id: zizmor
