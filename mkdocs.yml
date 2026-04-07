@@ -70,3 +70,6 @@ validation:
   absolute_links: warn
   unrecognized_links: warn
   anchors: warn
+
+extra_css:
+  - stylesheets/extra.css

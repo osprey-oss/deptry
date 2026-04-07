@@ -1,0 +1,30 @@
+[data-md-color-scheme=slate] {
+    --md-default-bg-color: hsla(var(--md-hue), 15%, 14%, 1);
+}
+
+.md-header {
+    background-color: var(--md-primary-fg-color);
+    color: hsla(var(--md-hue), 0%, 100%, 1);
+}
+
+.md-search__button {
+    background-color: #00000042;
+    color: inherit;
+}
+
+.md-search__button:focus, .md-search__button:hover {
+    background-color: hsla(var(--md-hue), 15%, 90%, 0.32);
+    color: hsla(var(--md-hue), 0%, 100%, 1);
+}
+
+.md-search__button:before {
+    background-color: hsla(var(--md-hue), 0%, 100%, 1);
+}
+
+.md-search__button:after {
+    background-color: hsla(var(--md-hue), 15%, 5%, 0.54);
+}
+
+.md-typeset h1, .md-typeset h2, .md-typeset h3, .md-typeset h4, .md-typeset h5, .md-typeset h6 {
+    font-weight: 100;
+}
