@@ -8,7 +8,7 @@ You can contribute in many ways.
 
 ### Reporting bugs
 
-Report bugs at https://github.com/fpgmaas/deptry/issues.
+Report bugs at https://github.com/osprey-oss/deptry/issues.
 
 If you are reporting a bug, please include:
 
@@ -30,7 +30,7 @@ _deptry_ could always use more documentation, whether as part of the official do
 
 ### Submitting feedback
 
-The best way to send feedback is to file an issue at https://github.com/fpgmaas/deptry/issues.
+The best way to send feedback is to file an issue at https://github.com/osprey-oss/deptry/issues.
 
 If you are proposing a new feature:
 
@@ -44,7 +44,7 @@ Ready to contribute? Here's how to set up _deptry_ for local development. Please
 already have [uv](https://docs.astral.sh/uv/), [Git](https://git-scm.com/) and [pre-commit](https://pre-commit.com/)
 installed and ready to go.
 
-1. [Fork](https://github.com/fpgmaas/deptry/fork) the _deptry_ repository on GitHub.
+1. [Fork](https://github.com/osprey-oss/deptry/fork) the _deptry_ repository on GitHub.
 
 2. Clone your fork locally:
     ```bash
