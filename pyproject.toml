@@ -35,9 +35,6 @@ dependencies = [
 ]
 
 [dependency-groups]
-dev = [
-    "rust-just>=1.48.1",
-]
 docs = [
     "mkdocs==1.6.1",
     "mkdocs-material==9.7.4",
