@@ -1,4 +1,4 @@
-# Rules & Violations
+# Rules and Violations
 
 _deptry_ checks your project against the following rules related to dependencies:
 
@@ -10,9 +10,9 @@ _deptry_ checks your project against the following rules related to dependencies
 | DEP004 | Project should not use development dependencies in non-development code | [link](#misplaced-development-dependencies-dep004)  |
 | DEP005 | Project should not contain dependencies that are in the standard library    | [link](#standard-library-dependencies-dep005)       |
 
-Any of the checks can be disabled with the [`ignore`](usage.md#ignore) flag. Specific dependencies or modules can be
-ignored with the [`per-rule-ignores`](usage.md#per-rule-ignores) flag. Individual import lines can also be excluded
-using [inline ignore comments](usage.md#inline-ignore-comments).
+Any of the checks can be disabled with the [`ignore`](configuration.md#ignore) flag. Specific dependencies or modules
+can be ignored with the [`per-rule-ignores`](configuration.md#per-rule-ignores) flag. Individual import lines can also
+be excluded using [inline ignore comments](usage.md#inline-ignore-comments).
 
 ## Missing dependencies (DEP001)
 

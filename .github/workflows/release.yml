@@ -60,6 +60,15 @@ jobs:
           args: --release --out dist --interpreter ${{ startsWith(matrix.python, 'pypy') && matrix.python || format('python{0}', matrix.python) }}
           sccache: 'true'
 
+      - name: Build free-threaded wheels
+        uses: PyO3/maturin-action@04ac600d27cdf7a9a280dadf7147097c42b757ad # v1.50.1
+        if: ${{ !startsWith(matrix.python, 'pypy') }}
+        with:
+          target: ${{ matrix.target }}
+          manylinux: ${{ matrix.manylinux }}
+          args: --release --out dist --interpreter python3.14t
+          sccache: 'true'
+
       - name: Upload wheels
         uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
         with:
@@ -101,6 +110,20 @@ jobs:
           args: --release --out dist --interpreter ${{ startsWith(matrix.python, 'pypy') && matrix.python || format('python{0}', matrix.python) }}
           sccache: 'true'
 
+      - name: Install free-threaded Python
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
+        if: ${{ !startsWith(matrix.python, 'pypy') }}
+        with:
+          python-version: '3.14t'
+
+      - name: Build free-threaded wheels
+        uses: PyO3/maturin-action@04ac600d27cdf7a9a280dadf7147097c42b757ad # v1.50.1
+        if: ${{ !startsWith(matrix.python, 'pypy') }}
+        with:
+          target: ${{ matrix.target }}
+          args: --release --out dist --interpreter python3.14t
+          sccache: 'true'
+
       - name: Upload wheels
         uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
         with:
@@ -136,6 +159,20 @@ jobs:
         with:
           target: ${{ matrix.target }}
           args: --release --out dist --interpreter ${{ steps.setup-python.outputs.python-path }}
+          sccache: 'true'
+
+      - name: Install free-threaded Python
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
+        if: ${{ !startsWith(matrix.python, 'pypy') }}
+        with:
+          python-version: '3.14t'
+
+      - name: Build free-threaded wheels
+        uses: PyO3/maturin-action@04ac600d27cdf7a9a280dadf7147097c42b757ad # v1.50.1
+        if: ${{ !startsWith(matrix.python, 'pypy') }}
+        with:
+          target: ${{ matrix.target }}
+          args: --release --out dist --interpreter python3.14t
           sccache: 'true'
 
       - name: Upload wheels

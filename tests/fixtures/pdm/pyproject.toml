@@ -13,7 +13,7 @@ baz = [
     "click==8.3.1",
     "isort==8.0.1",
 ]
-bar = ["requests==2.32.5"]
+bar = ["requests==2.33.0"]
 
 [tool.pdm]
 version = {source = "scm"}

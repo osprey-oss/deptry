@@ -31,8 +31,11 @@ subdirectories, and comparing those to the dependencies listed in the project's 
 To add _deptry_ to your project, run one of the following commands:
 
 ```shell
+# Install with uv
+uv add --dev deptry
+
 # Install with poetry
-poetry add --group dev deptry
+poetry add --dev deptry
 
 # Install with pip
 pip install deptry
@@ -65,8 +68,8 @@ Found 3 dependency issues.
 
 ### Configuration
 
-_deptry_ can be configured by using additional command line arguments, or by adding a `[tool.deptry]` section in _pyproject.toml_. For more information, see the [Usage and Configuration](https://deptry.com/usage/) section of the documentation..
+_deptry_ can be configured by using additional command line arguments, or by adding a `[tool.deptry]` section in _pyproject.toml_. For more information, see the [Usage](https://deptry.com/usage/) and [Configuration](https://deptry.com/configuration/) documentations.
 
 ---
 
-Repository initiated with [fpgmaas/cookiecutter-poetry](https://github.com/fpgmaas/cookiecutter-poetry).
+Repository initiated with [osprey-oss/cookiecutter-poetry](https://github.com/osprey-oss/cookiecutter-poetry).

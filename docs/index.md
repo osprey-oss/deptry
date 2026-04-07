@@ -33,8 +33,11 @@ Dependency issues are detected by scanning for imported modules within all Pytho
 To add _deptry_ to your project, run one of the following commands:
 
 ```shell
+# Install with uv
+uv add --dev deptry
+
 # Install with poetry
-poetry add --group dev deptry
+poetry add --dev deptry
 
 # Install with pip
 pip install deptry
@@ -70,4 +73,5 @@ Found 3 dependency issues.
 ### Configuration
 
 _deptry_ can be configured by using additional command line arguments, or
-by adding a `[tool.deptry]` section in `pyproject.toml`. For more information, see [Usage and Configuration](./usage.md)
+by adding a `[tool.deptry]` section in `pyproject.toml`. For more information, see [Usage](./usage.md) and
+[Configuration](./configuration.md) documentations.
