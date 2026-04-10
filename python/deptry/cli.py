@@ -10,7 +10,7 @@ from typing import TYPE_CHECKING
 
 import click
 
-from deptry.config import read_configuration_from_pyproject_toml
+from deptry.config import Config, read_configuration_from_pyproject_toml
 from deptry.core import Core
 from deptry.deprecations import handle_deprecations
 
@@ -322,7 +322,7 @@ def cli(
 
     handle_deprecations(ctx)
 
-    Core(
+    deptry_config = Config(
         root=root,
         config=config,
         no_ansi=no_ansi,
@@ -344,7 +344,8 @@ def cli(
         non_dev_dependency_groups=non_dev_dependency_groups,
         experimental_namespace_package=experimental_namespace_package,
         enforce_posix_paths=enforce_posix_paths,
-    ).run()
+    )
+    Core(deptry_config).run()
 
 
 def deptry() -> None:

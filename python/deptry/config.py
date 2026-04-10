@@ -1,12 +1,14 @@
 from __future__ import annotations
 
 import logging
+from dataclasses import dataclass, replace
 from typing import TYPE_CHECKING, Any
 
 from deptry.exceptions import InvalidPyprojectTOMLOptionsError
 from deptry.utils import load_pyproject_toml
 
 if TYPE_CHECKING:
+    from collections.abc import Mapping
     from pathlib import Path
 
     import click
@@ -55,3 +57,32 @@ def read_configuration_from_pyproject_toml(ctx: click.Context, _param: click.Par
     ctx.default_map = click_default_map
 
     return value
+
+
+@dataclass(frozen=True)
+class Config:
+    root: tuple[Path, ...]
+    config: Path
+    no_ansi: bool
+    per_rule_ignores: Mapping[str, tuple[str, ...]]
+    ignore: tuple[str, ...]
+    exclude: tuple[str, ...]
+    extend_exclude: tuple[str, ...]
+    using_default_exclude: bool
+    ignore_notebooks: bool
+    requirements_files: tuple[str, ...]
+    using_default_requirements_files: bool
+    requirements_files_dev: tuple[str, ...]
+    known_first_party: tuple[str, ...]
+    json_output: str
+    package_module_name_map: Mapping[str, tuple[str, ...]]
+    optional_dependencies_dev_groups: tuple[str, ...]
+    non_dev_dependency_groups: tuple[str, ...]
+    experimental_namespace_package: bool
+    enforce_posix_paths: bool
+    github_output: bool
+    github_warning_errors: tuple[str, ...]
+
+    def with_overrides(self, overrides: dict[str, Any]) -> Config:
+        """Return a new Config with the given fields overridden."""
+        return replace(self, **overrides)

@@ -55,7 +55,7 @@ class UvVenvFactory(_BaseVenvFactory):
 
     @contextmanager
     def __call__(self, project: str) -> Generator[VirtualEnvironment, None, None]:
-        with self.venv(project, "uv sync") as virtual_env:
+        with self.venv(project, "uv sync --active --all-extras --all-groups --all-packages") as virtual_env:
             yield virtual_env
 
 

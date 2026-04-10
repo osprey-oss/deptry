@@ -23,7 +23,10 @@ class ViolationsFinder(ABC):
         dependencies: A list of Dependency objects representing the project's dependencies.
         ignored_modules: A tuple of module names to ignore when scanning for issues. Defaults to an
             empty tuple.
-        standard_library_modules: A set of modules that are part of the standard library
+        standard_library_modules: A set of modules that are part of the standard library.
+        workspace_sibling_module_names: A set of top-level module names provided by uv workspace
+            siblings. These modules are available in the environment but must still be explicitly
+            declared as dependencies by each member that imports them.
     """
 
     violation: ClassVar[type[Violation]]
@@ -31,6 +34,8 @@ class ViolationsFinder(ABC):
     dependencies: list[Dependency]
     standard_library_modules: frozenset[str]
     ignored_modules: tuple[str, ...] = ()
+    workspace_sibling_module_names: frozenset[str] = frozenset()
+    workspace_sibling_dep_names: frozenset[str] = frozenset()
 
     @abstractmethod
     def find(self) -> list[Violation]:
