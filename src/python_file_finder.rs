@@ -1,7 +1,7 @@
 use ignore::types::{Types, TypesBuilder};
 use ignore::{DirEntry, Walk, WalkBuilder};
 use path_slash::PathExt;
-use pyo3::{Bound, IntoPyObject, PyAny, Python, pyfunction};
+use pyo3::{Bound, IntoPyObject, PyAny, PyResult, Python, exceptions::PyValueError, pyfunction};
 use regex::Regex;
 use std::path::PathBuf;
 
@@ -14,29 +14,31 @@ pub fn find_python_files(
     extend_exclude: Vec<String>,
     using_default_exclude: bool,
     ignore_notebooks: bool,
-) -> Bound<'_, PyAny> {
+) -> PyResult<Bound<'_, PyAny>> {
     let mut unique_directories = directories;
     unique_directories.dedup();
 
-    let python_files: Vec<_> = build_walker(
+    let walker = build_walker(
         unique_directories.as_ref(),
         [exclude, extend_exclude].concat().as_ref(),
         using_default_exclude,
         ignore_notebooks,
-    )
-    .flatten()
-    .filter(|entry| entry.path().is_file())
-    .map(|entry| {
-        entry
-            .path()
-            .to_string_lossy()
-            .strip_prefix("./")
-            .unwrap_or(&entry.path().to_string_lossy())
-            .to_owned()
-    })
-    .collect();
+    )?;
 
-    python_files.into_pyobject(py).unwrap()
+    let python_files: Vec<_> = walker
+        .flatten()
+        .filter(|entry| entry.path().is_file())
+        .map(|entry| {
+            entry
+                .path()
+                .to_string_lossy()
+                .strip_prefix("./")
+                .unwrap_or(&entry.path().to_string_lossy())
+                .to_owned()
+        })
+        .collect();
+
+    Ok(python_files.into_pyobject(py).unwrap())
 }
 
 fn build_walker(
@@ -44,7 +46,7 @@ fn build_walker(
     excluded_patterns: &[String],
     use_git_ignore: bool,
     ignore_notebooks: bool,
-) -> Walk {
+) -> PyResult<Walk> {
     let (first_directory, additional_directories) = directories.split_first().unwrap();
 
     let mut walk_builder = WalkBuilder::new(first_directory);
@@ -55,15 +57,20 @@ fn build_walker(
     let re: Option<Regex> = if excluded_patterns.is_empty() {
         None
     } else {
-        Some(Regex::new(format!(r"^({})", excluded_patterns.join("|")).as_str()).unwrap())
+        Some(
+            Regex::new(format!(r"^({})", excluded_patterns.join("|")).as_str())
+                .map_err(|err| PyValueError::new_err(format!("Invalid exclude regex: {err}")))?,
+        )
     };
 
-    walk_builder
-        .types(build_types(ignore_notebooks).unwrap())
-        .standard_filters(use_git_ignore)
-        .hidden(false)
-        .filter_entry(move |entry| entry_satisfies_predicate(entry, re.as_ref()))
-        .build()
+    Ok(
+        walk_builder
+            .types(build_types(ignore_notebooks).unwrap())
+            .standard_filters(use_git_ignore)
+            .hidden(false)
+            .filter_entry(move |entry| entry_satisfies_predicate(entry, re.as_ref()))
+            .build(),
+    )
 }
 
 fn build_types(ignore_notebooks: bool) -> Result<Types, ignore::Error> {
