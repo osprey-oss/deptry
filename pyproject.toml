@@ -35,18 +35,18 @@ dependencies = [
 ]
 
 [dependency-groups]
-docs = ["zensical==0.0.31"]
+docs = ["zensical==0.0.32"]
 test = [
     "inline-snapshot==0.32.5",
     "pdm==2.26.7",
     "poetry==2.3.3",
-    "pytest==9.0.2",
+    "pytest==9.0.3",
     "pytest-cov==7.1.0",
     "pytest-xdist[psutil]==3.8.0",
 ]
 typing = [
     "mypy==1.20.0",
-    "types-colorama==0.4.15.20250801; sys_platform == 'win32'",
+    "types-colorama==0.4.15.20260408; sys_platform == 'win32'",
 ]
 
 [project.urls]
