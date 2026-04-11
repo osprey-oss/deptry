@@ -64,10 +64,16 @@ def _build_workflow_command(
         ("title", title),
     ]
 
-    result += ",".join(f"{k}={v}" for k, v in entries if v is not None)
+    result += ",".join(
+        f"{k}={_escape_property(v) if isinstance(v, str) else v}" for k, v in entries if v is not None
+    )
 
     return f"{result}::{_escape(message)}"
 
 
 def _escape(s: str) -> str:
     return s.replace("%", "%25").replace("\r", "%0D").replace("\n", "%0A")
+
+
+def _escape_property(s: str) -> str:
+    return _escape(s).replace(":", "%3A").replace(",", "%2C")
