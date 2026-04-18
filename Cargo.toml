@@ -10,7 +10,7 @@ name = "deptry"
 crate-type = ["cdylib"]
 
 [dependencies]
-chardetng = "=0.1.17"
+chardetng = "=1.0.0"
 encoding_rs = "=0.8.35"
 ignore = "=0.4.25"
 log = "=0.4.29"
