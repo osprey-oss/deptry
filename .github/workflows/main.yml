@@ -41,7 +41,7 @@ jobs:
       - name: Setup Rust toolchain
         run: rustup component add clippy rustfmt
 
-      - uses: j178/prek-action@0bb87d7f00b0c99306c8bcb8b8beba1eb581c037 # v1.1.1
+      - uses: j178/prek-action@cbc2f23eb5539cf20d82d1aabd0d0ecbcc56f4e3 # v2.0.2
         with:
           # We skip mypy hook because it runs in "tests" job.
           extra-args: '--all-files --skip mypy'
