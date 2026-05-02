@@ -24,7 +24,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@08807647e7069bb48b6ef5acd8ec9567f424441b # v8.1.0
         with:
-          version: '0.11.7'
+          version: '0.11.8'
           enable-cache: true
           cache-dependency-glob: 'uv.lock'
 
@@ -41,7 +41,7 @@ jobs:
       - name: Setup Rust toolchain
         run: rustup component add clippy rustfmt
 
-      - uses: j178/prek-action@cbc2f23eb5539cf20d82d1aabd0d0ecbcc56f4e3 # v2.0.2
+      - uses: j178/prek-action@6ad80277337ad479fe43bd70701c3f7f8aa74db3 # v2.0.3
         with:
           # We skip mypy hook because it runs in "tests" job.
           extra-args: '--all-files --skip mypy'
@@ -82,7 +82,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@08807647e7069bb48b6ef5acd8ec9567f424441b # v8.1.0
         with:
-          version: '0.11.7'
+          version: '0.11.8'
           enable-cache: true
           cache-dependency-glob: 'uv.lock'
           cache-suffix: ${{ matrix.python-version }}
@@ -124,7 +124,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@08807647e7069bb48b6ef5acd8ec9567f424441b # v8.1.0
         with:
-          version: '0.11.7'
+          version: '0.11.8'
           enable-cache: true
           cache-dependency-glob: 'uv.lock'
 
