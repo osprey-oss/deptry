@@ -24,7 +24,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@08807647e7069bb48b6ef5acd8ec9567f424441b # v8.1.0
         with:
-          version: '0.11.14'
+          version: '0.11.15'
           enable-cache: true
           cache-dependency-glob: 'uv.lock'
 
@@ -41,7 +41,7 @@ jobs:
       - name: Setup Rust toolchain
         run: rustup component add clippy rustfmt
 
-      - uses: j178/prek-action@6ad80277337ad479fe43bd70701c3f7f8aa74db3 # v2.0.3
+      - uses: j178/prek-action@bdca6f102f98e2b4c7029491a53dfd366469e33d # v2.0.4
         with:
           # We skip mypy hook because it runs in "tests" job.
           extra-args: '--all-files --skip mypy'
@@ -82,7 +82,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@08807647e7069bb48b6ef5acd8ec9567f424441b # v8.1.0
         with:
-          version: '0.11.14'
+          version: '0.11.15'
           enable-cache: true
           cache-dependency-glob: 'uv.lock'
           cache-suffix: ${{ matrix.python-version }}
@@ -108,7 +108,7 @@ jobs:
           PYTHONIOENCODING: 'utf-8'
 
       - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@57e3a136b779b570ffcdbf80b3bdc90e7fab3de2 # v6.0.0
+        uses: codecov/codecov-action@e79a6962e0d4c0c17b229090214935d2e33f8354 # v6.0.1
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
         if: ${{ matrix.os.name == 'linux' && matrix.python-version == '3.14' }}
@@ -124,7 +124,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@08807647e7069bb48b6ef5acd8ec9567f424441b # v8.1.0
         with:
-          version: '0.11.14'
+          version: '0.11.15'
           enable-cache: true
           cache-dependency-glob: 'uv.lock'
 
