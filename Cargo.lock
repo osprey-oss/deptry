@@ -661,7 +661,7 @@ checksum = "dc897dd8d9e8bd1ed8cdad82b5966c3e0ecae09fb1907d58efaa013543185d0a"
 [[package]]
 name = "ruff_python_ast"
 version = "0.0.0"
-source = "git+https://github.com/astral-sh/ruff?tag=0.15.12#66f93cf7ed4d36325f35a452e4afa28268fbcd28"
+source = "git+https://github.com/astral-sh/ruff?tag=0.15.14#9ad2da3015e5faf73bdc5f1d09df3e47238e3edf"
 dependencies = [
  "aho-corasick",
  "bitflags",
@@ -679,7 +679,7 @@ dependencies = [
 [[package]]
 name = "ruff_python_parser"
 version = "0.0.0"
-source = "git+https://github.com/astral-sh/ruff?tag=0.15.12#66f93cf7ed4d36325f35a452e4afa28268fbcd28"
+source = "git+https://github.com/astral-sh/ruff?tag=0.15.14#9ad2da3015e5faf73bdc5f1d09df3e47238e3edf"
 dependencies = [
  "bitflags",
  "bstr",
@@ -699,7 +699,7 @@ dependencies = [
 [[package]]
 name = "ruff_python_trivia"
 version = "0.0.0"
-source = "git+https://github.com/astral-sh/ruff?tag=0.15.12#66f93cf7ed4d36325f35a452e4afa28268fbcd28"
+source = "git+https://github.com/astral-sh/ruff?tag=0.15.14#9ad2da3015e5faf73bdc5f1d09df3e47238e3edf"
 dependencies = [
  "itertools",
  "ruff_source_file",
@@ -710,7 +710,7 @@ dependencies = [
 [[package]]
 name = "ruff_source_file"
 version = "0.0.0"
-source = "git+https://github.com/astral-sh/ruff?tag=0.15.12#66f93cf7ed4d36325f35a452e4afa28268fbcd28"
+source = "git+https://github.com/astral-sh/ruff?tag=0.15.14#9ad2da3015e5faf73bdc5f1d09df3e47238e3edf"
 dependencies = [
  "memchr",
  "ruff_text_size",
@@ -719,7 +719,7 @@ dependencies = [
 [[package]]
 name = "ruff_text_size"
 version = "0.0.0"
-source = "git+https://github.com/astral-sh/ruff?tag=0.15.12#66f93cf7ed4d36325f35a452e4afa28268fbcd28"
+source = "git+https://github.com/astral-sh/ruff?tag=0.15.14#9ad2da3015e5faf73bdc5f1d09df3e47238e3edf"
 dependencies = [
  "get-size2",
 ]
@@ -782,9 +782,9 @@ dependencies = [
 
 [[package]]
 name = "serde_json"
-version = "1.0.149"
+version = "1.0.150"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "83fc039473c5595ace860d8c4fafa220ff474b3fc6bfdb4293327f1a37e94d86"
+checksum = "e8014e44b4736ed0538adeecded0fce2a272f22dc9578a7eb6b2d9993c74cfb9"
 dependencies = [
  "itoa",
  "memchr",
