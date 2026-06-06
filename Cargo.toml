@@ -13,16 +13,16 @@ crate-type = ["cdylib"]
 chardetng = "=1.0.0"
 encoding_rs = "=0.8.35"
 ignore = "=0.4.25"
-log = "=0.4.30"
+log = "=0.4.32"
 path-slash = "=0.2.1"
 pyo3 = { version = "=0.28.3", features = ["abi3-py310", "generate-import-lib"] }
 pyo3-log = "=0.13.3"
 rayon = "=1.12.0"
 regex = "=1.12.3"
-ruff_python_ast = { git = "https://github.com/astral-sh/ruff", tag = "0.15.14" }
-ruff_python_parser = { git = "https://github.com/astral-sh/ruff", tag = "0.15.14" }
-ruff_source_file = { git = "https://github.com/astral-sh/ruff", tag = "0.15.14" }
-ruff_text_size = { git = "https://github.com/astral-sh/ruff", tag = "0.15.14" }
+ruff_python_ast = { git = "https://github.com/astral-sh/ruff", tag = "0.15.15" }
+ruff_python_parser = { git = "https://github.com/astral-sh/ruff", tag = "0.15.15" }
+ruff_source_file = { git = "https://github.com/astral-sh/ruff", tag = "0.15.15" }
+ruff_text_size = { git = "https://github.com/astral-sh/ruff", tag = "0.15.15" }
 serde_json = "=1.0.150"
 
 [profile.release]
