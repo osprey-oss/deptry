@@ -37,9 +37,9 @@ dependencies = [
 [dependency-groups]
 docs = ["zensical==0.0.43"]
 test = [
-    "inline-snapshot==0.32.7",
+    "inline-snapshot==0.34.1",
     "pdm==2.26.9",
-    "poetry==2.3.4",
+    "poetry==2.4.1",
     "pytest==9.0.3",
     "pytest-cov==7.1.0",
     "pytest-xdist[psutil]==3.8.0",
