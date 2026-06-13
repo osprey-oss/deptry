@@ -45,7 +45,7 @@ test = [
     "pytest-xdist[psutil]==3.8.0",
 ]
 typing = [
-    "mypy==1.20.2",
+    "mypy==2.1.0",
     "types-colorama==0.4.15.20260508; sys_platform == 'win32'",
 ]
 
