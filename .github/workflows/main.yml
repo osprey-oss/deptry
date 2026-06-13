@@ -24,7 +24,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@08807647e7069bb48b6ef5acd8ec9567f424441b # v8.1.0
         with:
-          version: '0.11.19'
+          version: '0.11.20'
           enable-cache: true
           cache-dependency-glob: 'uv.lock'
 
@@ -82,7 +82,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@08807647e7069bb48b6ef5acd8ec9567f424441b # v8.1.0
         with:
-          version: '0.11.19'
+          version: '0.11.20'
           enable-cache: true
           cache-dependency-glob: 'uv.lock'
           cache-suffix: ${{ matrix.python-version }}
@@ -108,7 +108,7 @@ jobs:
           PYTHONIOENCODING: 'utf-8'
 
       - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@e79a6962e0d4c0c17b229090214935d2e33f8354 # v6.0.1
+        uses: codecov/codecov-action@fb8b3582c8e4def4969c97caa2f19720cb33a72f # v6.0.2
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
         if: ${{ matrix.os.name == 'linux' && matrix.python-version == '3.14' }}
@@ -124,7 +124,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@08807647e7069bb48b6ef5acd8ec9567f424441b # v8.1.0
         with:
-          version: '0.11.19'
+          version: '0.11.20'
           enable-cache: true
           cache-dependency-glob: 'uv.lock'
 
