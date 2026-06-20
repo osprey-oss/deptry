@@ -35,7 +35,7 @@ dependencies = [
 ]
 
 [dependency-groups]
-docs = ["zensical==0.0.43"]
+docs = ["zensical==0.0.45"]
 test = [
     "inline-snapshot==0.34.1",
     "pdm==2.26.9",
