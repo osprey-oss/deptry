@@ -35,9 +35,9 @@ dependencies = [
 ]
 
 [dependency-groups]
-docs = ["zensical==0.0.45"]
+docs = ["zensical==0.0.46"]
 test = [
-    "inline-snapshot==0.34.1",
+    "inline-snapshot==0.34.2",
     "pdm==2.26.9",
     "poetry==2.4.1",
     "pytest==9.0.3",
