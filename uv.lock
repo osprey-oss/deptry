@@ -681,7 +681,7 @@ requires-dist = [
 docs = [{ name = "zensical", specifier = "==0.0.50" }]
 test = [
     { name = "inline-snapshot", specifier = "==0.34.2" },
-    { name = "pdm", specifier = "==2.26.9" },
+    { name = "pdm", specifier = "==2.27.0" },
     { name = "poetry", specifier = "==2.4.1" },
     { name = "pytest", specifier = "==9.0.3" },
     { name = "pytest-cov", specifier = "==7.1.0" },
@@ -938,11 +938,11 @@ wheels = [
 
 [[package]]
 name = "installer"
-version = "0.7.0"
+version = "1.0.1"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/05/18/ceeb4e3ab3aa54495775775b38ae42b10a92f42ce42dfa44da684289b8c8/installer-0.7.0.tar.gz", hash = "sha256:a26d3e3116289bb08216e0d0f7d925fcef0b0194eedfa0c944bcaaa106c4b631", size = 474349, upload-time = "2023-03-17T20:39:38.871Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/06/fe/b9f481cf0cc867958a21338baa900357b7b7d86cac9b025948049d77923c/installer-1.0.1.tar.gz", hash = "sha256:052c7fc3721d54c696e2dea019be67539d7b144e924f559f54beb3121831c364", size = 481132, upload-time = "2026-05-11T18:13:28.158Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/e5/ca/1172b6638d52f2d6caa2dd262ec4c811ba59eee96d54a7701930726bce18/installer-0.7.0-py3-none-any.whl", hash = "sha256:05d1933f0a5ba7d8d6296bb6d5018e7c94fa473ceb10cf198a92ccea19c27b53", size = 453838, upload-time = "2023-03-17T20:39:36.219Z" },
+    { url = "https://files.pythonhosted.org/packages/26/48/bedf3ba4163e7db392c9d4cbdfc8217423196c8fccbe5a404a0f094fde63/installer-1.0.1-py3-none-any.whl", hash = "sha256:011d045df8b954ced7dde3a7e42ae4418da40ecda7990f2d11d5ed7c146fd98b", size = 464455, upload-time = "2026-05-11T18:13:26.252Z" },
 ]
 
 [[package]]
@@ -1395,7 +1395,7 @@ install = [
 
 [[package]]
 name = "pdm"
-version = "2.26.9"
+version = "2.27.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "blinker" },
@@ -1422,9 +1422,9 @@ dependencies = [
     { name = "unearth" },
     { name = "virtualenv" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/58/eb/d80e61738585b5e0417e591e2e68d12c53cb2b3b2f3842c062a9d95cc339/pdm-2.26.9.tar.gz", hash = "sha256:6f7279b5e54b2948db3dcc1495197e9d0b2c8643e8159cc835e22d8f9af083b5", size = 2682146, upload-time = "2026-05-10T07:49:57.758Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/d5/c7/f7e256e8e82e2dc535d466dcb7731a1f569de0c71e9cb4006ff83d3d245f/pdm-2.27.0.tar.gz", hash = "sha256:dbfbc484065d0150fa5b29484ead908354313d8699cf74c099d4531826bd04de", size = 2686064, upload-time = "2026-05-21T07:08:18.232Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/89/c0/b8dbd794c1ade2237582439d8c5ad7a95848f1b2471ee8cd78d6585cefff/pdm-2.26.9-py3-none-any.whl", hash = "sha256:a00835262cde339bf5374b8e061e424f405ed13a240620759bbbabd8f86e5753", size = 302464, upload-time = "2026-05-10T07:49:55.997Z" },
+    { url = "https://files.pythonhosted.org/packages/fe/ed/1ce51c70fa3fed5eb332354607052c785a83d43a52ef362c31658a977940/pdm-2.27.0-py3-none-any.whl", hash = "sha256:2f56c4a8f01809564430fb35e850c0b9f56f45e71f272b35dece4db0d558a3aa", size = 304059, upload-time = "2026-05-21T07:08:16.339Z" },
 ]
 
 [[package]]
