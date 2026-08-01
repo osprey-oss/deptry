@@ -15,10 +15,10 @@ requests = { version = "2.32.5" }
 
 [project.optional-dependencies]
 foo = [
-    "click==8.3.1",
+    "click==8.4.2",
     "isort==8.0.1",
 ]
-bar = ["urllib3==2.6.3"]
+bar = ["urllib3==2.7.0"]
 
 [tool.poetry.dev-dependencies]
 black = "25.9.0"
