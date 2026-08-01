@@ -5,32 +5,32 @@ requires-python = ">=3.10"
 dependencies = [
     "arrow==1.4.0",
     "pkginfo==1.12.1.2",
-    "urllib3==2.6.3",
+    "urllib3==2.7.0",
 ]
 
 [project.optional-dependencies]
 baz = [
-    "click==8.3.1",
+    "click==8.4.2",
     "isort==8.0.1",
 ]
-bar = ["requests==2.33.0"]
+bar = ["requests==2.34.2"]
 
 [tool.pdm]
 version = {source = "scm"}
 
 [dependency-groups]
-foo = ["certifi==2026.2.25"]
-bar = ["idna==3.11"]
-all = [{include-group = "foo"}, "packaging==26.0"]
+foo = ["certifi==2026.7.22"]
+bar = ["idna==3.18"]
+all = [{include-group = "foo"}, "packaging==26.2"]
 
 [tool.pdm.dev-dependencies]
 lint = [
-    "black==26.3.0",
-    "mypy==1.19.1",
+    "black==26.5.1",
+    "mypy==2.3.0",
 ]
 test = [
-    "pytest==9.0.2",
-    "pytest-cov==7.0.0",
+    "pytest==9.1.1",
+    "pytest-cov==7.1.0",
 ]
 
 [tool.deptry]
