@@ -35,7 +35,11 @@ jobs:
       matrix:
         target: [x86_64, aarch64]
         manylinux: [auto, musllinux_1_1]
-        python: ['3.14', 'pypy3.11']
+        python:
+          - '3.14'
+          - '3.14t'
+          - '3.15t'
+          - 'pypy3.11'
     steps:
       - name: Check out
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -50,7 +54,7 @@ jobs:
       - name: Install Python
         uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
-          python-version: ${{ matrix.python }}
+          python-version: ${{ matrix.python == '3.15t' && format('{0}-dev', matrix.python) || matrix.python }}
 
       - name: Build wheels
         uses: PyO3/maturin-action@e83996d129638aa358a18fbd1dfb82f0b0fb5d3b # v1.51.0
@@ -58,14 +62,6 @@ jobs:
           target: ${{ matrix.target }}
           manylinux: ${{ matrix.manylinux }}
           args: --release --out dist --interpreter ${{ startsWith(matrix.python, 'pypy') && matrix.python || format('python{0}', matrix.python) }}
-
-      - name: Build free-threaded wheels
-        uses: PyO3/maturin-action@e83996d129638aa358a18fbd1dfb82f0b0fb5d3b # v1.51.0
-        if: ${{ !startsWith(matrix.python, 'pypy') }}
-        with:
-          target: ${{ matrix.target }}
-          manylinux: ${{ matrix.manylinux }}
-          args: --release --out dist --interpreter python3.14t
 
       - name: Upload wheels
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
@@ -79,11 +75,19 @@ jobs:
     strategy:
       matrix:
         target: [x64]
-        python: ['3.14', 'pypy3.11']
+        python:
+          - '3.14'
+          - '3.14t'
+          - '3.15t'
+          - 'pypy3.11'
         # PyPy doesn't support Windows ARM64.
         include:
           - target: aarch64
             python: '3.14'
+          - target: aarch64
+            python: '3.14t'
+          - target: aarch64
+            python: '3.15t'
     steps:
       - name: Check out
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -99,26 +103,13 @@ jobs:
         uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         id: setup-python
         with:
-          python-version: ${{ matrix.python }}
+          python-version: ${{ matrix.python == '3.15t' && format('{0}-dev', matrix.python) || matrix.python }}
 
       - name: Build wheels
         uses: PyO3/maturin-action@e83996d129638aa358a18fbd1dfb82f0b0fb5d3b # v1.51.0
         with:
           target: ${{ matrix.target }}
           args: --release --out dist --interpreter ${{ startsWith(matrix.python, 'pypy') && matrix.python || format('python{0}', matrix.python) }}
-
-      - name: Install free-threaded Python
-        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
-        if: ${{ !startsWith(matrix.python, 'pypy') }}
-        with:
-          python-version: '3.14t'
-
-      - name: Build free-threaded wheels
-        uses: PyO3/maturin-action@e83996d129638aa358a18fbd1dfb82f0b0fb5d3b # v1.51.0
-        if: ${{ !startsWith(matrix.python, 'pypy') }}
-        with:
-          target: ${{ matrix.target }}
-          args: --release --out dist --interpreter python3.14t
 
       - name: Upload wheels
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
@@ -132,7 +123,11 @@ jobs:
     strategy:
       matrix:
         target: [x86_64, aarch64]
-        python: ['3.14', 'pypy3.11']
+        python:
+          - '3.14'
+          - '3.14t'
+          - '3.15t'
+          - 'pypy3.11'
     steps:
       - name: Check out
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -148,26 +143,13 @@ jobs:
         uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         id: setup-python
         with:
-          python-version: ${{ matrix.python }}
+          python-version: ${{ matrix.python == '3.15t' && format('{0}-dev', matrix.python) || matrix.python }}
 
       - name: Build wheels
         uses: PyO3/maturin-action@e83996d129638aa358a18fbd1dfb82f0b0fb5d3b # v1.51.0
         with:
           target: ${{ matrix.target }}
           args: --release --out dist --interpreter ${{ steps.setup-python.outputs.python-path }}
-
-      - name: Install free-threaded Python
-        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
-        if: ${{ !startsWith(matrix.python, 'pypy') }}
-        with:
-          python-version: '3.14t'
-
-      - name: Build free-threaded wheels
-        uses: PyO3/maturin-action@e83996d129638aa358a18fbd1dfb82f0b0fb5d3b # v1.51.0
-        if: ${{ !startsWith(matrix.python, 'pypy') }}
-        with:
-          target: ${{ matrix.target }}
-          args: --release --out dist --interpreter python3.14t
 
       - name: Upload wheels
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
