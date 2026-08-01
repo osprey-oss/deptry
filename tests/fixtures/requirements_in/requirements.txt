@@ -36,5 +36,5 @@ urllib3==2.7.0
     # via
     #   -r requirements.in
     #   requests
-uvicorn==0.52.0
+uvicorn==0.52.1
     # via -r requirements.in
