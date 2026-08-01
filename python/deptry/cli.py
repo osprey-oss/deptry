@@ -29,7 +29,7 @@ DEFAULT_REQUIREMENTS_FILES = ("requirements.txt",)
 logging.basicConfig(level=logging.INFO, handlers=[logging.StreamHandler()], format="%(message)s")
 
 
-class CommaSeparatedTupleParamType(click.ParamType):
+class CommaSeparatedTupleParamType(click.ParamType[tuple[str, ...]]):
     """
     This class is used to uniformly handle configuration parameters that can be either passed as a comma-separated string,
     as a list of strings, or as a tuple of strings. For example, the value for a parameter can be a comma-separated string
@@ -54,7 +54,7 @@ class CommaSeparatedTupleParamType(click.ParamType):
 COMMA_SEPARATED_TUPLE = CommaSeparatedTupleParamType()
 
 
-class CommaSeparatedMappingParamType(click.ParamType):
+class CommaSeparatedMappingParamType(click.ParamType[dict[str, tuple[str, ...]]]):
     """
     This class is used to uniformly handle configuration parameters that can be either passed as a comma-separated pair
     string, or as a Mapping of strings to tuples of strings. Items in a pair string are separated by an equal sign,
