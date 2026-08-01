@@ -21,7 +21,7 @@ pub fn read_file(file_path: &str) -> PyResult<String> {
                 "File not found: '{file_path}'",
             ))),
             ErrorKind::InvalidData => {
-                let file = File::open(path).unwrap();
+                let file = File::open(path).map_err(|e| PyIOError::new_err(format!("An error occurred: '{e}'")))?;
                 let mut buffer = Vec::new();
                 BufReader::new(file).read_to_end(&mut buffer)?;
 
