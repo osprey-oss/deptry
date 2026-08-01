@@ -9,7 +9,6 @@ dependencies = [
     "isort==8.0.1",
     "pkginfo==1.12.1.2",
     "requests==2.34.2",
-    "urllib3==2.7.0",
 ]
 
 [project.optional-dependencies]
@@ -18,7 +17,7 @@ dev = [
     "mypy==2.3.0",
 ]
 test = ["pytest==9.1.1"]
-plot = ["matplotlib==3.11.1"]
+foobar = ["urllib3==2.7.0"]
 
 [dependency-groups]
 foo = ["certifi==2026.7.22"]
