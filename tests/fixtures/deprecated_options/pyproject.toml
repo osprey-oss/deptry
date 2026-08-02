@@ -5,7 +5,7 @@ requires-python = ">=3.10"
 dependencies = []
 
 [project.optional-dependencies]
-dev = ["black==26.3.0"]
+dev = ["black==26.5.1"]
 
 [build-system]
 requires = ["setuptools>=61.0.0"]

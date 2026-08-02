@@ -8,11 +8,11 @@ authors = []
 python = ">=3.10"
 arrow = "1.4.0"
 pkginfo = "1.12.1.2"
-urllib3 = "2.5.0"
+urllib3 = "2.7.0"
 
-click = { version = "8.1.8", optional = true }
-isort = { version = "7.0.0", optional = true }
-requests = { version = "2.32.5", optional = true }
+click = { version = "8.4.2", optional = true }
+isort = { version = "8.0.1", optional = true }
+requests = { version = "2.34.2", optional = true }
 
 [tool.poetry.extras]
 foo = [
@@ -22,12 +22,12 @@ foo = [
 bar = ["requests"]
 
 [tool.poetry.group.lint.dependencies]
-black = "25.9.0"
-mypy = "1.18.2"
+black = "26.5.1"
+mypy = "2.3.0"
 
 [tool.poetry.group.test.dependencies]
-pytest = "8.4.2"
-pytest-cov = "7.0.0"
+pytest = "9.1.1"
+pytest-cov = "7.1.0"
 
 [tool.deptry.per_rule_ignores]
 DEP002 = ["pkginfo"]

@@ -177,10 +177,8 @@ fn is_guarded_by_type_checking(if_stmt: &StmtIf, typing_aliases: &HashSet<String
                 return true;
             }
         }
-        Expr::Name(ExprName { id, .. }) => {
-            if id == "TYPE_CHECKING" {
-                return true;
-            }
+        Expr::Name(ExprName { id, .. }) if id == "TYPE_CHECKING" => {
+            return true;
         }
         _ => (),
     }

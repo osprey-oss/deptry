@@ -1,4 +1,4 @@
-use chardetng::EncodingDetector;
+use chardetng::{EncodingDetector, Iso2022JpDetection, Utf8Detection};
 use encoding_rs::Encoding;
 use pyo3::exceptions::{PyFileNotFoundError, PyIOError};
 use pyo3::prelude::*;
@@ -66,7 +66,7 @@ fn read_with_encoding(buffer: &[u8], encoding: &'static Encoding) -> PyResult<St
 /// Uses the `EncodingDetector` crate to guess the encoding of a given byte array.
 /// Returns the guessed encoding, defaulting to UTF-8 if no conclusive guess can be made.
 fn guess_encoding(bytes: &[u8]) -> &'static Encoding {
-    let mut detector = EncodingDetector::new();
+    let mut detector = EncodingDetector::new(Iso2022JpDetection::Deny);
     detector.feed(bytes, true);
-    detector.guess(None, true)
+    detector.guess(None, Utf8Detection::Allow)
 }

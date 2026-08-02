@@ -68,7 +68,7 @@ def test_read_configuration_from_pyproject_toml_exists(tmp_path: Path) -> None:
             f.write(pyproject_toml_content)
 
         assert (
-            read_configuration_from_pyproject_toml(click_context, click.UNPROCESSED(None), pyproject_toml_path)
+            read_configuration_from_pyproject_toml(click_context, click.Argument(["foo"]), pyproject_toml_path)
             == pyproject_toml_path
         )
 
@@ -94,7 +94,7 @@ def test_read_configuration_from_pyproject_toml_file_not_found(caplog: LogCaptur
     with caplog.at_level(logging.DEBUG):
         assert (
             read_configuration_from_pyproject_toml(
-                click.Context(click_command), click.UNPROCESSED(None), pyproject_toml_path
+                click.Context(click_command), click.Argument(["foo"]), pyproject_toml_path
             )
             == pyproject_toml_path
         )
@@ -118,7 +118,7 @@ def test_read_configuration_from_pyproject_toml_file_without_deptry_section(
 
         with caplog.at_level(logging.DEBUG):
             assert read_configuration_from_pyproject_toml(
-                click.Context(click_command), click.UNPROCESSED(None), pyproject_toml_path
+                click.Context(click_command), click.Argument(["foo"]), pyproject_toml_path
             ) == Path("pyproject.toml")
 
     assert "No configuration for deptry was found in pyproject.toml." in caplog.text
@@ -143,5 +143,5 @@ def test_read_configuration_from_pyproject_toml_file_with_invalid_options(
 
         with pytest.raises(InvalidPyprojectTOMLOptionsError):
             assert read_configuration_from_pyproject_toml(
-                click.Context(click_command), click.UNPROCESSED(None), pyproject_toml_path
+                click.Context(click_command), click.Argument(["foo"]), pyproject_toml_path
             ) == Path("pyproject.toml")

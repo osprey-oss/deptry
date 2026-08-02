@@ -4,19 +4,19 @@ version = "0.0.1"
 requires-python = ">=3.10"
 dependencies = [
     "arrow==1.4.0",
-    "click==8.3.1",
+    "click==8.4.2",
     "isort==8.0.1",
     "pkginfo==1.12.1.2",
-    "requests==2.32.5",
-    "urllib3==2.6.3",
+    "requests==2.34.2",
+    "urllib3==2.7.0",
 ]
 
 [project.optional-dependencies]
 dev = [
-    "black==26.3.0",
-    "mypy==1.19.1",
+    "black==26.5.1",
+    "mypy==2.3.0",
 ]
-test = ["pytest==9.0.2"]
+test = ["pytest==9.1.1"]
 
 [build-system]
 requires = ["setuptools>=61.0.0"]

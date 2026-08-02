@@ -1,5 +1,5 @@
-click==8.3.1
+click==8.4.2
 isort==8.0.1
-urllib3==2.6.3
-uvicorn==0.41.0
+urllib3==2.7.0
+uvicorn==0.52.1
 itchiodl==2.3.0
