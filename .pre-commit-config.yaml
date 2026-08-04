@@ -19,7 +19,7 @@ repos:
       - id: trailing-whitespace
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: "v0.16.0"
+    rev: "v0.16.1"
     hooks:
       - id: ruff-check
         args: [--exit-non-zero-on-fix]

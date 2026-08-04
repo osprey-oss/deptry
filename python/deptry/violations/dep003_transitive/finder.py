@@ -41,8 +41,9 @@ class DEP003TransitiveDependenciesFinder(ViolationsFinder):
 
             if self._is_transitive(module):
                 # `self._is_transitive` only returns `True` if the package is not None.
-                for location in module_with_locations.locations:
-                    transitive_dependencies.append(self.violation(module, location))
+                transitive_dependencies.extend(
+                    self.violation(module, location) for location in module_with_locations.locations
+                )
 
         return transitive_dependencies
 

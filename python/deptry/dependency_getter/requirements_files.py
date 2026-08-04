@@ -67,19 +67,19 @@ def get_dependencies_from_requirements_file(
 ) -> list[Dependency]:
     logging.debug("Scanning %s for %s", file_name, "dev dependencies" if is_dev else "dependencies")
 
-    dependencies = []
     requirements_file = Path(file_name)
 
     with requirements_file.open() as requirements_file_content:
-        for requirement in requirements.parse(requirements_file_content):
+        return [
+            dependency
+            for requirement in requirements.parse(requirements_file_content)
             if (
                 dependency := _build_dependency_from_requirement(
                     requirement, requirements_file, package_module_name_map
                 )
-            ) is not None:
-                dependencies.append(dependency)
-
-    return dependencies
+            )
+            is not None
+        ]
 
 
 def _build_dependency_from_requirement(
