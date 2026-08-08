@@ -21,7 +21,7 @@ version = {source = "scm"}
 [dependency-groups]
 foo = ["certifi==2026.7.22"]
 bar = ["idna==3.18"]
-all = [{include-group = "foo"}, "packaging==26.2"]
+all = [{include-group = "foo"}, "packaging==26.3"]
 
 [tool.pdm.dev-dependencies]
 lint = [
