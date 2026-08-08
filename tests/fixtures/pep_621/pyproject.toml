@@ -22,7 +22,7 @@ foobar = ["urllib3==2.7.0"]
 [dependency-groups]
 foo = ["certifi==2026.7.22"]
 bar = ["idna==3.18"]
-all = [{include-group = "foo"}, "packaging==26.2"]
+all = [{include-group = "foo"}, "packaging==26.3"]
 
 [build-system]
 requires = ["setuptools>=61.0.0"]
