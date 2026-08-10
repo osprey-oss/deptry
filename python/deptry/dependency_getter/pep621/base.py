@@ -195,10 +195,8 @@ class PEP621DependencyGetter(DependencyGetter):
         """
         Given a list of dependency specifications (e.g. "django>2.1; os_name != 'nt'"), convert them to Dependency objects.
         """
-        extracted_dependencies: list[Dependency] = []
-
-        for dependency in dependencies:
-            if extracted_dependency := parse_pep_508_dependency(dependency, self.config, self.package_module_name_map):
-                extracted_dependencies.append(extracted_dependency)
-
-        return extracted_dependencies
+        return [
+            extracted_dependency
+            for dependency in dependencies
+            if (extracted_dependency := parse_pep_508_dependency(dependency, self.config, self.package_module_name_map))
+        ]

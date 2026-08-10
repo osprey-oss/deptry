@@ -33,8 +33,9 @@ class DEP001MissingDependenciesFinder(ViolationsFinder):
             logging.debug("Scanning module %s...", module.name)
 
             if self._is_missing(module):
-                for location in module_with_locations.locations:
-                    missing_dependencies.append(self.violation(module, location))
+                missing_dependencies.extend(
+                    self.violation(module, location) for location in module_with_locations.locations
+                )
 
         return missing_dependencies
 

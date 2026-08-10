@@ -195,6 +195,8 @@ select = [
     "RUF",
     # tryceratops
     "TRY",
+    # perflint
+    "PERF"
 ]
 ignore = [
     # line-too-long (https://docs.astral.sh/ruff/rules/line-too-long/)

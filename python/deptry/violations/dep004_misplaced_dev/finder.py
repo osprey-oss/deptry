@@ -43,8 +43,9 @@ class DEP004MisplacedDevDependenciesFinder(ViolationsFinder):
             corresponding_package_name = self._get_package_name(module)
 
             if corresponding_package_name and self._is_development_dependency(module, corresponding_package_name):
-                for location in module_with_locations.locations:
-                    misplaced_dev_dependencies.append(self.violation(module, location))
+                misplaced_dev_dependencies.extend(
+                    self.violation(module, location) for location in module_with_locations.locations
+                )
 
         return misplaced_dev_dependencies
 
