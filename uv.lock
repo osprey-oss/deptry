@@ -36,6 +36,15 @@ wheels = [
 ]
 
 [[package]]
+name = "argcomplete"
+version = "3.7.2"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/87/6f/5a73f04007ca950701765949209f068da628bd11f9c2da287278ce91e0ee/argcomplete-3.7.2.tar.gz", hash = "sha256:aad8b69a0b9969edb62db0d1752354c0d50717b10e0cbb00e2a958381b9fc6b9", size = 74473, upload-time = "2026-08-06T04:53:21.662Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/46/bd/551ee6af426af84ca33e02622be722925c196608e9127d731ef17c47f06e/argcomplete-3.7.2-py3-none-any.whl", hash = "sha256:6029205678bdd9c1c728a155f5f9ecf5812393f969eef58807641a2bc2aa5b19", size = 43294, upload-time = "2026-08-06T04:53:20.246Z" },
+]
+
+[[package]]
 name = "ast-serialize"
 version = "0.8.0"
 source = { registry = "https://pypi.org/simple" }
@@ -723,8 +732,8 @@ requires-dist = [
 [package.metadata.requires-dev]
 docs = [{ name = "zensical", specifier = "==0.0.53" }]
 test = [
-    { name = "inline-snapshot", specifier = "==0.35.3" },
-    { name = "pdm", specifier = "==2.28.0" },
+    { name = "inline-snapshot", specifier = "==0.35.4" },
+    { name = "pdm", specifier = "==2.28.1" },
     { name = "poetry", specifier = "==2.4.1" },
     { name = "pytest", specifier = "==9.1.1" },
     { name = "pytest-cov", specifier = "==7.1.0" },
@@ -964,7 +973,7 @@ wheels = [
 
 [[package]]
 name = "inline-snapshot"
-version = "0.35.3"
+version = "0.35.4"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "asttokens" },
@@ -974,9 +983,9 @@ dependencies = [
     { name = "tomli", marker = "python_full_version < '3.11'" },
     { name = "typing-extensions" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/03/8e/baacae89b98ead1940164468fca01812c66186b12c89523f3ea66efcf87c/inline_snapshot-0.35.3.tar.gz", hash = "sha256:5d76f3b4b134fb190b7883669eb496f5c3e7d1c9549bbd6d78b5b8ac17e553e3", size = 2535863, upload-time = "2026-07-27T11:34:46.846Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/59/46/3c459f0350e88d6a5ca58a4792a7215c3b0990cf9bb6a2b37ac8d74a2504/inline_snapshot-0.35.4.tar.gz", hash = "sha256:82432a58b7ea77a172515f5024cd26fdea8dc0f873c7a4251e4e0471a914db14", size = 2537089, upload-time = "2026-08-11T07:07:56.213Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/d6/9c/b8a9697e4c4c98fb25fbb49d70734432cab917c98fa50b258aea687584e4/inline_snapshot-0.35.3-py3-none-any.whl", hash = "sha256:3decb255b15d6f5956fbc0648c56acf6ceeb9a331b26868e3bf16d2a393c2e31", size = 95167, upload-time = "2026-07-27T11:34:45.234Z" },
+    { url = "https://files.pythonhosted.org/packages/97/b3/dc18eb603de18daf5cacc27bb4c5e80c5403d9ca3eade7342fe4228652bf/inline_snapshot-0.35.4-py3-none-any.whl", hash = "sha256:0ad221c1bc6fe4ce249f7c1c4131284099ecac1a5c1023aa7b1a95921c07265d", size = 95725, upload-time = "2026-08-11T07:07:54.24Z" },
 ]
 
 [[package]]
@@ -1496,9 +1505,10 @@ install = [
 
 [[package]]
 name = "pdm"
-version = "2.28.0"
+version = "2.28.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
+    { name = "argcomplete" },
     { name = "blinker" },
     { name = "certifi" },
     { name = "dep-logic" },
@@ -1523,9 +1533,9 @@ dependencies = [
     { name = "unearth" },
     { name = "virtualenv" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/f9/d9/dd3739cb451b3ebe95ce27868e145fb108b8fc0d728d0768c6f3e51a83a0/pdm-2.28.0.tar.gz", hash = "sha256:ca7d21548955086985070d2fe4334a55e59093a466b25eebc6bb0769a0539e89", size = 2693556, upload-time = "2026-06-23T01:50:25.895Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/5c/43/8774291780455905bff6f8854eaeac115c540f9a841bc061cd0ee180b418/pdm-2.28.1.tar.gz", hash = "sha256:734da0d17dae982ec8ae39465f4befc0274bd16295b40141738c4c5952e3515b", size = 2697761, upload-time = "2026-08-11T11:12:55.103Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/ab/c9/e987befe00d0d3a451e443b8d86b4c68597fc2b3fcce588d474052f614a6/pdm-2.28.0-py3-none-any.whl", hash = "sha256:c173f0a5801bccdec73944abe86288acd90ca2eebaeded503d7511586d2b6a27", size = 307331, upload-time = "2026-06-23T01:50:23.973Z" },
+    { url = "https://files.pythonhosted.org/packages/47/71/04f4a1d7f53aeaf62ef7efa9e6d9453940b984b39dc7701eecc26993395d/pdm-2.28.1-py3-none-any.whl", hash = "sha256:a804b59aab87e1d05ac9f062c6d434f867abde28b1dfdebb622a223714f9a87e", size = 297840, upload-time = "2026-08-11T11:12:53.608Z" },
 ]
 
 [[package]]
