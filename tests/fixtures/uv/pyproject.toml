@@ -17,13 +17,13 @@ bar = ["requests==2.34.2"]
 
 [dependency-groups]
 foo = ["certifi==2026.7.22"]
-bar = ["idna==3.18"]
+bar = ["idna==3.19"]
 all = [{include-group = "foo"}, "packaging==26.3"]
 
 [tool.uv]
 dev-dependencies = [
     "black==26.5.1",
-    "mypy==2.3.0",
+    "mypy==2.3.1",
     "pytest==9.1.1",
     "pytest-cov==7.1.0",
 ]
