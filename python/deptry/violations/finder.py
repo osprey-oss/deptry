@@ -10,10 +10,12 @@ from deptry.violations import (
     DEP003TransitiveDependenciesFinder,
     DEP004MisplacedDevDependenciesFinder,
     DEP005StandardLibraryDependenciesFinder,
+    DEP006OptionalDependencyPlacementFinder,
 )
 
 if TYPE_CHECKING:
     from collections.abc import Mapping, Sequence
+    from pathlib import Path
 
     from deptry.dependency import Dependency
     from deptry.module import ModuleLocations
@@ -26,6 +28,7 @@ _VIOLATIONS_FINDERS: tuple[type[ViolationsFinder], ...] = (
     DEP003TransitiveDependenciesFinder,
     DEP004MisplacedDevDependenciesFinder,
     DEP005StandardLibraryDependenciesFinder,
+    DEP006OptionalDependencyPlacementFinder,
 )
 
 
@@ -35,6 +38,10 @@ def find_violations(
     ignore: tuple[str, ...],
     per_rule_ignores: Mapping[str, tuple[str, ...]],
     standard_library_modules: frozenset[str],
+    optional_dependencies_runtime: Mapping[str, tuple[str, ...]] | None = None,
+    optional_group_dependencies: Mapping[str, Sequence[Dependency]] | None = None,
+    project_dependencies: Sequence[Dependency] = (),
+    source_roots: tuple[Path, ...] = (),
 ) -> list[Violation]:
     violations = []
 
@@ -46,6 +53,10 @@ def find_violations(
                     dependencies=dependencies,
                     ignored_modules=per_rule_ignores.get(violation_finder.violation.error_code, ()),
                     standard_library_modules=standard_library_modules,
+                    optional_dependencies_runtime=optional_dependencies_runtime or {},
+                    optional_group_dependencies=optional_group_dependencies or {},
+                    project_dependencies=project_dependencies,
+                    source_roots=source_roots,
                 ).find()
             )
     return _get_sorted_violations(_filter_inline_ignored_violations(violations))
