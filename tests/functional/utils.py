@@ -15,6 +15,7 @@ class Project(str, Enum):
     NAMESPACE = "namespace"
     PDM = "pdm"
     PEP_621 = "pep_621"
+    PEP_723 = "pep_723"
     POETRY = "poetry"
     POETRY_PEP_621 = "poetry_pep_621"
     PYPROJECT_DIFFERENT_DIRECTORY = "pyproject_different_directory"

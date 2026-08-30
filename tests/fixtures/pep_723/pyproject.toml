@@ -1,0 +1,5 @@
+[project]
+name = "foo"
+version = "0.0.1"
+requires-python = ">=3.10"
+dependencies = ["arrow==1.4.0"]
