@@ -19,6 +19,12 @@ If your project has multiple source directories, multiple root directories can b
 deptry a_directory another_directory
 ```
 
+If you want to scan a single Python file instead of a whole directory, you can provide the path to that file:
+
+```shell
+deptry foo.py
+```
+
 If you want to configure _deptry_ using `pyproject.toml`, or if your dependencies are stored in `pyproject.toml`, but it is located in another location than the one _deptry_ is run from, you can specify the location to it by using `--config <path_to_pyproject.toml>` argument.
 
 ## Dependencies extraction

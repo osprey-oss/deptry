@@ -5,21 +5,49 @@ use pyo3::{Bound, IntoPyObject, PyAny, Python, pyfunction};
 use regex::Regex;
 use std::path::PathBuf;
 
+fn _build_single_file_result(unique_paths: &[PathBuf], ignore_notebooks: bool) -> Vec<String> {
+    let var_name = &unique_paths[0];
+    let path = var_name;
+    let is_valid = match path.extension().and_then(|ext| ext.to_str()) {
+        Some("py") => true,
+        Some("ipynb") => !ignore_notebooks,
+        _ => false,
+    };
+
+    let result: Vec<String> = if is_valid {
+        let path_str = path.to_string_lossy();
+        vec![path_str.strip_prefix("./").unwrap_or(&path_str).to_string()]
+    } else {
+        vec![]
+    };
+
+    result
+}
+
 #[pyfunction]
-#[pyo3(signature = (directories, exclude, extend_exclude, using_default_exclude, ignore_notebooks=false))]
+#[pyo3(signature = (paths, exclude, extend_exclude, using_default_exclude, ignore_notebooks=false))]
 pub fn find_python_files(
     py: Python<'_>,
-    directories: Vec<PathBuf>,
+    paths: Vec<PathBuf>,
     exclude: Vec<String>,
     extend_exclude: Vec<String>,
     using_default_exclude: bool,
     ignore_notebooks: bool,
 ) -> Bound<'_, PyAny> {
-    let mut unique_directories = directories;
-    unique_directories.dedup();
+    let mut unique_paths: Vec<PathBuf> = paths;
+    unique_paths.dedup();
 
-    let python_files: Vec<_> = build_walker(
-        unique_directories.as_ref(),
+    // Fast Path: If there's only one file passed
+    let is_single_file: bool = unique_paths.len() == 1 && unique_paths[0].is_file();
+    if is_single_file {
+        return _build_single_file_result(&unique_paths, ignore_notebooks)
+            .into_pyobject(py)
+            .unwrap();
+    }
+
+    // General Path: Multiple files or directories
+    build_walker(
+        unique_paths.as_ref(),
         [exclude, extend_exclude].concat().as_ref(),
         using_default_exclude,
         ignore_notebooks,
@@ -27,16 +55,12 @@ pub fn find_python_files(
     .flatten()
     .filter(|entry| entry.path().is_file())
     .map(|entry| {
-        entry
-            .path()
-            .to_string_lossy()
-            .strip_prefix("./")
-            .unwrap_or(&entry.path().to_string_lossy())
-            .to_owned()
+        let path_str = entry.path().to_string_lossy();
+        path_str.strip_prefix("./").unwrap_or(&path_str).to_string()
     })
-    .collect();
-
-    python_files.into_pyobject(py).unwrap()
+    .collect::<Vec<String>>()
+    .into_pyobject(py)
+    .unwrap()
 }
 
 fn build_walker(

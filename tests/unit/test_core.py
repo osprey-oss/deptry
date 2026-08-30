@@ -89,7 +89,7 @@ from tests.utils import create_files, run_within_dir
         ),
     ],
 )
-def test__get_local_modules(
+def test__get_local_modules_with_directories(
     tmp_path: Path,
     known_first_party: tuple[str, ...],
     root_suffix: str,
@@ -134,6 +134,69 @@ def test__get_local_modules(
             )._get_local_modules()
             == expected
         )
+
+
+def test__get_local_modules_with_single_file(tmp_path: Path) -> None:
+    """Test that _get_local_modules works with a single Python file."""
+    with run_within_dir(tmp_path):
+        create_files([
+            Path("app.py"),
+            Path("other.py"),
+        ])
+
+        result = Core(
+            root=(tmp_path / "app.py",),
+            config=Path("pyproject.toml"),
+            no_ansi=False,
+            per_rule_ignores={},
+            ignore=(),
+            exclude=(),
+            extend_exclude=(),
+            using_default_exclude=True,
+            ignore_notebooks=False,
+            requirements_files=(),
+            requirements_files_dev=(),
+            known_first_party=(),
+            json_output="",
+            package_module_name_map={},
+            optional_dependencies_dev_groups=(),
+            using_default_requirements_files=True,
+            experimental_namespace_package=False,
+            github_output=False,
+            github_warning_errors=(),
+        )._get_local_modules()
+
+        assert result == {"app"}
+
+
+def test__get_local_modules_ignores_init_file(tmp_path: Path) -> None:
+    """Test that __init__.py files are not treated as modules."""
+    with run_within_dir(tmp_path):
+        create_files([Path("__init__.py")])
+
+        result = Core(
+            root=(tmp_path / "__init__.py",),
+            config=Path("pyproject.toml"),
+            no_ansi=False,
+            per_rule_ignores={},
+            ignore=(),
+            exclude=(),
+            extend_exclude=(),
+            using_default_exclude=True,
+            ignore_notebooks=False,
+            requirements_files=(),
+            requirements_files_dev=(),
+            known_first_party=(),
+            json_output="",
+            package_module_name_map={},
+            optional_dependencies_dev_groups=(),
+            using_default_requirements_files=True,
+            experimental_namespace_package=False,
+            github_output=False,
+            github_warning_errors=(),
+        )._get_local_modules()
+
+        assert result == set()
 
 
 def test__get_stdlib_packages_with_stdlib_module_names() -> None:
