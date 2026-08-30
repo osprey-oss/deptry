@@ -45,7 +45,7 @@ class CommaSeparatedTupleParamType(click.ParamType[tuple[str, ...]]):
         ctx: click.Context | None,
     ) -> tuple[str, ...]:
         if isinstance(value, str):
-            return tuple(value.split(","))
+            return tuple(item.strip() for item in value.split(","))
         if isinstance(value, list):
             return tuple(value)
         return value
@@ -77,14 +77,14 @@ class CommaSeparatedMappingParamType(click.ParamType[dict[str, tuple[str, ...]]]
         if isinstance(value, str):
             map_: defaultdict[str, list[str]] = defaultdict(list)
             for item in value.split(","):
-                pair = tuple(item.split("=", 1))
+                pair = tuple(part.strip() for part in item.split("=", 1))
                 if len(pair) != 2:
                     error_msg = (
                         f"package name and module names pairs should be concatenated with an equal sign (=): {item}"
                     )
                     raise ValueError(error_msg)
                 package_name = pair[0]
-                module_names = pair[1].split("|")
+                module_names = (module_name.strip() for module_name in pair[1].split("|"))
                 map_[package_name].extend(module_names)
             converted = {k: tuple(v) for k, v in map_.items()}
         else:
