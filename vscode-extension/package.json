@@ -1,0 +1,87 @@
+{
+  "name": "deptry",
+  "displayName": "deptry",
+  "description": "Python dependency checker — surface deptry violations as VS Code diagnostics",
+  "version": "0.2.0",
+  "publisher": "RamuKamath",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fpgmaas/deptry"
+  },
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": ["Linters"],
+  "keywords": ["python", "dependencies", "linter", "deptry"],
+  "activationEvents": [
+    "onLanguage:python",
+    "workspaceContains:pyproject.toml",
+    "workspaceContains:requirements.txt"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "deptry.run",
+        "title": "deptry: Run Dependency Check"
+      },
+      {
+        "command": "deptry.clearDiagnostics",
+        "title": "deptry: Clear Diagnostics"
+      }
+    ],
+    "configuration": {
+      "title": "deptry",
+      "properties": {
+        "deptry.executable": {
+          "type": "string",
+          "default": "deptry",
+          "description": "Path to the deptry executable. Use an absolute path to point at a virtualenv installation (e.g. .venv/bin/deptry)."
+        },
+        "deptry.runOnSave": {
+          "type": "boolean",
+          "default": true,
+          "description": "Run deptry automatically whenever a Python file is saved."
+        },
+        "deptry.args": {
+          "type": "array",
+          "items": { "type": "string" },
+          "default": [],
+          "description": "Extra CLI arguments passed to deptry (e.g. [\"--ignore\", \"DEP002\"])."
+        },
+        "deptry.rootDirectory": {
+          "type": "string",
+          "default": "",
+          "description": "Directory passed to deptry as the root to scan. Defaults to the workspace root."
+        },
+        "deptry.severityMap": {
+          "type": "object",
+          "default": {
+            "DEP001": "error",
+            "DEP002": "warning",
+            "DEP003": "warning",
+            "DEP004": "error",
+            "DEP005": "warning"
+          },
+          "description": "Map deptry error codes to VS Code diagnostic severities (\"error\", \"warning\", \"information\", \"hint\").",
+          "additionalProperties": {
+            "type": "string",
+            "enum": ["error", "warning", "information", "hint"]
+          }
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "lint": "eslint src"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/vscode": "^1.85.0",
+    "typescript": "^5.3.0"
+  }
+}
