@@ -1,5 +1,5 @@
 -r requirements-from-other.txt
 arrow==1.4.0
-click==8.4.2
-pkginfo==1.12.1.2
+click==8.5.0
+pkginfo==1.13
 requests==2.34.2
