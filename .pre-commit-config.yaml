@@ -72,6 +72,6 @@ repos:
         pass_filenames: false
 
   - repo: https://github.com/woodruffw/zizmor-pre-commit
-    rev: "v1.28.0"
+    rev: "v1.30.0"
     hooks:
       - id: zizmor
