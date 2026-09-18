@@ -1,6 +1,9 @@
 from __future__ import annotations
 
+import codecs
 from pathlib import Path
+
+import pytest
 
 from deptry.dependency_getter.requirements_files import RequirementsTxtDependencyGetter
 from tests.utils import run_within_dir
@@ -178,3 +181,19 @@ def test_dev_multiple_with_arguments(tmp_path: Path) -> None:
 
         assert dev_dependencies[0].name == "click"
         assert dev_dependencies[1].name == "bar"
+
+
+@pytest.mark.parametrize("encoding", ["utf-8-sig", "utf-16", "utf-16-le", "utf-16-be", "utf-32"])
+def test_parse_requirements_file_with_bom(tmp_path: Path, encoding: str) -> None:
+    """Requirements files that `pip` accepts thanks to their BOM should be parsed, not rejected."""
+    with run_within_dir(tmp_path):
+        content = "click==8.1.3\ncolorama==0.4.5\n"
+        if encoding in {"utf-16-le", "utf-16-be"}:
+            bom = codecs.BOM_UTF16_LE if encoding == "utf-16-le" else codecs.BOM_UTF16_BE
+            Path("requirements.txt").write_bytes(bom + content.encode(encoding))
+        else:
+            Path("requirements.txt").write_bytes(content.encode(encoding))
+
+        dependencies = RequirementsTxtDependencyGetter(Path("pyproject.toml")).get().dependencies
+
+        assert [dependency.name for dependency in dependencies] == ["click", "colorama"]
