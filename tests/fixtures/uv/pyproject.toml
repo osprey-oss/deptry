@@ -4,20 +4,20 @@ version = "0.0.1"
 requires-python = ">=3.10"
 dependencies = [
     "arrow==1.4.0",
-    "pkginfo==1.12.1.2",
-    "urllib3==2.7.0",
+    "pkginfo==1.13",
+    "urllib3==2.8.0",
 ]
 
 [project.optional-dependencies]
 foo = [
-    "click==8.4.2",
-    "isort==8.0.1",
+    "click==8.5.0",
+    "isort==9.0.1",
 ]
 bar = ["requests==2.34.2"]
 
 [dependency-groups]
 foo = ["certifi==2026.7.22"]
-bar = ["idna==3.19"]
+bar = ["idna==3.20"]
 all = [{include-group = "foo"}, "packaging==26.3"]
 
 [tool.uv]
