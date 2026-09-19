@@ -808,7 +808,7 @@ requires-dist = [
 docs = [{ name = "zensical", specifier = "==0.0.62" }]
 test = [
     { name = "inline-snapshot", specifier = "==0.35.4" },
-    { name = "pdm", specifier = "==2.28.2" },
+    { name = "pdm", specifier = "==2.29.2" },
     { name = "poetry", specifier = "==2.4.3" },
     { name = "pytest", specifier = "==9.1.1" },
     { name = "pytest-cov", specifier = "==7.1.0" },
@@ -1623,7 +1623,7 @@ install = [
 
 [[package]]
 name = "pdm"
-version = "2.28.2"
+version = "2.29.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "argcomplete" },
@@ -1651,9 +1651,9 @@ dependencies = [
     { name = "unearth" },
     { name = "virtualenv" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/f1/4b/370c1546eb03748d6a46dc1f87a2303457a50bbdef69ea7645eb8e6c8544/pdm-2.28.2.tar.gz", hash = "sha256:dc31c1d11c2e90564207181f87ca3d6fc16ee6584d703c0a9e0c03ba287a925a", size = 2703070, upload-time = "2026-08-18T02:18:45.937Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/66/4c/ff78fd6aeb244ac8b3a4596ffc6b223b8d4341d649d47e1c786b8e35983c/pdm-2.29.2.tar.gz", hash = "sha256:bad9705e9482e7d877a53380ff25273b01e9c1d313ee6ce7b215a6562a9d8bdd", size = 2714556, upload-time = "2026-09-17T07:00:02.024Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/38/62/87f1d753c4399de5eaca54013c14329489fe588e820b4423ca4fcd08a437/pdm-2.28.2-py3-none-any.whl", hash = "sha256:5319fea3d3647b85aab0d702914b2536724b7878d5fb6ae68045c1ac40136f54", size = 300289, upload-time = "2026-08-18T02:18:44.088Z" },
+    { url = "https://files.pythonhosted.org/packages/ef/7b/4fb8a503e932f8d200e3b2c5fb3496fe4cb028440032b3f07a8f9d2ba29d/pdm-2.29.2-py3-none-any.whl", hash = "sha256:b17dcc9b55b94694d63afc56053afb7d580e963bb038c753df2cd18fda71182d", size = 304446, upload-time = "2026-09-17T06:59:59.533Z" },
 ]
 
 [[package]]
