@@ -5,9 +5,9 @@ requires-python = ">=3.10"
 dependencies = [
     "arrow==1.4.0",
     "asyncio==3.4.3",
-    "click==8.4.2",
-    "isort==8.0.1",
-    "pkginfo==1.12.1.2",
+    "click==8.5.0",
+    "isort==9.0.1",
+    "pkginfo==1.13",
     "requests==2.34.2",
 ]
 
@@ -17,11 +17,11 @@ dev = [
     "mypy==2.3.1",
 ]
 test = ["pytest==9.1.1"]
-foobar = ["urllib3==2.7.0"]
+foobar = ["urllib3==2.8.0"]
 
 [dependency-groups]
 foo = ["certifi==2026.7.22"]
-bar = ["idna==3.19"]
+bar = ["idna==3.20"]
 all = [{include-group = "foo"}, "packaging==26.3"]
 
 [build-system]
