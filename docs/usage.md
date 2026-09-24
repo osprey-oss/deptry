@@ -140,7 +140,7 @@ an example config for your `.pre-commit-config.yaml` file:
   rev: "<tag>"
   hooks:
     - id: deptry
-      args: ["--ignore", "DEP001"]
+      args: [".", "--ignore", "DEP001"]
 ```
 
 Replace `<tag>` with one of the [tags](https://github.com/osprey-oss/deptry/tags) from the
