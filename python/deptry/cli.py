@@ -308,7 +308,7 @@ def cli(
 ) -> None:
     """Find dependency issues in your Python project.
 
-    ROOT is the path to the root directory of the project to be scanned. For instance, to invoke deptry in the current
+    ROOT is the path to the source directory or file to be scanned. For instance, to invoke deptry in the current
     directory:
 
         deptry .
@@ -317,6 +317,10 @@ def cli(
     both 'src' and 'worker' directories:
 
         deptry src worker
+
+    You can also specify a single Python file:
+
+        deptry app.py
 
     """
 

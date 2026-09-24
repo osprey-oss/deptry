@@ -116,15 +116,26 @@ class Core:
 
     def _get_local_modules(self) -> set[str]:
         """
-        Get all local Python modules from the source directories and `known_first_party` list.
+        Get all local Python modules from the source paths and `known_first_party` list.
         A module is considered a local Python module if it matches at least one of those conditions:
         - it is a directory that contains at least one Python file
         - it is a Python file that is not named `__init__.py` (since it is a special case)
         - it is set in the `known_first_party` list
+
+        Source paths can be either directories (which are searched for modules) or individual
+        Python files (whose stem is used as the module name).
         """
-        guessed_local_modules = {
-            path.stem for source in self.root for path in source.iterdir() if self._is_local_module(path)
-        }
+        guessed_local_modules: set[str] = set()
+
+        for source in self.root:
+            if source.is_file():  # likely a single file program
+                if source.suffix == ".py" and source.name != "__init__.py":
+                    guessed_local_modules.add(source.stem)
+                continue
+
+            for path in source.iterdir():
+                if self._is_local_module(path):
+                    guessed_local_modules.add(path.stem)
 
         return guessed_local_modules | set(self.known_first_party)
 
