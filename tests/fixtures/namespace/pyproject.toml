@@ -5,7 +5,7 @@ requires-python = ">=3.10"
 dependencies = ["arrow==1.4.0"]
 
 [project.optional-dependencies]
-dev = ["flake8==7.3.0"]
+dev = ["flake8==7.4.1"]
 
 [build-system]
 requires = ["setuptools>=61.0.0"]
