@@ -122,7 +122,7 @@ class PEP621DependencyGetter(DependencyGetter):
         try:
             if pyproject_toml["build-system"]["build-backend"] == "setuptools.build_meta":
                 logging.debug(
-                    "pyproject.toml has the entry build-system.build-backend == 'setuptools.build_meta', so setuptools"
+                    "pyproject.toml has the entry build-system.build-backend == 'setuptools.build_meta', so setuptools "
                     "is used to specify the project's dependencies."
                 )
                 return True
