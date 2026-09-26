@@ -12,6 +12,7 @@ _deptry_ checks your project against the following rules related to dependencies
 | DEP003 | Project should not use transitive dependencies            | [link](#transitive-dependencies-dep003)             |
 | DEP004 | Project should not use development dependencies in non-development code | [link](#misplaced-development-dependencies-dep004)  |
 | DEP005 | Project should not contain dependencies that are in the standard library    | [link](#standard-library-dependencies-dep005)       |
+| DEP006 | Extra-only dependencies should only be imported in mapped modules | [link](#optional-extra-placement-dep006)            |
 
 Any of the checks can be disabled with the [`ignore`](configuration.md#ignore) flag. Specific dependencies or modules
 can be ignored with the [`per-rule-ignores`](configuration.md#per-rule-ignores) flag. Individual import lines can also
@@ -209,3 +210,45 @@ To fix the issue, `asyncio` should be removed from `[project.dependencies]`:
 [project]
 dependencies = []
 ```
+
+## Optional extra placement (DEP006)
+
+Dependencies declared only in `[project.optional-dependencies]` may be imported from the first-party modules mapped to that extra. Imports of those packages from other modules are reported.
+
+This is opt-in. By default, optional extras are still treated as regular dependencies, so unmapped extras do not produce DEP006.
+
+Mapped extras do **not** have to wrap their imports in `try` / `except ImportError`. A module such as `mypackage/snowflake.py` may import `snowflake.connector` unconditionally when users install `mypackage[snowflake]`.
+
+### Example
+
+```toml
+[project]
+name = "mypackage"
+dependencies = ["httpx"]
+
+[project.optional-dependencies]
+snowflake = ["snowflake-connector-python"]
+postgres = ["psycopg"]
+
+[tool.deptry.optional_dependencies_runtime]
+snowflake = ["mypackage.snowflake", "mypackage.snowflake.*"]
+postgres = ["mypackage.postgres", "mypackage.postgres.*"]
+```
+
+`mypackage/core.py`:
+
+```python
+import snowflake.connector
+```
+
+_deptry_ reports `snowflake` as DEP006 because it is imported outside the modules mapped to the `snowflake` extra.
+
+`mypackage/snowflake.py`:
+
+```python
+import snowflake.connector
+```
+
+is allowed. `mypackage/postgres.py` importing `snowflake.connector` is also DEP006 (wrong extra).
+
+If `snowflake-connector-python` is also listed in `[project.dependencies]`, DEP006 is not reported.

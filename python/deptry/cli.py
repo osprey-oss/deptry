@@ -255,6 +255,16 @@ def display_deptry_version(ctx: click.Context, _param: click.Parameter, value: b
     show_default=False,
 )
 @click.option(
+    "--optional-dependencies-runtime",
+    "-odr",
+    type=COMMA_SEPARATED_MAPPING,
+    help="""Map optional extras to the first-party modules that may import them.
+    Imports of those extra-only packages outside the mapped modules are reported as DEP006.
+    Example: `deptry . --optional-dependencies-runtime snowflake=mypackage.snowflake|mypackage.snowflake.*`.""",
+    default={},
+    show_default=False,
+)
+@click.option(
     "--pep621-dev-dependency-groups",
     "-ddg",
     type=COMMA_SEPARATED_TUPLE,
@@ -302,6 +312,7 @@ def cli(
     package_module_name_map: MutableMapping[str, tuple[str, ...]],
     pep621_dev_dependency_groups: tuple[str, ...],
     optional_dependencies_dev_groups: tuple[str, ...],
+    optional_dependencies_runtime: Mapping[str, tuple[str, ...]],
     non_dev_dependency_groups: tuple[str, ...],
     experimental_namespace_package: bool,
     enforce_posix_paths: bool,
@@ -341,6 +352,7 @@ def cli(
         github_warning_errors=github_warning_errors,
         package_module_name_map=package_module_name_map,
         optional_dependencies_dev_groups=pep621_dev_dependency_groups or optional_dependencies_dev_groups,
+        optional_dependencies_runtime=optional_dependencies_runtime,
         non_dev_dependency_groups=non_dev_dependency_groups,
         experimental_namespace_package=experimental_namespace_package,
         enforce_posix_paths=enforce_posix_paths,

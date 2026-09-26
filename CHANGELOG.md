@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Features
+
+* Add DEP006 to flag extra-only imports outside modules mapped with `--optional-dependencies-runtime`
+
 ## 0.25.1 - 2025-03-18
 
 Release 0.25.0 was yanked in PyPI because of a failure during the release. 0.25.1 is identical, but includes a fix in the release process.

@@ -39,6 +39,7 @@ class Core:
     json_output: str
     package_module_name_map: Mapping[str, tuple[str, ...]]
     optional_dependencies_dev_groups: tuple[str, ...]
+    optional_dependencies_runtime: Mapping[str, tuple[str, ...]]
     non_dev_dependency_groups: tuple[str, ...]
     experimental_namespace_package: bool
     enforce_posix_paths: bool
@@ -86,6 +87,10 @@ class Core:
             self.ignore,
             self.per_rule_ignores,
             standard_library_modules,
+            optional_dependencies_runtime=self.optional_dependencies_runtime,
+            optional_group_dependencies=dependencies_extract.optional_group_dependencies,
+            project_dependencies=dependencies_extract.project_dependencies,
+            source_roots=self.root,
         )
         TextReporter(violations, enforce_posix_paths=self.enforce_posix_paths, use_ansi=not self.no_ansi).report()
 
