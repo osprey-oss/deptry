@@ -100,6 +100,26 @@ bar = "foo"
 importlib.import_module(bar)  # Not detected
 ```
 
+### Django settings
+
+Django loads the apps listed in `INSTALLED_APPS` from strings, so a package that is only referenced there is reported as
+unused. To take those references into account, set [`--django-settings-module`](configuration.md#django-settings-module)
+to the dotted name of your settings module:
+
+```shell
+deptry . --django-settings-module mysite.settings
+```
+
+The settings are read statically: _deptry_ never imports or runs them, so the result is a best effort. Only
+`INSTALLED_APPS` is read, and the value is resolved from top-level assignments, `+=` updates, and names imported with
+`from ... import ...` from other modules within the directory of the configuration file. Anything that cannot be
+resolved without running the code (function calls, comprehensions, wildcard imports, or assignments within functions,
+classes or conditions) is ignored.
+
+Every string in `INSTALLED_APPS` that is a dotted Python name is treated as an import of its top-level module, so that
+both `"rest_framework"` and `"corsheaders.apps.CorsHeadersConfig"` count as a use of the respective package. Violations
+are then reported at the location of the string in the settings file.
+
 ## Excluding files and directories
 
 To determine issues with imported modules and dependencies, _deptry_ will scan the working directory and its subdirectories recursively for `.py` and `.ipynb` files, so it can

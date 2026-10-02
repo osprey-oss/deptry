@@ -282,6 +282,12 @@ def display_deptry_version(ctx: click.Context, _param: click.Parameter, value: b
     hidden=True,
     help="Enforce posix paths in reporters.",
 )
+@click.option(
+    "--django-settings-module",
+    type=str,
+    default=None,
+    help="Read INSTALLED_APPS statically from a local Django settings module.",
+)
 @click.pass_context
 def cli(
     ctx: click.Context,
@@ -305,6 +311,7 @@ def cli(
     non_dev_dependency_groups: tuple[str, ...],
     experimental_namespace_package: bool,
     enforce_posix_paths: bool,
+    django_settings_module: str | None,
 ) -> None:
     """Find dependency issues in your Python project.
 
@@ -344,6 +351,7 @@ def cli(
         non_dev_dependency_groups=non_dev_dependency_groups,
         experimental_namespace_package=experimental_namespace_package,
         enforce_posix_paths=enforce_posix_paths,
+        django_settings_module=django_settings_module,
     ).run()
 
 

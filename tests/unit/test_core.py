@@ -131,6 +131,7 @@ def test__get_local_modules(
                 github_output=False,
                 github_warning_errors=(),
                 enforce_posix_paths=False,
+                django_settings_module=None,
             )._get_local_modules()
             == expected
         )
@@ -185,6 +186,7 @@ def test_text_reporter_only(
             github_output=False,
             github_warning_errors=(),
             enforce_posix_paths=False,
+            django_settings_module=None,
         ).run()
 
     mock_text_reporter_report.assert_called()
@@ -221,6 +223,7 @@ def test_all_reporters(
             github_output=True,
             github_warning_errors=(),
             enforce_posix_paths=False,
+            django_settings_module=None,
         ).run()
 
     mock_text_reporter_report.assert_called()
