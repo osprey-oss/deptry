@@ -1,7 +1,8 @@
 -   id: deptry
     name: deptry
     description: deptry is a command line tool to check for issues with dependencies in a Python project, such as unused or missing dependencies.
-    entry: deptry .
+    entry: deptry
+    args: [ "." ]
     language: system
     always_run: true
     pass_filenames: false
