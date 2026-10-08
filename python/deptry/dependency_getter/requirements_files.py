@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import codecs
 import itertools
 import logging
 import re
@@ -16,6 +17,16 @@ if TYPE_CHECKING:
     from collections.abc import Mapping, Sequence
 
     from requirements.requirement import Requirement
+
+
+# Byte order marks recognized by `pip`, ordered so that a longer mark is matched before a shorter prefix of it.
+BOM_ENCODINGS = (
+    (codecs.BOM_UTF8, "utf-8-sig"),
+    (codecs.BOM_UTF32_LE, "utf-32"),
+    (codecs.BOM_UTF32_BE, "utf-32"),
+    (codecs.BOM_UTF16_LE, "utf-16"),
+    (codecs.BOM_UTF16_BE, "utf-16"),
+)
 
 
 @dataclass
@@ -70,16 +81,29 @@ def get_dependencies_from_requirements_file(
     dependencies = []
     requirements_file = Path(file_name)
 
-    with requirements_file.open() as requirements_file_content:
-        for requirement in requirements.parse(requirements_file_content):
-            if (
-                dependency := _build_dependency_from_requirement(
-                    requirement, requirements_file, package_module_name_map
-                )
-            ) is not None:
-                dependencies.append(dependency)
+    for requirement in requirements.parse(_read_requirements_file(requirements_file)):
+        if (
+            dependency := _build_dependency_from_requirement(requirement, requirements_file, package_module_name_map)
+        ) is not None:
+            dependencies.append(dependency)
 
     return dependencies
+
+
+def _read_requirements_file(requirements_file: Path) -> str:
+    """
+    Read a requirements file, honoring the byte order mark if there is one.
+
+    `pip` supports requirements files encoded as UTF-8, UTF-16 or UTF-32 by looking at their BOM, so files that
+    `pip` can install from should also be parseable by deptry. Files without a BOM are decoded as UTF-8.
+    """
+    content = requirements_file.read_bytes()
+
+    for bom, encoding in BOM_ENCODINGS:
+        if content.startswith(bom):
+            return content.decode(encoding)
+
+    return content.decode("utf-8")
 
 
 def _build_dependency_from_requirement(
