@@ -10,9 +10,9 @@ beautifulsoup4==4.15.0
     # via itchiodl
 certifi==2026.7.22
     # via requests
-charset-normalizer==3.5.1
+charset-normalizer==3.5.2
     # via requests
-click==8.4.2
+click==8.5.0
     # via
     #   -r requirements.in
     #   uvicorn
@@ -20,21 +20,21 @@ clint==0.5.1
     # via itchiodl
 h11==0.16.0
     # via uvicorn
-idna==3.19
+idna==3.20
     # via requests
-isort==8.0.1
+isort==9.0.2
     # via -r requirements.in
 itchiodl==2.3.0
     # via -r requirements.in
 requests==2.34.2
     # via itchiodl
-soupsieve==2.9.2
+soupsieve==2.10
     # via beautifulsoup4
 typing-extensions==4.16.0
     # via beautifulsoup4
-urllib3==2.7.0
+urllib3==2.8.0
     # via
     #   -r requirements.in
     #   requests
-uvicorn==0.52.4
+uvicorn==0.54.0
     # via -r requirements.in
