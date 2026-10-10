@@ -1,0 +1,1 @@
+Not a directory, so not a workspace member, although it is matched by the `packages/*` glob.
