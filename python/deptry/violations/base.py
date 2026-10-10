@@ -24,9 +24,12 @@ class ViolationsFinder(ABC):
         ignored_modules: A tuple of module names to ignore when scanning for issues. Defaults to an
             empty tuple.
         standard_library_modules: A set of modules that are part of the standard library.
-        workspace_sibling_module_names: A set of top-level module names provided by uv workspace
-            siblings. These modules are available in the environment but must still be explicitly
-            declared as dependencies by each member that imports them.
+        workspace_sibling_module_names: A set of top-level module names provided by the other members of the uv
+            workspace. These modules are available in the environment but must still be explicitly declared as
+            dependencies by each member that imports them. Empty outside of a uv workspace.
+        workspace_sibling_dep_names: A set of names of the dependencies declared by the other members of the uv
+            workspace. These packages are available in the environment but must still be explicitly declared as
+            dependencies by each member that imports them. Empty outside of a uv workspace.
     """
 
     violation: ClassVar[type[Violation]]

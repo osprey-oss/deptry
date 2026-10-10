@@ -13,8 +13,8 @@ from deptry.violations.dep005_standard_library.finder import DEP005StandardLibra
 from deptry.violations.dep005_standard_library.violation import DEP005StandardLibraryDependencyViolation
 from deptry.violations.dep101_missing_workspace.finder import DEP101MissingWorkspaceDependenciesFinder
 from deptry.violations.dep101_missing_workspace.violation import DEP101MissingWorkspaceDependencyViolation
-from deptry.violations.dep102_workspace_transitive.finder import DEP102WorkspaceTransitiveDependenciesFinder
-from deptry.violations.dep102_workspace_transitive.violation import DEP102WorkspaceTransitiveDependencyViolation
+from deptry.violations.dep102_workspace_leaked.finder import DEP102WorkspaceLeakedDependenciesFinder
+from deptry.violations.dep102_workspace_leaked.violation import DEP102WorkspaceLeakedDependencyViolation
 
 __all__ = (
     "DEP001MissingDependenciesFinder",
@@ -29,8 +29,8 @@ __all__ = (
     "DEP005StandardLibraryDependencyViolation",
     "DEP101MissingWorkspaceDependenciesFinder",
     "DEP101MissingWorkspaceDependencyViolation",
-    "DEP102WorkspaceTransitiveDependenciesFinder",
-    "DEP102WorkspaceTransitiveDependencyViolation",
+    "DEP102WorkspaceLeakedDependenciesFinder",
+    "DEP102WorkspaceLeakedDependencyViolation",
     "Violation",
     "ViolationsFinder",
 )
