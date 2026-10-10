@@ -13,6 +13,13 @@ _deptry_ checks your project against the following rules related to dependencies
 | DEP004 | Project should not use development dependencies in non-development code | [link](#misplaced-development-dependencies-dep004)  |
 | DEP005 | Project should not contain dependencies that are in the standard library    | [link](#standard-library-dependencies-dep005)       |
 
+When a [uv workspace](uv-workspaces.md) is detected, the following additional rules are applied:
+
+| Code   | Description                        | More information                                    |
+|--------|------------------------------------| ----------------------------------------------------|
+| DEP101 | Workspace member should declare sibling dependencies it imports | [link](#missing-workspace-dependency-dep101)        |
+| DEP102 | Workspace member should not rely on dependencies declared by siblings | [link](#workspace-leaked-dependency-dep102)         |
+
 Any of the checks can be disabled with the [`ignore`](configuration.md#ignore) flag. Specific dependencies or modules
 can be ignored with the [`per-rule-ignores`](configuration.md#per-rule-ignores) flag. Individual import lines can also
 be excluded using [inline ignore comments](usage.md#inline-ignore-comments).
@@ -208,4 +215,79 @@ To fix the issue, `asyncio` should be removed from `[project.dependencies]`:
 ```toml
 [project]
 dependencies = []
+```
+
+## uv Workspace rules
+
+The following rules only apply when _deptry_ detects a [uv workspace](uv-workspaces.md). They catch dependency issues
+that are specific to multi-package workspaces.
+
+### Missing workspace dependency (DEP101)
+
+A module provided by a sibling workspace member is imported, but that sibling is not declared as a dependency of the
+importing package.
+
+#### Example
+
+Consider a uv workspace with two members, `bar` (which exposes the `bar2` module) and `baz`:
+
+```toml title="packages/baz/pyproject.toml"
+[project]
+name = "baz"
+dependencies = []
+```
+
+and the following `__init__.py` in `baz`:
+
+```python
+import bar2
+```
+
+_deptry_ will report `bar2` as a missing workspace dependency (DEP101), because `baz` imports a module from sibling
+package `bar` without declaring it as a dependency.
+
+To fix the issue, `bar` should be added to `baz`'s dependencies with a workspace source:
+
+```toml title="packages/baz/pyproject.toml"
+[project]
+name = "baz"
+dependencies = ["bar"]
+
+[tool.uv.sources]
+bar = { workspace = true }
+```
+
+### Workspace leaked dependency (DEP102)
+
+A third-party package is imported by a workspace member that does not declare it as a dependency. The package is only
+available because another workspace member declares it, and it is installed in the shared workspace environment.
+
+This differs from [transitive dependencies (DEP003)](#transitive-dependencies-dep003), where the imported package is a
+dependency of one of the member's own dependencies.
+
+#### Example
+
+Consider a uv workspace with two members, `bar` (which declares `pandas` as a dependency) and `foo`:
+
+```toml title="packages/foo/pyproject.toml"
+[project]
+name = "foo"
+dependencies = []
+```
+
+and the following `__init__.py` in `foo`:
+
+```python
+import pandas
+```
+
+_deptry_ will report `pandas` as a workspace leaked dependency (DEP102), because `foo` imports it without declaring it.
+`pandas` is only available because `bar` declares it.
+
+To fix the issue, `pandas` should be added to `foo`'s dependencies:
+
+```toml title="packages/foo/pyproject.toml"
+[project]
+name = "foo"
+dependencies = ["pandas"]
 ```

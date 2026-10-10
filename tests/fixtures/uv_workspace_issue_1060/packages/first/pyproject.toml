@@ -1,0 +1,12 @@
+[project]
+name = "first"
+version = "0.1.0"
+requires-python = ">=3.10"
+dependencies = ["second", "click"]
+
+[tool.uv.sources]
+second = { workspace = true }
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

@@ -143,5 +143,12 @@ def test_parse_pep_508_dependency(
         assert getattr(dependency, dependency_key) == expected_value
 
 
+def test_parse_pep_508_dependency_package_module_name_map_canonical_name() -> None:
+    dependency = parse_pep_508_dependency("Foo_Bar>=1.0", Path("pyproject.toml"), {"foo-bar": ("baz",)})
+
+    assert dependency is not None
+    assert dependency.top_levels == {"baz"}
+
+
 def test_parse_pep_508_dependency_invalid_definition() -> None:
     assert parse_pep_508_dependency("an_incorrect_definition=1.2.3", Path("pyproject.toml"), {}) is None
