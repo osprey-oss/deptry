@@ -2,23 +2,60 @@ from __future__ import annotations
 
 import logging
 import re
-import site
 from dataclasses import dataclass
-from importlib.metadata import PackageNotFoundError, distribution
-from pathlib import Path
 from typing import TYPE_CHECKING
 
-from deptry.dependency_getter.base import DependenciesExtract
 from deptry.dependency_getter.pep621.uv import UvDependencyGetter
-from deptry.scanners.project import ProjectScanner
+from deptry.exceptions import PyprojectFileNotFoundError
+from deptry.scanners.project import ProjectScanner, is_local_module
 from deptry.utils import load_pyproject_toml
 
 if TYPE_CHECKING:
-    from importlib.metadata import Distribution
+    from collections.abc import Iterable, Mapping
+    from pathlib import Path
 
     from deptry.config import Config
-    from deptry.core import UvWorkspaceConfig
+    from deptry.dependency_getter.base import DependenciesExtract
     from deptry.violations import Violation
+
+
+@dataclass(frozen=True)
+class UvWorkspaceConfig:
+    members: tuple[Path, ...]
+
+
+def get_uv_workspace_config(config: Path) -> UvWorkspaceConfig | None:
+    """
+    Get the members of the uv workspace defined in `[tool.uv.workspace]`, or `None` if the given `pyproject.toml` is
+    not the root of a uv workspace. Like in uv, a path matched by `members` is only a member if it is a directory that
+    contains a `pyproject.toml`, and if it is not matched by `exclude`.
+    """
+    try:
+        pyproject_data = load_pyproject_toml(config)
+    except PyprojectFileNotFoundError:
+        return None
+
+    workspace = pyproject_data.get("tool", {}).get("uv", {}).get("workspace")
+    if not workspace:
+        return None
+
+    root = config.parent
+    excluded = {path for glob_pattern in workspace.get("exclude", []) for path in root.glob(glob_pattern)}
+
+    # A dictionary is used to drop members matched by several patterns, while keeping them ordered.
+    members = tuple(
+        dict.fromkeys(
+            path
+            for glob_pattern in workspace.get("members", [])
+            for path in sorted(root.glob(glob_pattern))
+            if path not in excluded and (path / "pyproject.toml").is_file()
+        )
+    )
+    logging.debug("Found %d uv workspace member(s):", len(members))
+    for member in members:
+        logging.debug("  - %s", member)
+
+    return UvWorkspaceConfig(members=members)
 
 
 @dataclass
@@ -27,186 +64,165 @@ class UvWorkspaceScanner:
     uv_workspace_config: UvWorkspaceConfig
 
     def scan(self) -> list[Violation]:
-        root_path = self.config.config.parent
-        all_members = (root_path, *self.uv_workspace_config.members)
+        members = self._get_members_to_scan()
 
-        package_module_map = self._build_workspace_package_module_name_map(all_members)
-        member_configs, member_dependency_extracts = self._collect_member_configs_and_dependency_extracts(all_members)
-        all_workspace_modules = frozenset(m for modules in package_module_map.values() for m in modules)
+        base_configs = {member: self._build_member_base_config(member, members) for member in members}
+        package_names = {member: self._get_package_name(base_configs[member].config) for member in members}
+        member_modules = {
+            member: self._get_member_modules(member, members, base_configs[member].experimental_namespace_package)
+            for member in members
+        }
+        for member in members:
+            logging.debug("Workspace member %s: modules: %s", member, sorted(member_modules[member]))
 
-        violations: list[Violation] = []
-        for member in all_members:
-            logging.debug("Scanning workspace member: %s", member)
-            violations += self._scan_member(
-                member, member_configs[member], member_dependency_extracts, package_module_map, all_workspace_modules
-            )
-        return violations
-
-    def _collect_member_configs_and_dependency_extracts(
-        self, all_members: tuple[Path, ...]
-    ) -> tuple[dict[Path, Config], dict[Path, DependenciesExtract]]:
-        """Build a Config and resolve dependencies for every workspace member."""
-        configs: dict[Path, Config] = {}
-        extracts: dict[Path, DependenciesExtract] = {}
-        for member in all_members:
-            config = self._build_member_base_config(member)
-            configs[member] = config
-            extracts[member] = UvDependencyGetter(
-                member / "pyproject.toml",
+        configs = {
+            member: self._add_workspace_modules_to_config(member, base_configs[member], package_names, member_modules)
+            for member in members
+        }
+        dependency_extracts = {
+            member: UvDependencyGetter(
+                config.config,
                 config.package_module_name_map,
                 config.optional_dependencies_dev_groups,
                 config.non_dev_dependency_groups,
             ).get()
-        return configs, extracts
+            for member, config in configs.items()
+        }
 
-    def _scan_member(
-        self,
+        violations: list[Violation] = []
+        for member in members:
+            logging.debug("Scanning workspace member: %s", member)
+            sibling_modules, sibling_deps = self._get_sibling_context(member, member_modules, dependency_extracts)
+            violations += ProjectScanner(
+                configs[member], dependency_extracts[member], sibling_modules, sibling_deps
+            ).scan()
+        return violations
+
+    def _get_members_to_scan(self) -> tuple[Path, ...]:
+        """Get the directories to scan. The workspace root is only one of them if it is a project itself, as opposed to
+        a virtual root that only defines the workspace."""
+        if "project" in load_pyproject_toml(self.config.config):
+            return (self.config.config.parent, *self.uv_workspace_config.members)
+
+        logging.debug("The workspace root has no [project] section, so only its members are scanned.")
+        return self.uv_workspace_config.members
+
+    def _build_member_base_config(self, member: Path, members: tuple[Path, ...]) -> Config:
+        """Build a Config for a workspace member, without the context of the modules of the workspace.
+
+        Directories of other members are excluded, so that their files are only scanned during their own scan. For the
+        workspace root, the configuration is otherwise left untouched. For other members, any [tool.deptry] overrides
+        from their pyproject.toml are applied, and their directory becomes the directory to scan."""
+        other_members = [other_member for other_member in members if other_member != member]
+
+        if member == self.config.config.parent:
+            config = self.config
+        else:
+            member_deptry_config = load_pyproject_toml(member / "pyproject.toml").get("tool", {}).get("deptry", {})
+            config = self.config.with_overrides({
+                **member_deptry_config,
+                "config": member / "pyproject.toml",
+                "root": (member,),
+            })
+            # Exclusion patterns are matched from the start of paths that are prefixed with the scanned directory. For
+            # patterns to behave like when running deptry from the member directory, also apply them from there.
+            config = config.with_overrides({
+                "exclude": (*config.exclude, *self._anchor_patterns_to(member, config.exclude)),
+                "extend_exclude": (*config.extend_exclude, *self._anchor_patterns_to(member, config.extend_exclude)),
+            })
+
+        return config.with_overrides({
+            "extend_exclude": (*config.extend_exclude, *self._get_member_exclude_patterns(config.root, other_members)),
+        })
+
+    @staticmethod
+    def _anchor_patterns_to(directory: Path, patterns: Iterable[str]) -> tuple[str, ...]:
+        prefix = re.escape(f"{directory.as_posix()}/")
+        return tuple(f"{prefix}(?:{pattern})" for pattern in patterns)
+
+    @staticmethod
+    def _get_member_exclude_patterns(roots: Iterable[Path], members: Iterable[Path]) -> tuple[str, ...]:
+        """Build the patterns that exclude the directories of the given members from a scan of the given roots.
+
+        Patterns are matched from the start of paths that are prefixed with the root they are found in, exactly as it
+        was passed, so each pattern is built from the root rather than from the member path. This makes them work for
+        absolute roots too. Patterns end on a path separator or on the end of the path, to match whole path segments
+        only (`packages/foo` must not exclude `packages/foobar`)."""
+        patterns: list[str] = []
+        for root in roots:
+            resolved_root = root.resolve()
+            for member in members:
+                resolved_member = member.resolve()
+                if resolved_member != resolved_root and resolved_member.is_relative_to(resolved_root):
+                    member_in_root = root / resolved_member.relative_to(resolved_root)
+                    patterns.append(f"{re.escape(member_in_root.as_posix())}(/|$)")
+        return tuple(patterns)
+
+    @staticmethod
+    def _get_package_name(pyproject_toml: Path) -> str | None:
+        """Read the distribution name from the member's pyproject.toml."""
+        name = load_pyproject_toml(pyproject_toml).get("project", {}).get("name")
+        return str(name) if name is not None else None
+
+    @staticmethod
+    def _get_member_modules(
+        member: Path, members: Iterable[Path], experimental_namespace_package: bool
+    ) -> frozenset[str]:
+        """
+        Get the top-level modules of a workspace member, by looking for local Python modules in its directory and in
+        its `src` directory, if any. The `src` directory is not a module itself, and neither are directories that are
+        or contain other workspace members (like `packages` in the workspace root), nor paths that cannot be imported.
+        """
+        source_roots = (member, member / "src")
+        other_members = [other_member.resolve() for other_member in members if other_member != member]
+
+        return frozenset(
+            path.stem
+            for source_root in source_roots
+            if source_root.is_dir()
+            for path in source_root.iterdir()
+            if path not in source_roots
+            and path.stem.isidentifier()
+            and not any(other_member.is_relative_to(path.resolve()) for other_member in other_members)
+            and is_local_module(path, experimental_namespace_package)
+        )
+
+    @staticmethod
+    def _add_workspace_modules_to_config(
         member: Path,
         config: Config,
-        member_dependency_extracts: dict[Path, DependenciesExtract],
-        package_module_map: dict[str, tuple[str, ...]],
-        all_workspace_modules: frozenset[str],
-    ) -> list[Violation]:
-        """Scan a single workspace member with full sibling context."""
-        extract = self._build_member_dependency_extract(member, member_dependency_extracts)
+        package_names: Mapping[Path, str | None],
+        member_modules: Mapping[Path, frozenset[str]],
+    ) -> Config:
+        """Make the member aware of its own modules, so that importing them is never a violation wherever they are
+        located, and of the modules of its siblings, so that a sibling declared as a dependency is matched with the
+        modules it provides even if they are not named after the package."""
+        sibling_package_module_name_map = {
+            package_name: tuple(sorted(modules))
+            for sibling, modules in member_modules.items()
+            if sibling != member and modules and (package_name := package_names[sibling]) is not None
+        }
 
-        member_package_name = self._get_package_name(member)
-        member_modules = (
-            frozenset(package_module_map.get(member_package_name, ())) if member_package_name else frozenset()
-        )
-        sibling_modules, sibling_deps = self._get_sibling_context(
-            member, all_workspace_modules, member_modules, member_dependency_extracts
-        )
-
-        return ProjectScanner(config, extract, sibling_modules, sibling_deps).scan()
-
-    def _build_member_dependency_extract(
-        self, member: Path, member_dependency_extracts: dict[Path, DependenciesExtract]
-    ) -> DependenciesExtract:
-        """For non-root members, merge in the root's dev dependencies (they live in the shared environment)."""
-        root_path = self.config.config.parent
-        if member == root_path:
-            return member_dependency_extracts[member]
-        return DependenciesExtract(
-            dependencies=member_dependency_extracts[member].dependencies,
-            dev_dependencies=[
-                *member_dependency_extracts[member].dev_dependencies,
-                *member_dependency_extracts[root_path].dev_dependencies,
-            ],
-        )
+        return config.with_overrides({
+            "known_first_party": (*config.known_first_party, *sorted(member_modules[member])),
+            "package_module_name_map": {**sibling_package_module_name_map, **config.package_module_name_map},
+        })
 
     @staticmethod
     def _get_sibling_context(
         member: Path,
-        all_workspace_modules: frozenset[str],
-        member_modules: frozenset[str],
-        member_dependency_extracts: dict[Path, DependenciesExtract],
+        member_modules: Mapping[Path, frozenset[str]],
+        dependency_extracts: Mapping[Path, DependenciesExtract],
     ) -> tuple[frozenset[str], frozenset[str]]:
-        """Compute the module names and dependency names from all sibling members."""
-        sibling_modules = all_workspace_modules - member_modules
+        """Compute the module names and dependency names from all sibling members. A module that the member also has
+        itself is never a sibling module."""
+        sibling_modules = frozenset(
+            module for sibling, modules in member_modules.items() if sibling != member for module in modules
+        )
         sibling_deps = frozenset(
             dep.name
-            for other_member, extract in member_dependency_extracts.items()
-            if other_member != member
+            for sibling, extract in dependency_extracts.items()
+            if sibling != member
             for dep in (*extract.dependencies, *extract.dev_dependencies)
         )
-        return sibling_modules, sibling_deps
-
-    def _build_member_base_config(self, member: Path) -> Config:
-        """Build a Config for a workspace member, applying any [tool.deptry] from its pyproject.toml.
-
-        For the workspace root, member directories are excluded to avoid scanning their files twice.
-        For other members, any [tool.deptry] overrides from their pyproject.toml are applied."""
-        if member == self.config.config.parent:
-            # Exclude member directories so their files are only scanned during their own member scan.
-            root_path = self.config.config.parent
-            member_excludes = tuple(re.escape(str(m.relative_to(root_path))) for m in self.uv_workspace_config.members)
-            return self.config.with_overrides({
-                "extend_exclude": (*self.config.extend_exclude, *member_excludes),
-            })
-
-        try:
-            data = load_pyproject_toml(member / "pyproject.toml")
-        except FileNotFoundError:
-            data = {}
-        member_deptry_config = data.get("tool", {}).get("deptry", {})
-        return self.config.with_overrides({
-            **member_deptry_config,
-            "config": member / "pyproject.toml",
-            "root": (member,),
-        })
-
-    def _build_workspace_package_module_name_map(self, members: tuple[Path, ...]) -> dict[str, tuple[str, ...]]:
-        """
-        For each workspace member, find its editable-install .pth file via importlib.metadata,
-        resolve the source root it points to, and discover top-level Python modules there.
-        Returns a mapping of {package_name: (module_name, ...)}.
-        """
-        result: dict[str, tuple[str, ...]] = {}
-
-        for member in members:
-            package_name = self._get_package_name(member)
-            if package_name is None:
-                logging.debug("Could not determine package name for %s, skipping.", member)
-                continue
-
-            modules = self._get_modules_for_package(package_name)
-            if modules:
-                logging.debug("Package '%s': modules: %s", package_name, modules)
-                result[package_name] = modules
-
-        return result
-
-    @staticmethod
-    def _get_package_name(member: Path) -> str | None:
-        """Read the distribution name from the member's pyproject.toml."""
-        try:
-            data = load_pyproject_toml(member / "pyproject.toml")
-        except FileNotFoundError:
-            return None
-        name = data.get("project", {}).get("name")
-        return str(name) if name is not None else None
-
-    @staticmethod
-    def _get_modules_for_package(package_name: str) -> tuple[str, ...]:
-        """Use importlib.metadata to find the editable-install .pth file for the package,
-        then discover top-level Python modules in the source root it points to."""
-        try:
-            dist = distribution(package_name)
-        except PackageNotFoundError:
-            logging.debug("Package '%s' is not installed in the current environment.", package_name)
-            return ()
-
-        source_root = UvWorkspaceScanner._find_pth_source_root(package_name, dist)
-        if source_root is None:
-            logging.debug("No .pth file found for package '%s'.", package_name)
-            return ()
-
-        return UvWorkspaceScanner._collect_top_level_modules(source_root)
-
-    @staticmethod
-    def _find_pth_source_root(package_name: str, dist: Distribution) -> Path | None:
-        """Locate the editable-install .pth file in site-packages and return the source root it points to."""
-        for f in (f for f in dist.files or [] if f.suffix == ".pth"):
-            for sp in site.getsitepackages():
-                pth_path = Path(sp) / f
-                if not pth_path.exists():
-                    continue
-                source_root = Path(pth_path.read_text(encoding="utf-8").strip())
-                if source_root.is_dir():
-                    return source_root
-                logging.debug(".pth for '%s' points to non-existent directory: %s", package_name, source_root)
-        return None
-
-    @staticmethod
-    def _collect_top_level_modules(source_root: Path) -> tuple[str, ...]:
-        """Discover top-level Python packages and modules directly under source_root."""
-        return tuple(
-            entry.name if entry.is_dir() else entry.stem
-            for entry in sorted(source_root.iterdir())
-            if not entry.name.startswith(".")
-            and (
-                (entry.is_dir() and (entry / "__init__.py").exists())
-                or (entry.is_file() and entry.suffix == ".py" and entry.name != "__init__.py")
-            )
-        )
+        return sibling_modules - member_modules[member], sibling_deps
