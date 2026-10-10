@@ -4,7 +4,7 @@ from pathlib import Path
 from unittest.mock import patch
 
 from deptry.imports.location import Location
-from deptry.module import ModuleBuilder, ModuleLocations
+from deptry.module import Module, ModuleBuilder, ModuleLocations
 from deptry.violations.dep101_missing_workspace.finder import DEP101MissingWorkspaceDependenciesFinder
 from deptry.violations.dep101_missing_workspace.violation import DEP101MissingWorkspaceDependencyViolation
 
@@ -84,3 +84,11 @@ def test_standard_library_skipped() -> None:
     ).find()
 
     assert issues == []
+
+
+def test_error_message() -> None:
+    violation = DEP101MissingWorkspaceDependencyViolation(Module("bar"), Location(Path("foo.py"), 1, 2))
+
+    assert violation.get_error_message() == (
+        "'bar' imported but it is a uv workspace sibling not declared as a dependency"
+    )

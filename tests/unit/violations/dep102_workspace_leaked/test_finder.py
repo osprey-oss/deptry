@@ -4,9 +4,9 @@ from pathlib import Path
 from unittest.mock import patch
 
 from deptry.imports.location import Location
-from deptry.module import ModuleBuilder, ModuleLocations
-from deptry.violations.dep102_workspace_transitive.finder import DEP102WorkspaceTransitiveDependenciesFinder
-from deptry.violations.dep102_workspace_transitive.violation import DEP102WorkspaceTransitiveDependencyViolation
+from deptry.module import Module, ModuleBuilder, ModuleLocations
+from deptry.violations.dep102_workspace_leaked.finder import DEP102WorkspaceLeakedDependenciesFinder
+from deptry.violations.dep102_workspace_leaked.violation import DEP102WorkspaceLeakedDependencyViolation
 
 
 def test_simple() -> None:
@@ -14,7 +14,7 @@ def test_simple() -> None:
     module = ModuleBuilder("bar", set(), frozenset()).build()
 
     with patch.object(module, "package", "bar-pkg"):
-        issues = DEP102WorkspaceTransitiveDependenciesFinder(
+        issues = DEP102WorkspaceLeakedDependenciesFinder(
             [ModuleLocations(module, [Location(Path("foo.py"), 1, 2)])],
             [],
             frozenset(),
@@ -22,7 +22,7 @@ def test_simple() -> None:
         ).find()
 
     assert issues == [
-        DEP102WorkspaceTransitiveDependencyViolation(
+        DEP102WorkspaceLeakedDependencyViolation(
             issue=module,
             location=Location(file=Path("foo.py"), line=1, column=2),
         ),
@@ -34,7 +34,7 @@ def test_package_not_declared_by_sibling() -> None:
     module = ModuleBuilder("bar", set(), frozenset()).build()
 
     with patch.object(module, "package", "bar-pkg"):
-        issues = DEP102WorkspaceTransitiveDependenciesFinder(
+        issues = DEP102WorkspaceLeakedDependenciesFinder(
             [ModuleLocations(module, [Location(Path("foo.py"), 1, 2)])],
             [],
             frozenset(),
@@ -49,7 +49,7 @@ def test_provided_by_dependency() -> None:
     module = ModuleBuilder("bar", set(), frozenset()).build()
 
     with patch.object(module, "package", "bar-pkg"), patch.object(module, "is_provided_by_dependency", True):
-        issues = DEP102WorkspaceTransitiveDependenciesFinder(
+        issues = DEP102WorkspaceLeakedDependenciesFinder(
             [ModuleLocations(module, [Location(Path("foo.py"), 1, 2)])],
             [],
             frozenset(),
@@ -64,7 +64,7 @@ def test_provided_by_dev_dependency() -> None:
     module = ModuleBuilder("bar", set(), frozenset()).build()
 
     with patch.object(module, "package", "bar-pkg"), patch.object(module, "is_provided_by_dev_dependency", True):
-        issues = DEP102WorkspaceTransitiveDependenciesFinder(
+        issues = DEP102WorkspaceLeakedDependenciesFinder(
             [ModuleLocations(module, [Location(Path("foo.py"), 1, 2)])],
             [],
             frozenset(),
@@ -79,7 +79,7 @@ def test_is_workspace_sibling_module() -> None:
     module = ModuleBuilder("bar", set(), frozenset()).build()
 
     with patch.object(module, "package", "bar-pkg"):
-        issues = DEP102WorkspaceTransitiveDependenciesFinder(
+        issues = DEP102WorkspaceLeakedDependenciesFinder(
             [ModuleLocations(module, [Location(Path("foo.py"), 1, 2)])],
             [],
             frozenset(),
@@ -94,7 +94,7 @@ def test_local_module() -> None:
     """A local module is never flagged by DEP102."""
     module = ModuleBuilder("bar", {"bar"}, frozenset()).build()
 
-    issues = DEP102WorkspaceTransitiveDependenciesFinder(
+    issues = DEP102WorkspaceLeakedDependenciesFinder(
         [ModuleLocations(module, [Location(Path("foo.py"), 1, 2)])],
         [],
         frozenset(),
@@ -109,7 +109,7 @@ def test_with_ignore() -> None:
     module = ModuleBuilder("bar", set(), frozenset()).build()
 
     with patch.object(module, "package", "bar-pkg"):
-        issues = DEP102WorkspaceTransitiveDependenciesFinder(
+        issues = DEP102WorkspaceLeakedDependenciesFinder(
             [ModuleLocations(module, [Location(Path("foo.py"), 1, 2)])],
             [],
             frozenset(),
@@ -124,7 +124,7 @@ def test_standard_library_skipped() -> None:
     """Standard library modules are never flagged."""
     module = ModuleBuilder("os", set(), standard_library_modules=frozenset(["os"])).build()
 
-    issues = DEP102WorkspaceTransitiveDependenciesFinder(
+    issues = DEP102WorkspaceLeakedDependenciesFinder(
         [ModuleLocations(module, [Location(Path("foo.py"), 1, 2)])],
         [],
         frozenset(),
@@ -132,3 +132,11 @@ def test_standard_library_skipped() -> None:
     ).find()
 
     assert issues == []
+
+
+def test_error_message() -> None:
+    violation = DEP102WorkspaceLeakedDependencyViolation(Module("bar"), Location(Path("foo.py"), 1, 2))
+
+    assert violation.get_error_message() == (
+        "'bar' imported but it is only available because another workspace member declares it as a dependency"
+    )

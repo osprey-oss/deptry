@@ -11,7 +11,7 @@ from deptry.violations import (
     DEP004MisplacedDevDependenciesFinder,
     DEP005StandardLibraryDependenciesFinder,
     DEP101MissingWorkspaceDependenciesFinder,
-    DEP102WorkspaceTransitiveDependenciesFinder,
+    DEP102WorkspaceLeakedDependenciesFinder,
 )
 
 if TYPE_CHECKING:
@@ -29,7 +29,7 @@ _VIOLATIONS_FINDERS: tuple[type[ViolationsFinder], ...] = (
     DEP004MisplacedDevDependenciesFinder,
     DEP005StandardLibraryDependenciesFinder,
     DEP101MissingWorkspaceDependenciesFinder,
-    DEP102WorkspaceTransitiveDependenciesFinder,
+    DEP102WorkspaceLeakedDependenciesFinder,
 )
 
 
