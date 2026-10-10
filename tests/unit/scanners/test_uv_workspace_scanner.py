@@ -420,6 +420,33 @@ def test_scan_declared_sibling_with_name_written_differently(
         assert _scan() == []
 
 
+def test_scan_member_package_module_name_map_as_string(tmp_path: Path) -> None:
+    with run_within_dir(tmp_path):
+        _write_files({
+            "pyproject.toml": WORKSPACE,
+            "packages/foo/pyproject.toml": _pyproject(
+                "foo", ("bar-python",), '[tool.deptry.package_module_name_map]\nbar-python = "barbar"\n'
+            ),
+            "packages/foo/foo/__init__.py": "import barbar",
+        })
+
+        assert _scan() == []
+
+
+@pytest.mark.parametrize("loose_file", ["conftest.py", "setup.py"])
+def test_scan_member_directory_is_not_a_local_module(tmp_path: Path, loose_file: str) -> None:
+    with run_within_dir(tmp_path):
+        _write_files({
+            "pyproject.toml": _pyproject("root", extra='[tool.uv.workspace]\nmembers = ["foo"]\n'),
+            "root/__init__.py": "import foo",
+            "foo/pyproject.toml": _pyproject("foo"),
+            "foo/foo/__init__.py": "",
+            f"foo/{loose_file}": "",
+        })
+
+        assert _scan() == [("DEP101", "foo", "root/__init__.py")]
+
+
 def test_scan_user_package_module_name_map_wins_over_sibling_modules(tmp_path: Path) -> None:
     with run_within_dir(tmp_path):
         _write_files({

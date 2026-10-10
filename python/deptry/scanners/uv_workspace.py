@@ -7,6 +7,7 @@ from typing import TYPE_CHECKING
 
 from packaging.utils import canonicalize_name
 
+from deptry.config import read_workspace_member_configuration
 from deptry.dependency_getter.pep621.uv import UvDependencyGetter
 from deptry.exceptions import PyprojectFileNotFoundError
 from deptry.scanners.project import ProjectScanner, is_local_module
@@ -121,9 +122,8 @@ class UvWorkspaceScanner:
         if member == self.config.config.parent:
             config = self.config
         else:
-            member_deptry_config = load_pyproject_toml(member / "pyproject.toml").get("tool", {}).get("deptry", {})
             config = self.config.with_overrides({
-                **member_deptry_config,
+                **read_workspace_member_configuration(member / "pyproject.toml"),
                 "config": member / "pyproject.toml",
                 "root": (member,),
             })

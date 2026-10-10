@@ -113,7 +113,8 @@ class ProjectScanner:
             if is_local_module(path, self.config.experimental_namespace_package)
         }
 
-        return guessed_local_modules | set(self.config.known_first_party)
+        # A directory that holds another member of a uv workspace is not a module of the scanned project.
+        return (guessed_local_modules - self.workspace_sibling_module_names) | set(self.config.known_first_party)
 
     @staticmethod
     def _get_standard_library_modules() -> frozenset[str]:

@@ -13,6 +13,21 @@ if TYPE_CHECKING:
 
     import click
 
+# Options that can be set for a single member of a workspace. The other ones only make sense for a whole run.
+_WORKSPACE_MEMBER_OPTIONS = frozenset({
+    "ignore",
+    "per_rule_ignores",
+    "exclude",
+    "extend_exclude",
+    "using_default_exclude",
+    "ignore_notebooks",
+    "known_first_party",
+    "package_module_name_map",
+    "optional_dependencies_dev_groups",
+    "non_dev_dependency_groups",
+    "experimental_namespace_package",
+})
+
 
 def _get_invalid_pyproject_toml_keys(ctx: click.Context, deptry_toml_config_keys: set[str]) -> list[str]:
     """Returns the list of options set in `pyproject.toml` that do not exist as CLI parameters."""
@@ -57,6 +72,43 @@ def read_configuration_from_pyproject_toml(ctx: click.Context, _param: click.Par
     ctx.default_map = click_default_map
 
     return value
+
+
+def read_workspace_member_configuration(pyproject_toml: Path) -> dict[str, Any]:
+    """
+    Read the `[tool.deptry]` section of a workspace member as overrides for `Config`. Options are validated and
+    converted by the CLI parameters, like the ones read from the `pyproject.toml` deptry is run with. Options that only
+    make sense for a whole run are ignored.
+    """
+    import click
+
+    from deptry.cli import cli
+
+    deptry_toml_config: dict[str, Any] = load_pyproject_toml(pyproject_toml).get("tool", {}).get("deptry", {})
+
+    ctx = click.Context(cli)
+    invalid_pyproject_toml_keys = _get_invalid_pyproject_toml_keys(ctx, set(deptry_toml_config))
+    if invalid_pyproject_toml_keys:
+        raise InvalidPyprojectTOMLOptionsError(invalid_pyproject_toml_keys, pyproject_toml)
+
+    cli_params = {param.name: param for param in cli.params}
+    overrides = {key: cli_params[key].type_cast_value(ctx, value) for key, value in deptry_toml_config.items()}
+
+    if overrides.get("pep621_dev_dependency_groups"):
+        overrides["optional_dependencies_dev_groups"] = overrides["pep621_dev_dependency_groups"]
+    if overrides.get("exclude"):
+        overrides["using_default_exclude"] = False
+
+    ignored_options = sorted(set(deptry_toml_config) - _WORKSPACE_MEMBER_OPTIONS - {"pep621_dev_dependency_groups"})
+    if ignored_options:
+        logging.warning(
+            "Options %s in '[tool.deptry]' section of '%s' are ignored, as they can only be set for the whole"
+            " workspace.",
+            ignored_options,
+            pyproject_toml,
+        )
+
+    return {key: value for key, value in overrides.items() if key in _WORKSPACE_MEMBER_OPTIONS}
 
 
 @dataclass(frozen=True)

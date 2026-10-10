@@ -71,6 +71,11 @@ The `[tool.deptry]` section of the root `pyproject.toml` applies to all members.
 ignore = ["DEP002"]
 ```
 
+The following options can be set for a member: `ignore`, `per_rule_ignores`, `exclude`, `extend_exclude`,
+`ignore_notebooks`, `known_first_party`, `package_module_name_map`, `optional_dependencies_dev_groups`,
+`non_dev_dependency_groups` and `experimental_namespace_package`. The other options, like the ones that configure the
+output, can only be set for the whole workspace. They are ignored with a warning if a member sets them.
+
 !!! note
 
     Development dependencies of the root are not shared with the members. A member must declare every package it
