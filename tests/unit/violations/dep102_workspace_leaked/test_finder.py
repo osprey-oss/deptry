@@ -29,6 +29,64 @@ def test_simple() -> None:
     ]
 
 
+def test_package_name_written_differently() -> None:
+    """The name of the installed package is compared with the names declared by siblings in their canonical form."""
+    module = ModuleBuilder("markupsafe", set(), frozenset()).build()
+
+    with patch.object(module, "package", "MarkupSafe"):
+        issues = DEP102WorkspaceLeakedDependenciesFinder(
+            [ModuleLocations(module, [Location(Path("foo.py"), 1, 2)])],
+            [],
+            frozenset(),
+            workspace_sibling_dep_names=frozenset(["markupsafe"]),
+        ).find()
+
+    assert issues == [
+        DEP102WorkspaceLeakedDependencyViolation(
+            issue=module,
+            location=Location(file=Path("foo.py"), line=1, column=2),
+        ),
+    ]
+
+
+def test_module_provided_by_sibling_dependency() -> None:
+    """A module is matched with the modules provided by the dependencies of siblings, since the name of the package it
+    is installed from is not always known (e.g. `yaml` for `pyyaml`)."""
+    module = ModuleBuilder("yaml", set(), frozenset()).build()
+
+    with patch.object(module, "package", "yaml"):
+        issues = DEP102WorkspaceLeakedDependenciesFinder(
+            [ModuleLocations(module, [Location(Path("foo.py"), 1, 2)])],
+            [],
+            frozenset(),
+            workspace_sibling_dep_names=frozenset(["pyyaml"]),
+            workspace_sibling_dep_top_levels=frozenset(["yaml"]),
+        ).find()
+
+    assert issues == [
+        DEP102WorkspaceLeakedDependencyViolation(
+            issue=module,
+            location=Location(file=Path("foo.py"), line=1, column=2),
+        ),
+    ]
+
+
+def test_module_provided_by_sibling_dependency_not_installed() -> None:
+    """A module that is not installed is reported by DEP001, not DEP102."""
+    module = ModuleBuilder("yaml", set(), frozenset()).build()
+
+    with patch.object(module, "package", None):
+        issues = DEP102WorkspaceLeakedDependenciesFinder(
+            [ModuleLocations(module, [Location(Path("foo.py"), 1, 2)])],
+            [],
+            frozenset(),
+            workspace_sibling_dep_names=frozenset(["pyyaml"]),
+            workspace_sibling_dep_top_levels=frozenset(["yaml"]),
+        ).find()
+
+    assert issues == []
+
+
 def test_package_not_declared_by_sibling() -> None:
     """A module whose package is not declared by any workspace sibling is not flagged by DEP102."""
     module = ModuleBuilder("bar", set(), frozenset()).build()

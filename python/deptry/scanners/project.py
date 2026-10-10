@@ -46,6 +46,7 @@ class ProjectScanner:
     dependencies_extract: DependenciesExtract
     workspace_sibling_module_names: frozenset[str] = frozenset()
     workspace_sibling_dep_names: frozenset[str] = frozenset()
+    workspace_sibling_dep_top_levels: frozenset[str] = frozenset()
 
     def scan(self) -> list[Violation]:
         self._log_config()
@@ -77,6 +78,7 @@ class ProjectScanner:
             standard_library_modules,
             self.workspace_sibling_module_names,
             self.workspace_sibling_dep_names,
+            self.workspace_sibling_dep_top_levels,
         )
 
     def _find_python_files(self) -> list[Path]:

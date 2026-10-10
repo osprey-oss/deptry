@@ -53,7 +53,7 @@ class DEP003TransitiveDependenciesFinder(ViolationsFinder):
             module.is_provided_by_dev_dependency,
             module.local_module,
             module.name in self.workspace_sibling_module_names,
-            module.package in self.workspace_sibling_dep_names,
+            self._is_provided_by_workspace_sibling_dependency(module),
         ]):
             return False
 

@@ -44,7 +44,7 @@ class DEP102WorkspaceLeakedDependenciesFinder(ViolationsFinder):
         return leaked_dependencies
 
     def _is_workspace_leaked(self, module: Module) -> bool:
-        if module.package not in self.workspace_sibling_dep_names:
+        if not self._is_provided_by_workspace_sibling_dependency(module):
             return False
 
         if any([

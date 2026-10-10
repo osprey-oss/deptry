@@ -70,6 +70,22 @@ def test_workspace_sibling_module() -> None:
     assert issues == []
 
 
+def test_workspace_sibling_dependency_top_level() -> None:
+    """A module provided by a dependency of a workspace sibling is reported by DEP102, not DEP003, even if the name of
+    its package does not match the name of the dependency."""
+    module = Module("yaml", package="yaml")
+
+    issues = DEP003TransitiveDependenciesFinder(
+        [ModuleLocations(module, [Location(Path("foo.py"), 1, 2)])],
+        [],
+        frozenset(),
+        workspace_sibling_dep_names=frozenset(["pyyaml"]),
+        workspace_sibling_dep_top_levels=frozenset(["yaml"]),
+    ).find()
+
+    assert issues == []
+
+
 def test_workspace_sibling_dependency() -> None:
     """A module whose package is declared by a workspace sibling is reported by DEP102, not DEP003."""
     module = Module("bar", package="bar-pkg")

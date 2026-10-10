@@ -221,19 +221,22 @@ def test__get_sibling_context() -> None:
         baz: frozenset({"baz"}),
     }
     dependency_extracts = {
-        foo: DependenciesExtract([], [Dependency("pytest", foo / "pyproject.toml")]),
-        bar: DependenciesExtract([Dependency("pandas", bar / "pyproject.toml")], []),
+        foo: DependenciesExtract([], [Dependency("pytest", foo / "pyproject.toml", module_names=("pytest",))]),
+        bar: DependenciesExtract([Dependency("PyYAML", bar / "pyproject.toml", module_names=("yaml",))], []),
         baz: DependenciesExtract([Dependency("foo", baz / "pyproject.toml", module_names=("foo",))], []),
     }
 
-    # A module that the member has itself (here, `tests`) is not a sibling module.
+    # A module that the member has itself (here, `tests`) is not a sibling module. Names of dependencies are
+    # canonicalized, and the modules they provide are returned too.
     assert UvWorkspaceScanner._get_sibling_context(foo, member_modules, dependency_extracts) == (
         frozenset({"bar2", "baz"}),
-        frozenset({"pandas", "foo"}),
+        frozenset({"pyyaml", "foo"}),
+        frozenset({"yaml", "foo"}),
     )
     assert UvWorkspaceScanner._get_sibling_context(baz, member_modules, dependency_extracts) == (
         frozenset({"foo", "bar2", "tests"}),
-        frozenset({"pytest", "pandas"}),
+        frozenset({"pytest", "pyyaml"}),
+        frozenset({"pytest", "yaml"}),
     )
 
 
@@ -244,7 +247,7 @@ def test__get_sibling_context_no_siblings() -> None:
         only,
         {only: frozenset({"only"})},
         {only: DependenciesExtract([Dependency("requests", only / "pyproject.toml", module_names=("requests",))], [])},
-    ) == (frozenset(), frozenset())
+    ) == (frozenset(), frozenset(), frozenset())
 
 
 # ---------------------------------------------------------------------------
@@ -392,6 +395,29 @@ def test_scan_declared_sibling_with_module_named_differently(tmp_path: Path) -> 
         assert ("DEP002", "foo", "packages/baz/pyproject.toml") in violations
         assert ("DEP101", "bar2", "packages/baz/baz/__init__.py") in violations
         assert {file for _, _, file in violations} == {"packages/baz/pyproject.toml", "packages/baz/baz/__init__.py"}
+
+
+@pytest.mark.parametrize(
+    ("sibling_name", "declared_as"),
+    [
+        ("my_pkg", "my-pkg"),
+        ("my-pkg", "my_pkg"),
+        ("My.Pkg", "my-pkg"),
+    ],
+)
+def test_scan_declared_sibling_with_name_written_differently(
+    tmp_path: Path, sibling_name: str, declared_as: str
+) -> None:
+    with run_within_dir(tmp_path):
+        _write_files({
+            "pyproject.toml": WORKSPACE,
+            "packages/foo/pyproject.toml": _pyproject("foo", (declared_as,)),
+            "packages/foo/foo/__init__.py": "import core",
+            "packages/bar/pyproject.toml": _pyproject(sibling_name),
+            "packages/bar/src/core/__init__.py": "",
+        })
+
+        assert _scan() == []
 
 
 def test_scan_user_package_module_name_map_wins_over_sibling_modules(tmp_path: Path) -> None:

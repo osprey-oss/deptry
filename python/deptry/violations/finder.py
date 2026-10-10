@@ -41,6 +41,7 @@ def find_violations(
     standard_library_modules: frozenset[str],
     workspace_sibling_module_names: frozenset[str] = frozenset(),
     workspace_sibling_dep_names: frozenset[str] = frozenset(),
+    workspace_sibling_dep_top_levels: frozenset[str] = frozenset(),
 ) -> list[Violation]:
     violations = []
 
@@ -54,6 +55,7 @@ def find_violations(
                     standard_library_modules=standard_library_modules,
                     workspace_sibling_module_names=workspace_sibling_module_names,
                     workspace_sibling_dep_names=workspace_sibling_dep_names,
+                    workspace_sibling_dep_top_levels=workspace_sibling_dep_top_levels,
                 ).find()
             )
     return _get_sorted_violations(_filter_inline_ignored_violations(violations))

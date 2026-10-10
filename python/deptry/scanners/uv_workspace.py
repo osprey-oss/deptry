@@ -5,6 +5,8 @@ import re
 from dataclasses import dataclass
 from typing import TYPE_CHECKING
 
+from packaging.utils import canonicalize_name
+
 from deptry.dependency_getter.pep621.uv import UvDependencyGetter
 from deptry.exceptions import PyprojectFileNotFoundError
 from deptry.scanners.project import ProjectScanner, is_local_module
@@ -92,9 +94,10 @@ class UvWorkspaceScanner:
         violations: list[Violation] = []
         for member in members:
             logging.debug("Scanning workspace member: %s", member)
-            sibling_modules, sibling_deps = self._get_sibling_context(member, member_modules, dependency_extracts)
             violations += ProjectScanner(
-                configs[member], dependency_extracts[member], sibling_modules, sibling_deps
+                configs[member],
+                dependency_extracts[member],
+                *self._get_sibling_context(member, member_modules, dependency_extracts),
             ).scan()
         return violations
 
@@ -198,7 +201,7 @@ class UvWorkspaceScanner:
         located, and of the modules of its siblings, so that a sibling declared as a dependency is matched with the
         modules it provides even if they are not named after the package."""
         sibling_package_module_name_map = {
-            package_name: tuple(sorted(modules))
+            canonicalize_name(package_name): tuple(sorted(modules))
             for sibling, modules in member_modules.items()
             if sibling != member and modules and (package_name := package_names[sibling]) is not None
         }
@@ -213,16 +216,20 @@ class UvWorkspaceScanner:
         member: Path,
         member_modules: Mapping[Path, frozenset[str]],
         dependency_extracts: Mapping[Path, DependenciesExtract],
-    ) -> tuple[frozenset[str], frozenset[str]]:
-        """Compute the module names and dependency names from all sibling members. A module that the member also has
-        itself is never a sibling module."""
+    ) -> tuple[frozenset[str], frozenset[str], frozenset[str]]:
+        """Compute the module names, the dependency names and the top-level modules of the dependencies from all sibling
+        members. A module that the member also has itself is never a sibling module."""
         sibling_modules = frozenset(
             module for sibling, modules in member_modules.items() if sibling != member for module in modules
         )
-        sibling_deps = frozenset(
-            dep.name
+        sibling_deps = [
+            dep
             for sibling, extract in dependency_extracts.items()
             if sibling != member
             for dep in (*extract.dependencies, *extract.dev_dependencies)
+        ]
+        return (
+            sibling_modules - member_modules[member],
+            frozenset(canonicalize_name(dep.name) for dep in sibling_deps),
+            frozenset(top_level for dep in sibling_deps for top_level in dep.top_levels),
         )
-        return sibling_modules - member_modules[member], sibling_deps
