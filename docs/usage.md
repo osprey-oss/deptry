@@ -20,7 +20,7 @@ deptry a_directory another_directory
 ```
 
 If your project is a [uv workspace](https://docs.astral.sh/uv/concepts/workspaces/), _deptry_ will automatically detect
-it and scan each workspace member individually. See [uv Workspaces](uv-workspaces.md) for more details.
+it and scan each workspace member individually, against its own dependencies. See [uv Workspaces](uv-workspaces.md) for more details.
 
 If you want to configure _deptry_ using `pyproject.toml`, or if your dependencies are stored in `pyproject.toml`, but it is located in another location than the one _deptry_ is run from, you can specify the location to it by using `--config <path_to_pyproject.toml>` argument.
 

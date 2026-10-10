@@ -18,7 +18,7 @@ When a [uv workspace](uv-workspaces.md) is detected, the following additional ru
 | Code   | Description                        | More information                                    |
 |--------|------------------------------------| ----------------------------------------------------|
 | DEP101 | Workspace member should declare sibling dependencies it imports | [link](#missing-workspace-dependency-dep101)        |
-| DEP102 | Workspace member should not rely on dependencies declared by siblings | [link](#workspace-transitive-dependency-dep102)     |
+| DEP102 | Workspace member should not rely on dependencies declared by siblings | [link](#workspace-leaked-dependency-dep102)         |
 
 Any of the checks can be disabled with the [`ignore`](configuration.md#ignore) flag. Specific dependencies or modules
 can be ignored with the [`per-rule-ignores`](configuration.md#per-rule-ignores) flag. Individual import lines can also
@@ -257,10 +257,13 @@ dependencies = ["bar"]
 bar = { workspace = true }
 ```
 
-### Workspace transitive dependency (DEP102)
+### Workspace leaked dependency (DEP102)
 
-A third-party package is imported without being declared as a dependency. It only resolves because another workspace
-member declares it, making it a transitive dependency within the workspace.
+A third-party package is imported by a workspace member that does not declare it as a dependency. The package is only
+available because another workspace member declares it, and it is installed in the shared workspace environment.
+
+This differs from [transitive dependencies (DEP003)](#transitive-dependencies-dep003), where the imported package is a
+dependency of one of the member's own dependencies.
 
 #### Example
 
@@ -278,8 +281,8 @@ and the following `__init__.py` in `foo`:
 import pandas
 ```
 
-_deptry_ will report `pandas` as a workspace transitive dependency (DEP102), because `foo` imports it without declaring
-it. `pandas` is only available because `bar` declares it.
+_deptry_ will report `pandas` as a workspace leaked dependency (DEP102), because `foo` imports it without declaring it.
+`pandas` is only available because `bar` declares it.
 
 To fix the issue, `pandas` should be added to `foo`'s dependencies:
 

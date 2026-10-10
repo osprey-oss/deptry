@@ -77,8 +77,9 @@ dev-dependencies = [
 ```
 
 _deptry_ also supports [uv workspaces](https://docs.astral.sh/uv/concepts/workspaces/). When a
-`[tool.uv.workspace]` section is detected, each workspace member is scanned individually with workspace-aware rules.
-See the [uv Workspaces](uv-workspaces.md) page for details.
+`[tool.uv.workspace]` section is detected, each workspace member is scanned individually, against its own dependencies,
+with additional workspace-specific rules. See the [uv Workspaces](uv-workspaces.md) page for details. Workspaces of
+other dependency managers are not supported.
 
 ### Poetry
 
