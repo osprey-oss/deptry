@@ -120,10 +120,10 @@ foo = { workspace = true }
 Running `deptry .` produces:
 
 ```
-my_workspace/__init__.py:2:8: DEP102 'pandas' imported but is not declared as a dependency, it is available only because another workspace member declares it
+my_workspace/__init__.py:2:8: DEP102 'pandas' imported but it is only available because another workspace member declares it as a dependency
 packages/bar/pyproject.toml: DEP002 'pandas' defined as a dependency but not used in the codebase
 packages/baz/baz/__init__.py:2:1: DEP101 'bar2' imported but it is a uv workspace sibling not declared as a dependency
-packages/foo/foo/__init__.py:1:8: DEP102 'pandas' imported but is not declared as a dependency, it is available only because another workspace member declares it
+packages/foo/foo/__init__.py:1:8: DEP102 'pandas' imported but it is only available because another workspace member declares it as a dependency
 ```
 
 ## Known limitations
