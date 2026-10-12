@@ -185,6 +185,24 @@ def test_comma_separated_mapping_param_type_convert_err(
         param_type.convert(value=value, param=param, ctx=ctx)
 
 
+def test_comma_separated_mapping_param_type_convert_err_message_is_generic() -> None:
+    """The error should not assume the option is the package/module name map, since the type is shared."""
+    param = mock.Mock(spec=click.Parameter)
+    ctx = mock.Mock(spec=click.Context)
+    param_type = CommaSeparatedMappingParamType()
+
+    with pytest.raises(ValueError, match="equal sign") as exc_info:
+        param_type.convert(value="DEP001", param=param, ctx=ctx)
+
+    message = str(exc_info.value)
+    assert "package" not in message
+    assert "module" not in message
+    # The message should tell the user about both separators they might get wrong.
+    assert "equal sign" in message
+    assert "pipe" in message
+    assert "DEP001" in message
+
+
 def test_display_deptry_version(capsys: pytest.CaptureFixture[str]) -> None:
     ctx = mock.Mock(resilient_parsing=False, spec=click.Context)
     param = mock.Mock(spec=click.Parameter)

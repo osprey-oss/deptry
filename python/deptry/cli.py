@@ -80,7 +80,9 @@ class CommaSeparatedMappingParamType(click.ParamType[dict[str, tuple[str, ...]]]
                 pair = tuple(item.split("=", 1))
                 if len(pair) != 2:
                     error_msg = (
-                        f"package name and module names pairs should be concatenated with an equal sign (=): {item}"
+                        f"invalid mapping entry {item!r}: each entry must be a key and value joined by an "
+                        "equal sign (=), where multiple values are separated by a pipe (|), "
+                        "for example 'key1=value1,key2=value2|value3'"
                     )
                     raise ValueError(error_msg)
                 package_name = pair[0]
