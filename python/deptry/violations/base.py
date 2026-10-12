@@ -1,10 +1,13 @@
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import TYPE_CHECKING, ClassVar
 
 if TYPE_CHECKING:
+    from collections.abc import Mapping, Sequence
+    from pathlib import Path
+
     from deptry.dependency import Dependency
     from deptry.imports.location import Location
     from deptry.module import Module, ModuleLocations
@@ -24,6 +27,10 @@ class ViolationsFinder(ABC):
         ignored_modules: A tuple of module names to ignore when scanning for issues. Defaults to an
             empty tuple.
         standard_library_modules: A set of modules that are part of the standard library
+        optional_dependencies_runtime: Mapping of optional extra names to module patterns that may import them
+        optional_group_dependencies: Dependencies declared in each non-dev optional extra
+        project_dependencies: Dependencies declared in the project's main dependency list
+        source_roots: Directories passed as ROOT when invoking deptry
     """
 
     violation: ClassVar[type[Violation]]
@@ -31,6 +38,10 @@ class ViolationsFinder(ABC):
     dependencies: list[Dependency]
     standard_library_modules: frozenset[str]
     ignored_modules: tuple[str, ...] = ()
+    optional_dependencies_runtime: Mapping[str, tuple[str, ...]] = field(default_factory=dict)
+    optional_group_dependencies: Mapping[str, Sequence[Dependency]] = field(default_factory=dict)
+    project_dependencies: Sequence[Dependency] = ()
+    source_roots: tuple[Path, ...] = ()
 
     @abstractmethod
     def find(self) -> list[Violation]:

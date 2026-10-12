@@ -15,6 +15,8 @@ if TYPE_CHECKING:
 class DependenciesExtract:
     dependencies: list[Dependency]
     dev_dependencies: list[Dependency]
+    optional_group_dependencies: dict[str, tuple[Dependency, ...]] = field(default_factory=dict)
+    project_dependencies: tuple[Dependency, ...] = ()
 
 
 @dataclass
