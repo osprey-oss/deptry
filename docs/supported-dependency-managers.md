@@ -150,6 +150,12 @@ pytest = "8.3.3"
 pytest-cov = "5.0.0"
 ```
 
+!!! note
+
+    Groups under `[tool.poetry.group.<group>.dependencies]` can be flagged as regular dependency groups by
+    using [`--non-dev-dependency-groups`](configuration.md#non-dev-dependency-groups) argument (or its
+    `non_dev_dependency_groups` equivalent in `pyproject.toml`).
+
 ### PDM
 
 If a `[tool.pdm.dev-dependencies]` section is found, _deptry_ will assume that PDM is used as a dependency manager, and

@@ -164,3 +164,30 @@ name = "foo"
 
         assert len(dependencies_extract.dependencies) == 0
         assert len(dependencies_extract.dev_dependencies) == 0
+
+
+def test_dependency_getter_non_dev_dependency_groups(tmp_path: Path) -> None:
+    fake_pyproject_toml = """
+[tool.poetry]
+name = "foo"
+
+[tool.poetry.dependencies]
+python = ">=3.9"
+bar = "^1.0.0"
+
+[tool.poetry.group.baremetal.dependencies]
+uvicorn = "^0.30.0"
+
+[tool.poetry.group.test.dependencies]
+pytest = "^7.3.0"
+"""
+
+    with run_within_dir(tmp_path):
+        with Path("pyproject.toml").open("w") as f:
+            f.write(fake_pyproject_toml)
+
+        getter = PoetryDependencyGetter(config=Path("pyproject.toml"), non_dev_dependency_groups=("baremetal",))
+        dependencies_extract = getter.get()
+
+        assert [dependency.name for dependency in dependencies_extract.dependencies] == ["bar", "uvicorn"]
+        assert [dependency.name for dependency in dependencies_extract.dev_dependencies] == ["pytest"]
