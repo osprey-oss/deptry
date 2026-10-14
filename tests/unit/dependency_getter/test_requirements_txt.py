@@ -178,3 +178,47 @@ def test_dev_multiple_with_arguments(tmp_path: Path) -> None:
 
         assert dev_dependencies[0].name == "click"
         assert dev_dependencies[1].name == "bar"
+
+
+def test_parse_requirements_file_utf16_le(tmp_path: Path) -> None:
+    """Test that requirements.txt files with UTF-16 LE encoding (with BOM) are parsed correctly."""
+    content = "click==8.1.3\ncolorama==0.4.5\n"
+    with run_within_dir(tmp_path):
+        # Write with BOM (\xff\xfe) followed by UTF-16 LE encoded content, as editors like VS Code do.
+        Path("requirements.txt").write_bytes(b"\xff\xfe" + content.encode("utf-16-le"))
+
+        dependencies_extract = RequirementsTxtDependencyGetter(Path("pyproject.toml")).get()
+        dependencies = dependencies_extract.dependencies
+
+        assert len(dependencies) == 2
+        assert dependencies[0].name == "click"
+        assert dependencies[1].name == "colorama"
+
+
+def test_parse_requirements_file_utf16_be(tmp_path: Path) -> None:
+    """Test that requirements.txt files with UTF-16 BE encoding (with BOM) are parsed correctly."""
+    content = "click==8.1.3\ncolorama==0.4.5\n"
+    with run_within_dir(tmp_path):
+        # Write with BOM (\xfe\xff) followed by UTF-16 BE encoded content.
+        Path("requirements.txt").write_bytes(b"\xfe\xff" + content.encode("utf-16-be"))
+
+        dependencies_extract = RequirementsTxtDependencyGetter(Path("pyproject.toml")).get()
+        dependencies = dependencies_extract.dependencies
+
+        assert len(dependencies) == 2
+        assert dependencies[0].name == "click"
+        assert dependencies[1].name == "colorama"
+
+
+def test_parse_requirements_file_utf8_with_bom(tmp_path: Path) -> None:
+    """Test that requirements.txt files with UTF-8 BOM are parsed correctly."""
+    content = "click==8.1.3\ncolorama==0.4.5\n"
+    with run_within_dir(tmp_path):
+        Path("requirements.txt").write_bytes(content.encode("utf-8-sig"))
+
+        dependencies_extract = RequirementsTxtDependencyGetter(Path("pyproject.toml")).get()
+        dependencies = dependencies_extract.dependencies
+
+        assert len(dependencies) == 2
+        assert dependencies[0].name == "click"
+        assert dependencies[1].name == "colorama"
