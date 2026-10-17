@@ -19,7 +19,9 @@ def _get_invalid_pyproject_toml_keys(ctx: click.Context, deptry_toml_config_keys
     return sorted(deptry_toml_config_keys.difference(existing_cli_params))
 
 
-def read_configuration_from_pyproject_toml(ctx: click.Context, _param: click.Parameter, value: Path) -> Path | None:
+def read_configuration_from_pyproject_toml(
+    ctx: click.Context, param: click.Parameter, value: Path | None
+) -> Path | None:
     """
     Callback that, given a click context, overrides the default values with configuration options set in a
     pyproject.toml file.
@@ -28,6 +30,9 @@ def read_configuration_from_pyproject_toml(ctx: click.Context, _param: click.Par
     2. Value is overrode by the one set from pyproject.toml, if any
     3. Value is overrode by the one set from the command line, if any
     """
+
+    if value is None or (param.name == "config" and ctx.params.get("config_only") is not None):
+        return value
 
     try:
         pyproject_data = load_pyproject_toml(value)

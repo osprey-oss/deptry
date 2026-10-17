@@ -124,6 +124,13 @@ def display_deptry_version(ctx: click.Context, _param: click.Parameter, value: b
     callback=set_debug_level,
 )
 @click.option(
+    "--config-only",
+    type=click.Path(exists=True, dir_okay=False, path_type=Path),
+    is_eager=True,
+    callback=read_configuration_from_pyproject_toml,
+    help="Read configuration from this file while reading dependencies from the current directory.",
+)
+@click.option(
     "--config",
     type=click.Path(path_type=Path),
     is_eager=True,
@@ -287,6 +294,7 @@ def cli(
     ctx: click.Context,
     root: tuple[Path, ...],
     config: Path,
+    config_only: Path | None,
     no_ansi: bool,
     ignore: tuple[str, ...],
     per_rule_ignores: Mapping[str, tuple[str, ...]],
@@ -319,6 +327,11 @@ def cli(
         deptry src worker
 
     """
+
+    if config_only is not None and ctx.get_parameter_source("config") == click.core.ParameterSource.COMMANDLINE:
+        ctx.fail("Cannot use both --config and --config-only.")
+    if config_only is not None:
+        config = Path("pyproject.toml")
 
     handle_deprecations(ctx)
 
