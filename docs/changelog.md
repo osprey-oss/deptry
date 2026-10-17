@@ -3,6 +3,12 @@ icon: lucide/scroll-text
 ---
 # Changelog
 
+## Unreleased
+
+### Breaking changes
+
+* Treat the optional dependency group named `dev` as development dependencies by default, including when using Poetry, PDM, uv or setuptools. Set `optional_dependencies_dev_groups = []` to retain the previous behavior. ([#1531](https://github.com/osprey-oss/deptry/issues/1531))
+
 ## 0.25.1 - 2025-03-18
 
 Release 0.25.0 was yanked in PyPI because of a failure during the release. 0.25.1 is identical, but includes a fix in the release process.
