@@ -22,7 +22,7 @@ class PyprojectFileNotFoundError(FileNotFoundError):
 
 
 class InvalidPyprojectTOMLOptionsError(UsageError):
-    def __init__(self, invalid_options: list[str]) -> None:
+    def __init__(self, invalid_options: list[str], pyproject_toml: Path | str = "pyproject.toml") -> None:
         super().__init__(
-            f"'[tool.deptry]' section in 'pyproject.toml' contains invalid configuration options: {invalid_options}."
+            f"'[tool.deptry]' section in '{pyproject_toml}' contains invalid configuration options: {invalid_options}."
         )

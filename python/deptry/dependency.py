@@ -7,6 +7,7 @@ from importlib import metadata
 from typing import TYPE_CHECKING
 
 from packaging.requirements import InvalidRequirement, Requirement
+from packaging.utils import canonicalize_name
 
 if TYPE_CHECKING:
     from collections.abc import Mapping, Sequence
@@ -147,5 +148,7 @@ def parse_pep_508_dependency(
     return Dependency(
         name=requirement.name,
         definition_file=definition_file,
-        module_names=package_module_name_map.get(requirement.name),
+        module_names=package_module_name_map.get(
+            requirement.name, package_module_name_map.get(canonicalize_name(requirement.name))
+        ),
     )

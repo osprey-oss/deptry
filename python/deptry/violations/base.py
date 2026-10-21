@@ -4,6 +4,8 @@ from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from typing import TYPE_CHECKING, ClassVar
 
+from packaging.utils import canonicalize_name
+
 if TYPE_CHECKING:
     from deptry.dependency import Dependency
     from deptry.imports.location import Location
@@ -23,7 +25,15 @@ class ViolationsFinder(ABC):
         dependencies: A list of Dependency objects representing the project's dependencies.
         ignored_modules: A tuple of module names to ignore when scanning for issues. Defaults to an
             empty tuple.
-        standard_library_modules: A set of modules that are part of the standard library
+        standard_library_modules: A set of modules that are part of the standard library.
+        workspace_sibling_module_names: A set of top-level module names provided by the other members of the uv
+            workspace. These modules are available in the environment but must still be explicitly declared as
+            dependencies by each member that imports them. Empty outside of a uv workspace.
+        workspace_sibling_dep_names: A set of names of the dependencies declared by the other members of the uv
+            workspace. These packages are available in the environment but must still be explicitly declared as
+            dependencies by each member that imports them. Empty outside of a uv workspace.
+        workspace_sibling_dep_top_levels: A set of top-level module names provided by the dependencies declared by
+            the other members of the uv workspace. Empty outside of a uv workspace.
     """
 
     violation: ClassVar[type[Violation]]
@@ -31,6 +41,16 @@ class ViolationsFinder(ABC):
     dependencies: list[Dependency]
     standard_library_modules: frozenset[str]
     ignored_modules: tuple[str, ...] = ()
+    workspace_sibling_module_names: frozenset[str] = frozenset()
+    workspace_sibling_dep_names: frozenset[str] = frozenset()
+    workspace_sibling_dep_top_levels: frozenset[str] = frozenset()
+
+    def _is_provided_by_workspace_sibling_dependency(self, module: Module) -> bool:
+        """Check if an installed module comes from a package that another member of the uv workspace declares."""
+        return module.package is not None and (
+            canonicalize_name(module.package) in self.workspace_sibling_dep_names
+            or module.name in self.workspace_sibling_dep_top_levels
+        )
 
     @abstractmethod
     def find(self) -> list[Violation]:

@@ -13,6 +13,7 @@ nav:
   - Configuration: configuration.md
   - Rules and Violations: rules-violations.md
   - Supported dependency managers: supported-dependency-managers.md
+  - uv Workspaces: uv-workspaces.md
   - Changelog: changelog.md
   - Contributing: contributing.md
 
