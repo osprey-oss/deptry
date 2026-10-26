@@ -24,8 +24,8 @@ By default, _deptry_ extracts, from `pyproject.toml`:
 
 - regular dependencies from:
     - `dependencies` entry under `[project]` section
-    - groups under `[project.optional-dependencies]` section
-- development dependencies from groups under `[dependency-groups]` section
+    - groups other than `dev` under `[project.optional-dependencies]` section
+- development dependencies from the `dev` optional group and groups under `[dependency-groups]` section
 
 For instance, given this `pyproject.toml`:
 
@@ -56,9 +56,11 @@ the following dependencies will be extracted:
 
 !!! note
 
-    Groups under `[project.optional-dependencies]` can be flagged as development dependency groups by
+    The optional group named `dev` is treated as development dependencies by default.
+    Other groups under `[project.optional-dependencies]` can be flagged as development dependency groups by
     using [`--optional-dependencies-dev-groups`](configuration.md#optional-dependencies-dev-groups) argument (or its
-    `optional_dependencies_dev_groups` equivalent in `pyproject.toml`).
+    `optional_dependencies_dev_groups` equivalent in `pyproject.toml`). An explicit selection replaces the default,
+    and `optional_dependencies_dev_groups = []` treats all optional groups as regular dependencies.
 
 ### uv
 
@@ -192,9 +194,9 @@ In this example, regular dependencies will be extracted from both `requirements.
 
 !!! note
 
-    Groups under `[tool.setuptools.dynamic.optional-dependencies]` can be flagged as development dependency groups by
-    using [`--pep621-dev-dependency-groups`](configuration.md#pep-621-dev-dependency-groups) argument (or its
-    `pep_621_dev_dependency_groups` equivalent in `pyproject.toml`).
+    The dynamically defined optional group named `dev` is also treated as development dependencies by default.
+    Override this with [`--optional-dependencies-dev-groups`](configuration.md#optional-dependencies-dev-groups)
+    or `optional_dependencies_dev_groups` in `pyproject.toml`, including `[]` to disable the default.
 
 ## `requirements.txt` (pip, pip-tools)
 

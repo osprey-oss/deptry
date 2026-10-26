@@ -25,9 +25,9 @@ Scanning 5 files...
 
 pyproject.toml: DEP002 'isort' defined as a dependency but not used in the codebase
 pyproject.toml: DEP002 'requests' defined as a dependency but not used in the codebase
-pyproject.toml: DEP002 'mypy' defined as a dependency but not used in the codebase
 pyproject.toml: DEP002 'pytest' defined as a dependency but not used in the codebase
 src/foobar.py:1:8: DEP001 'httpx' imported but missing from the dependency definitions
+src/src_directory/foo.py:4:8: DEP004 'black' imported but declared as a dev dependency
 src/src_directory/foo.py:6:8: DEP001 'white' imported but missing from the dependency definitions
 Found 6 dependency issues.
 

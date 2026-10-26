@@ -38,7 +38,7 @@ class Core:
     known_first_party: tuple[str, ...]
     json_output: str
     package_module_name_map: Mapping[str, tuple[str, ...]]
-    optional_dependencies_dev_groups: tuple[str, ...]
+    optional_dependencies_dev_groups: tuple[str, ...] | None
     non_dev_dependency_groups: tuple[str, ...]
     experimental_namespace_package: bool
     enforce_posix_paths: bool
