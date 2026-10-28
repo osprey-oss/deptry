@@ -42,6 +42,11 @@ if TYPE_CHECKING:
             id="from multiple str",
         ),
         pytest.param(
+            "foo, bar ",
+            ("foo", "bar"),
+            id="strips whitespace from multiple str",
+        ),
+        pytest.param(
             [],
             (),
             id="from empty list",
@@ -103,6 +108,11 @@ def test_comma_separated_tuple_param_type_convert(
             "foo=bar,fox=fuz",
             {"foo": ("bar",), "fox": ("fuz",)},
             id="from str, multi key, single value",
+        ),
+        pytest.param(
+            "foo=bar | baz, fox = fuz",
+            {"foo": ("bar", "baz"), "fox": ("fuz",)},
+            id="strips whitespace from keys and values",
         ),
         pytest.param(
             "foo=bar,foo=fuz",
