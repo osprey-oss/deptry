@@ -19,6 +19,10 @@ If your project has multiple source directories, multiple root directories can b
 deptry a_directory another_directory
 ```
 
+If some directories are only used to make modules importable (for instance a directory added to `sys.path` at runtime),
+you can use [`known_first_party_dirs`](configuration.md#known-first-party-directories) instead, so that the modules
+they contain are considered as first party ones without scanning the directories twice.
+
 If you want to configure _deptry_ using `pyproject.toml`, or if your dependencies are stored in `pyproject.toml`, but it is located in another location than the one _deptry_ is run from, you can specify the location to it by using `--config <path_to_pyproject.toml>` argument.
 
 ## Dependencies extraction
