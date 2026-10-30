@@ -58,6 +58,12 @@ class PEP621DependencyGetter(DependencyGetter):
         return DependenciesExtract(
             [*dependencies, *remaining_optional_dependencies, *remaining_dependency_groups_dependencies],
             self._get_dev_dependencies(dev_dependencies_from_optional, dev_dependencies_from_dependency_groups),
+            optional_group_dependencies={
+                group: tuple(group_dependencies)
+                for group, group_dependencies in optional_dependencies.items()
+                if group not in self.optional_dependencies_dev_groups
+            },
+            project_dependencies=tuple(dependencies),
         )
 
     def _get_dependencies(self) -> list[Dependency]:
