@@ -1,0 +1,20 @@
+[project]
+name = "qux"
+version = "0.1.0"
+requires-python = ">=3.9"
+dependencies = [
+    "bar",
+    "foo",
+    "pandas",
+]
+
+[tool.uv.sources]
+bar = { workspace = true }
+foo = { workspace = true }
+
+[tool.uv.build-backend]
+module-root = ""
+
+[build-system]
+requires = ["uv_build>=0.8.4,<0.9.0"]
+build-backend = "uv_build"

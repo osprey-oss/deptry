@@ -23,6 +23,9 @@ class Project(str, Enum):
     SRC_DIRECTORY = "src_directory"
     SETUPTOOLS_DYNAMIC_DEPENDENCIES = "setuptools_dynamic_dependencies"
     UV = "uv"
+    UV_WORKSPACE = "uv_workspace"
+    UV_WORKSPACE_ISSUE_1060 = "uv_workspace_issue_1060"
+    UV_WORKSPACE_MEMBER_DISCOVERY = "uv_workspace_member_discovery"
     WITHOUT_DEPTRY_OPTION = "without_deptry_option"
 
     def __str__(self) -> str:
