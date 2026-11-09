@@ -76,3 +76,19 @@ def test_no_error() -> None:
     ]
 
     assert DEP001MissingDependenciesFinder(modules_locations, dependencies, frozenset()).find() == []
+
+
+def test_workspace_sibling_module() -> None:
+    """A module provided by a workspace sibling is reported by DEP101, not DEP001."""
+    dependencies: list[Dependency] = []
+    module_foobar = ModuleBuilder("foobar", {"foo"}, frozenset(), dependencies).build()
+
+    assert (
+        DEP001MissingDependenciesFinder(
+            [ModuleLocations(module_foobar, [Location(Path("foo.py"), 1, 2)])],
+            dependencies,
+            frozenset(),
+            workspace_sibling_module_names=frozenset(["foobar"]),
+        ).find()
+        == []
+    )

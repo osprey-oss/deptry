@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import logging
+import re
 from pathlib import Path
 from typing import TYPE_CHECKING
 
@@ -8,7 +9,7 @@ import click
 import pytest
 from click import Argument
 
-from deptry.config import read_configuration_from_pyproject_toml
+from deptry.config import read_configuration_from_pyproject_toml, read_workspace_member_configuration
 from deptry.exceptions import InvalidPyprojectTOMLOptionsError
 from tests.utils import run_within_dir
 
@@ -145,3 +146,62 @@ def test_read_configuration_from_pyproject_toml_file_with_invalid_options(
             assert read_configuration_from_pyproject_toml(
                 click.Context(click_command), click.Argument(["foo"]), pyproject_toml_path
             ) == Path("pyproject.toml")
+
+
+def test_read_workspace_member_configuration(tmp_path: Path, caplog: LogCaptureFixture) -> None:
+    pyproject_toml = tmp_path / "pyproject.toml"
+    pyproject_toml.write_text(
+        """
+        [tool.deptry]
+        ignore = ["DEP001"]
+        exclude = ["generated"]
+        known_first_party = ["foo"]
+        pep621_dev_dependency_groups = ["dev"]
+        json_output = "deptry.json"
+
+        [tool.deptry.per_rule_ignores]
+        DEP002 = "foo"
+        DEP003 = ["bar", "baz"]
+
+        [tool.deptry.package_module_name_map]
+        foo-python = "foo"
+        bar-python = ["bar", "baz"]
+    """,
+        encoding="utf-8",
+    )
+
+    with caplog.at_level(logging.WARNING):
+        assert read_workspace_member_configuration(pyproject_toml) == {
+            "ignore": ("DEP001",),
+            "exclude": ("generated",),
+            "using_default_exclude": False,
+            "known_first_party": ("foo",),
+            "optional_dependencies_dev_groups": ("dev",),
+            "per_rule_ignores": {"DEP002": ("foo",), "DEP003": ("bar", "baz")},
+            "package_module_name_map": {"foo-python": ("foo",), "bar-python": ("bar", "baz")},
+        }
+
+    assert caplog.messages == [
+        f"Options ['json_output'] in '[tool.deptry]' section of '{pyproject_toml}' are ignored, as they can only be"
+        " set for the whole workspace."
+    ]
+
+
+def test_read_workspace_member_configuration_without_deptry_section(tmp_path: Path) -> None:
+    pyproject_toml = tmp_path / "pyproject.toml"
+    pyproject_toml.write_text('[project]\nname = "foo"\n', encoding="utf-8")
+
+    assert read_workspace_member_configuration(pyproject_toml) == {}
+
+
+def test_read_workspace_member_configuration_with_invalid_options(tmp_path: Path) -> None:
+    pyproject_toml = tmp_path / "pyproject.toml"
+    pyproject_toml.write_text('[tool.deptry]\nignroe = ["DEP001"]\n', encoding="utf-8")
+
+    with pytest.raises(
+        InvalidPyprojectTOMLOptionsError,
+        match=re.escape(
+            f"'[tool.deptry]' section in '{pyproject_toml}' contains invalid configuration options: ['ignroe']."
+        ),
+    ):
+        read_workspace_member_configuration(pyproject_toml)

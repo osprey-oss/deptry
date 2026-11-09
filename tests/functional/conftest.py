@@ -24,6 +24,9 @@ def pytest_sessionstart(session: pytest.Session) -> None:
 
     print(f"Building `deptry` wheel in {deptry_wheel_path} to use it on functional tests...")  # noqa: T201
 
+    for stale_wheel in deptry_wheel_path.glob("*.whl"):
+        stale_wheel.unlink()
+
     try:
         result = subprocess.run(
             shlex.split(f"uv build --verbose --wheel --out-dir {deptry_wheel_path}", posix=sys.platform != "win32"),

@@ -26,6 +26,11 @@ test-functional:
     @echo "🚀 Running functional tests"
     uv run pytest tests/functional
 
+# Update inline snapshots for functional tests.
+update-snapshots:
+    @echo "🚀 Updating inline snapshots"
+    uv run pytest tests/functional --inline-snapshot=update
+
 # Build wheel and sdist files using maturin.
 build:
     @echo "🚀 Creating wheel and sdist files"
