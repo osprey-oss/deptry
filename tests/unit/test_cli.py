@@ -260,6 +260,14 @@ def test_deprecated_options(caplog: pytest.LogCaptureFixture) -> None:
     )
 
 
+def test_help_names_only_existing_flags() -> None:
+    result = CliRunner().invoke(cli, ["--help"])
+
+    assert result.exit_code == 0
+    assert "--dev-optional-dependencies" not in result.output
+    assert "--optional-dependencies-dev-groups" in result.output
+
+
 def test_deprecated_conflict(caplog: pytest.LogCaptureFixture) -> None:
     with mock.patch("deptry.core.Core.run"):
         result = CliRunner().invoke(cli, ". --pep621-dev-dependency-groups dev --optional-dependencies-dev-groups dev")

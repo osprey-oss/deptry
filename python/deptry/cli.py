@@ -249,8 +249,8 @@ def display_deptry_version(ctx: click.Context, _param: click.Parameter, value: b
     type=COMMA_SEPARATED_TUPLE,
     help="""For projects that use PEP621 and that do not use a build tool that has its own method of declaring development dependencies,
     this argument provides the option to specify which groups under [project.optional-dependencies] in pyproject.toml
-    should be considered development dependencies. For example, use `--dev-optional-dependencies tests,docs` to mark the dependencies in
-    the groups 'tests' and 'docs' as development dependencies.""",
+    should be considered development dependencies. For example, use `--optional-dependencies-dev-groups tests,docs` to mark the
+    dependencies in the groups 'tests' and 'docs' as development dependencies.""",
     default=(),
     show_default=False,
 )
@@ -258,7 +258,7 @@ def display_deptry_version(ctx: click.Context, _param: click.Parameter, value: b
     "--pep621-dev-dependency-groups",
     "-ddg",
     type=COMMA_SEPARATED_TUPLE,
-    help="[DEPRECATED] Use --dev-optional-dependencies instead.",
+    help="[DEPRECATED] Use --optional-dependencies-dev-groups instead.",
     default=(),
     show_default=False,
 )
