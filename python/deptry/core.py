@@ -36,6 +36,7 @@ class Core:
     using_default_requirements_files: bool
     requirements_files_dev: tuple[str, ...]
     known_first_party: tuple[str, ...]
+    known_first_party_dirs: tuple[Path, ...]
     json_output: str
     package_module_name_map: Mapping[str, tuple[str, ...]]
     optional_dependencies_dev_groups: tuple[str, ...]
@@ -116,14 +117,18 @@ class Core:
 
     def _get_local_modules(self) -> set[str]:
         """
-        Get all local Python modules from the source directories and `known_first_party` list.
+        Get all local Python modules from the source directories, the `known_first_party_dirs` directories and the
+        `known_first_party` list.
         A module is considered a local Python module if it matches at least one of those conditions:
         - it is a directory that contains at least one Python file
         - it is a Python file that is not named `__init__.py` (since it is a special case)
         - it is set in the `known_first_party` list
         """
         guessed_local_modules = {
-            path.stem for source in self.root for path in source.iterdir() if self._is_local_module(path)
+            path.stem
+            for source in (*self.root, *self.known_first_party_dirs)
+            for path in source.iterdir()
+            if self._is_local_module(path)
         }
 
         return guessed_local_modules | set(self.known_first_party)

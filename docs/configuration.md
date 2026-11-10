@@ -185,6 +185,33 @@ known_first_party = ["bar", "foo"]
 deptry . --known-first-party bar --known-first-party foo
 ```
 
+### Known first party directories
+
+List of directories whose Python modules and packages should be considered as first party ones, in addition to the
+ones found at the top level of the source directories. A module or package inside one of these directories is detected
+the same way as in a source directory. This is useful when a directory is added to `sys.path` at runtime, for instance
+a Django project importing the apps stored under an `apps` directory as `from foo.models import Foo` instead of
+`from apps.foo.models import Foo`.
+
+Unlike passing the directories as additional source directories (e.g. `deptry . apps`), the directories are only used
+to detect first party modules, so files that are already part of a source directory are not scanned twice.
+
+Paths are relative to the directory from which _deptry_ is run, and must exist.
+
+- Type: `list[str]`
+- Default: `[]`
+- `pyproject.toml` option name: `known_first_party_dirs`
+- CLI option name: `--known-first-party-dirs` (short: `-kfd`)
+- `pyproject.toml` example:
+```toml
+[tool.deptry]
+known_first_party_dirs = ["apps"]
+```
+- CLI example:
+```shell
+deptry . --known-first-party-dirs apps --known-first-party-dirs libs
+```
+
 ### JSON output
 
 Write the detected issues to a JSON file. This will write the following kind of output:

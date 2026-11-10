@@ -214,6 +214,17 @@ def display_deptry_version(ctx: click.Context, _param: click.Parameter, value: b
     show_default=True,
 )
 @click.option(
+    "--known-first-party-dirs",
+    "-kfd",
+    type=click.Path(exists=True, file_okay=False, path_type=Path),
+    multiple=True,
+    help="""Directories whose Python modules and packages should be considered as first party ones, without scanning them
+    as additional source directories. Useful when a directory is added to `sys.path` at runtime. Can be multiple e.g.
+    `deptry . --known-first-party-dirs apps --known-first-party-dirs libs`""",
+    default=(),
+    show_default=True,
+)
+@click.option(
     "--json-output",
     "-o",
     type=str,
@@ -296,6 +307,7 @@ def cli(
     requirements_files: tuple[str, ...],
     requirements_files_dev: tuple[str, ...],
     known_first_party: tuple[str, ...],
+    known_first_party_dirs: tuple[Path, ...],
     json_output: str,
     github_output: bool,
     github_warning_errors: tuple[str, ...],
@@ -336,6 +348,7 @@ def cli(
         using_default_requirements_files=not requirements_files,
         requirements_files_dev=requirements_files_dev,
         known_first_party=known_first_party,
+        known_first_party_dirs=known_first_party_dirs,
         json_output=json_output,
         github_output=github_output,
         github_warning_errors=github_warning_errors,

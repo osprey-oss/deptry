@@ -122,12 +122,81 @@ def test__get_local_modules(
                 requirements_files=(),
                 requirements_files_dev=(),
                 known_first_party=known_first_party,
+                known_first_party_dirs=(),
                 json_output="",
                 package_module_name_map={},
                 optional_dependencies_dev_groups=(),
                 non_dev_dependency_groups=(),
                 using_default_requirements_files=True,
                 experimental_namespace_package=experimental_namespace_package,
+                github_output=False,
+                github_warning_errors=(),
+                enforce_posix_paths=False,
+            )._get_local_modules()
+            == expected
+        )
+
+
+@pytest.mark.parametrize(
+    ("root", "known_first_party_dirs", "expected"),
+    [
+        (
+            ".",
+            (),
+            {"apps", "manage", "project"},
+        ),
+        (
+            ".",
+            ("apps",),
+            {"app_with_init", "app_without_init", "apps", "local_file", "manage", "project"},
+        ),
+        (
+            "project",
+            ("apps", "libs"),
+            {"app_with_init", "app_without_init", "library", "local_file", "settings"},
+        ),
+    ],
+)
+def test__get_local_modules_with_known_first_party_dirs(
+    tmp_path: Path,
+    root: str,
+    known_first_party_dirs: tuple[str, ...],
+    expected: set[str],
+) -> None:
+    with run_within_dir(tmp_path):
+        create_files([
+            Path("apps/__init__.py"),
+            Path("apps/app_with_init/__init__.py"),
+            Path("apps/app_with_init/models.py"),
+            Path("apps/app_without_init/models.py"),
+            Path("apps/directory_without_python_files/foo.txt"),
+            Path("apps/local_file.py"),
+            Path("libs/library/__init__.py"),
+            Path("project/settings.py"),
+            Path("manage.py"),
+        ])
+
+        assert (
+            Core(
+                root=(Path(root),),
+                config=Path("pyproject.toml"),
+                no_ansi=False,
+                per_rule_ignores={},
+                ignore=(),
+                exclude=(),
+                extend_exclude=(),
+                using_default_exclude=True,
+                ignore_notebooks=False,
+                requirements_files=(),
+                requirements_files_dev=(),
+                known_first_party=(),
+                known_first_party_dirs=tuple(Path(directory) for directory in known_first_party_dirs),
+                json_output="",
+                package_module_name_map={},
+                optional_dependencies_dev_groups=(),
+                non_dev_dependency_groups=(),
+                using_default_requirements_files=True,
+                experimental_namespace_package=False,
                 github_output=False,
                 github_warning_errors=(),
                 enforce_posix_paths=False,
@@ -176,6 +245,7 @@ def test_text_reporter_only(
             requirements_files=(),
             requirements_files_dev=(),
             known_first_party=(),
+            known_first_party_dirs=(),
             json_output="",
             package_module_name_map={},
             optional_dependencies_dev_groups=(),
@@ -212,6 +282,7 @@ def test_all_reporters(
             requirements_files=(),
             requirements_files_dev=(),
             known_first_party=(),
+            known_first_party_dirs=(),
             json_output="foo.json",
             package_module_name_map={},
             optional_dependencies_dev_groups=(),
