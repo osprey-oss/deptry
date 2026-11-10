@@ -9,7 +9,7 @@ permissions: {}
 
 jobs:
   set-version:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -29,7 +29,7 @@ jobs:
           path: pyproject.toml
 
   linux:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     needs: [set-version]
     strategy:
       matrix:
@@ -176,7 +176,7 @@ jobs:
           path: dist
 
   sdist:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     needs: [set-version]
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -207,7 +207,7 @@ jobs:
 
   publish:
     name: Publish
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     needs: [linux, windows, macos, sdist]
     environment: pypi
     permissions:
@@ -216,7 +216,7 @@ jobs:
       - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
 
       - name: Install uv
-        uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9 # v9.0.0
+        uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
         with:
           version: '0.12.6'
           enable-cache: false
@@ -231,7 +231,7 @@ jobs:
 
   build-docs:
     name: Build documentation
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     needs: publish
     permissions:
       contents: write
@@ -241,7 +241,7 @@ jobs:
           persist-credentials: false
 
       - name: Install uv
-        uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9 # v9.0.0
+        uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
         with:
           version: '0.12.6'
           enable-cache: false
@@ -263,7 +263,7 @@ jobs:
 
   publish-docs:
     name: Publish documentation
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     needs: build-docs
     permissions:
       contents: write
