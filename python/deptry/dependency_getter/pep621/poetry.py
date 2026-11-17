@@ -36,15 +36,32 @@ class PoetryDependencyGetter(PEP621DependencyGetter):
         pyproject_data = load_pyproject_toml(self.config)
         return self._extract_poetry_dependencies(pyproject_data["tool"]["poetry"].get("dependencies", {}))
 
+    def _get_dependency_groups_dependencies(self) -> dict[str, list[Dependency]]:
+        """
+        In addition to `[dependency-groups]` defined by PEP 735, Poetry has its own dependency groups, defined under
+        `[tool.poetry.group.<group>.dependencies]`. Both kinds are returned, so that groups listed in
+        `non_dev_dependency_groups` are extracted as regular dependencies whichever syntax declares them.
+        """
+        pyproject_data = load_pyproject_toml(self.config)
+
+        dependency_groups = super()._get_dependency_groups_dependencies()
+
+        for group, group_values in pyproject_data.get("tool", {}).get("poetry", {}).get("group", {}).items():
+            dependency_groups[group] = [
+                *dependency_groups.get(group, []),
+                *self._extract_poetry_dependencies(group_values.get("dependencies", {})),
+            ]
+
+        return dependency_groups
+
     def _get_dev_dependencies(
         self,
         dev_dependencies_from_optional: list[Dependency],
         dev_dependencies_from_dependency_groups: list[Dependency],
     ) -> list[Dependency]:
         """
-        Poetry's development dependencies can be specified under either, or both:
-        - [tool.poetry.dev-dependencies]
-        - [tool.poetry.group.<group>.dependencies]
+        In addition to the dependency groups handled by `_get_dependency_groups_dependencies`, Poetry supports legacy
+        development dependencies under `[tool.poetry.dev-dependencies]`.
         """
         dev_dependencies = super()._get_dev_dependencies(
             dev_dependencies_from_optional, dev_dependencies_from_dependency_groups
@@ -59,16 +76,7 @@ class PoetryDependencyGetter(PEP621DependencyGetter):
                 **pyproject_data["tool"]["poetry"]["dev-dependencies"],
             }
 
-        try:
-            dependency_groups = pyproject_data["tool"]["poetry"]["group"]
-        except KeyError:
-            dependency_groups = {}
-
-        for group_values in dependency_groups.values():
-            with contextlib.suppress(KeyError):
-                poetry_dev_dependencies = {**poetry_dev_dependencies, **group_values["dependencies"]}
-
-        return [*dev_dependencies, *self._extract_poetry_dependencies(poetry_dev_dependencies)]
+        return [*self._extract_poetry_dependencies(poetry_dev_dependencies), *dev_dependencies]
 
     def _extract_poetry_dependencies(self, poetry_dependencies: dict[str, Any]) -> list[Dependency]:
         return [
