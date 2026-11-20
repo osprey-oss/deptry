@@ -21,6 +21,11 @@ deptry a_directory another_directory
 
 If you want to configure _deptry_ using `pyproject.toml`, or if your dependencies are stored in `pyproject.toml`, but it is located in another location than the one _deptry_ is run from, you can specify the location to it by using `--config <path_to_pyproject.toml>` argument.
 
+To share only configuration while keeping dependency definitions in the current
+directory, use `--config-only <path_to_pyproject.toml>` instead. For example,
+`deptry . --config-only ../../pyproject.toml` uses the shared `[tool.deptry]` settings
+and the current project's dependencies.
+
 ## Dependencies extraction
 
 _deptry_ can extract dependencies from a broad range of [dependency managers](supported-dependency-managers.md).

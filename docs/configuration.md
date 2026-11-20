@@ -27,6 +27,22 @@ Path to the `pyproject.toml` file that holds _deptry_'s configuration and depend
 deptry . --config sub_directory/pyproject.toml
 ```
 
+### Config only
+
+Read configuration from a shared `pyproject.toml` while reading dependencies from
+the current directory. This is useful for projects in a monorepo that share
+`[tool.deptry]` settings but declare their own dependencies. The local
+`[tool.deptry]` section is ignored when this option is used. Command line options
+still override the shared settings. This option cannot be combined with `--config`.
+
+- Type `Path`
+- Default `None`
+- CLI option name `--config-only`
+
+```shell
+deptry . --config-only ../../pyproject.toml
+```
+
 ### No ANSI
 
 Disable ANSI characters in terminal output.
