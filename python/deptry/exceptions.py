@@ -26,3 +26,8 @@ class InvalidPyprojectTOMLOptionsError(UsageError):
         super().__init__(
             f"'[tool.deptry]' section in 'pyproject.toml' contains invalid configuration options: {invalid_options}."
         )
+
+
+class InvalidExcludePatternError(UsageError):
+    def __init__(self, message: str) -> None:
+        super().__init__(f"Invalid exclusion pattern\n{message}")
