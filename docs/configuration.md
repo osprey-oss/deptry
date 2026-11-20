@@ -357,9 +357,13 @@ a standard convention for specifying development dependencies. [PEP 735](https:/
 this, but in the meantime, several projects defined development dependencies under `[project.optional-dependencies]`.
 _deptry_ offers a mechanism to interpret specific optional dependency groups as development dependencies.
 
-By default, all dependencies under `[project.dependencies]` and `[project.optional-dependencies]` are extracted as
-regular dependencies. By using the `--optional-dependencies-dev-groups` argument, users can specify which groups defined
-under `[project.optional-dependencies]` should be treated as development dependencies instead. This is particularly
+By default, the optional group named `dev` is treated as development dependencies
+when it exists. Other dependencies under `[project.dependencies]` and
+`[project.optional-dependencies]` are extracted as regular dependencies. By using
+the `--optional-dependencies-dev-groups` argument, users can specify which groups defined
+under `[project.optional-dependencies]` should be treated as development dependencies instead.
+An explicit list replaces the default. Set `optional_dependencies_dev_groups = []`
+in `[tool.deptry]` to treat every optional group as regular dependencies. This is particularly
 useful for projects that adhere to PEP 621 but do not employ a separate build tool for declaring development
 dependencies.
 
@@ -379,7 +383,7 @@ By default, `httpx`, `matplotlib` and `pytest` are extracted as regular dependen
 `--optional-dependencies-dev-groups=test`, `pytest` dependency will be treated as a development dependency instead.
 
 - Type: `list[str]`
-- Default: `[]`
+- Default `["dev"]` when that optional group exists, otherwise `[]`
 - `pyproject.toml` option name: `optional_dependencies_dev_groups`
 - CLI option name: `--optional-dependencies-dev-groups` (short: `-oddg`)
 - `pyproject.toml` example:

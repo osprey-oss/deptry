@@ -251,7 +251,7 @@ def display_deptry_version(ctx: click.Context, _param: click.Parameter, value: b
     this argument provides the option to specify which groups under [project.optional-dependencies] in pyproject.toml
     should be considered development dependencies. For example, use `--dev-optional-dependencies tests,docs` to mark the dependencies in
     the groups 'tests' and 'docs' as development dependencies.""",
-    default=(),
+    default=None,
     show_default=False,
 )
 @click.option(
@@ -301,7 +301,7 @@ def cli(
     github_warning_errors: tuple[str, ...],
     package_module_name_map: MutableMapping[str, tuple[str, ...]],
     pep621_dev_dependency_groups: tuple[str, ...],
-    optional_dependencies_dev_groups: tuple[str, ...],
+    optional_dependencies_dev_groups: tuple[str, ...] | None,
     non_dev_dependency_groups: tuple[str, ...],
     experimental_namespace_package: bool,
     enforce_posix_paths: bool,

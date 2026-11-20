@@ -33,7 +33,7 @@ class DependencyGetterBuilder:
 
     config: Path
     package_module_name_map: Mapping[str, tuple[str, ...]] = field(default_factory=dict)
-    optional_dependencies_dev_groups: tuple[str, ...] = ()
+    optional_dependencies_dev_groups: tuple[str, ...] | None = None
     non_dev_dependency_groups: tuple[str, ...] = ()
     requirements_files: tuple[str, ...] = ()
     using_default_requirements_files: bool = True

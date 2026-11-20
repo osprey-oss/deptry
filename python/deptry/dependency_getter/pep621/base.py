@@ -35,13 +35,13 @@ class PEP621DependencyGetter(DependencyGetter):
             "pytest-cov[all]"
         ]
 
-    Note that by default both dependencies and optional-dependencies are extracted as regular dependencies, since PEP-621 does not specify
-    a recommended way to extract development dependencies. However, if a value is passed for the `optional_dependencies_dev_groups`
-    argument, all dependencies from groups in that argument are considered to be development dependencies. e.g. in the example above, when
+    By default, the optional dependency group named `dev` is treated as development dependencies. Other dependencies
+    and optional dependencies are extracted as regular dependencies. When `optional_dependencies_dev_groups` is provided,
+    only the specified optional groups are treated as development dependencies. For example, when
     `optional_dependencies_dev_groups=(test,)`, both `pytest` and `pytest-cov` are returned as development dependencies.
     """
 
-    optional_dependencies_dev_groups: tuple[str, ...] = ()
+    optional_dependencies_dev_groups: tuple[str, ...] | None = None
     non_dev_dependency_groups: tuple[str, ...] = ()
 
     def get(self) -> DependenciesExtract:
@@ -149,18 +149,20 @@ class PEP621DependencyGetter(DependencyGetter):
         dev_dependencies: list[Dependency] = []
         regular_dependencies: list[Dependency] = []
 
-        if self.optional_dependencies_dev_groups and (
-            missing_groups := set(self.optional_dependencies_dev_groups) - set(optional_dependencies.keys())
-        ):
+        groups = self.optional_dependencies_dev_groups
+        if groups is None:
+            groups = ("dev",) if "dev" in optional_dependencies else ()
+
+        if groups and (missing_groups := set(groups) - set(optional_dependencies.keys())):
             logging.warning(
                 "Warning: Trying to extract the dependencies from the optional dependency groups %s as development dependencies, "
                 "but the following groups were not found: %s",
-                list(self.optional_dependencies_dev_groups),
+                list(groups),
                 list(missing_groups),
             )
 
         for group, dependencies in optional_dependencies.items():
-            if group in self.optional_dependencies_dev_groups:
+            if group in groups:
                 dev_dependencies.extend(dependencies)
             else:
                 regular_dependencies.extend(dependencies)

@@ -28,8 +28,8 @@ Assuming the corresponding module name of package 'pytest' is 'pytest'. Install 
 Scanning 3 files...
 
 pyproject.toml: DEP002 'requests' defined as a dependency but not used in the codebase
-pyproject.toml: DEP002 'mypy' defined as a dependency but not used in the codebase
 pyproject.toml: DEP002 'pytest' defined as a dependency but not used in the codebase
+src/foo.py:1:8: DEP004 'black' imported but declared as a dev dependency
 Found 3 dependency issues.
 
 For more information, see the documentation: https://deptry.com/
@@ -52,8 +52,8 @@ Assuming the corresponding module name of package 'pytest' is 'pytest'. Install 
 Scanning 3 files...
 
 pyproject.toml: DEP002 'requests' defined as a dependency but not used in the codebase
-pyproject.toml: DEP002 'mypy' defined as a dependency but not used in the codebase
 pyproject.toml: DEP002 'pytest' defined as a dependency but not used in the codebase
+src/foo.py:1:8: DEP004 'black' imported but declared as a dev dependency
 Found 3 dependency issues.
 
 For more information, see the documentation: https://deptry.com/
@@ -80,7 +80,9 @@ pyproject.toml: DEP002 'requests' defined as a dependency but not used in the co
 pyproject.toml: DEP002 'pytest' defined as a dependency but not used in the codebase
 src/barfoo.py:1:8: DEP001 'hello' imported but missing from the dependency definitions
 src/baz.py:1:8: DEP001 'hej' imported but missing from the dependency definitions
-Found 5 dependency issues.
+src/foo.py:1:8: DEP004 'black' imported but declared as a dev dependency
+src/foobar.py:1:8: DEP004 'mypy' imported but declared as a dev dependency
+Found 7 dependency issues.
 
 For more information, see the documentation: https://deptry.com/
 """)
