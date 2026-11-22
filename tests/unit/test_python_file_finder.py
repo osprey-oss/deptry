@@ -281,3 +281,47 @@ def test_gitignore_ignored_in_non_git_project(tmp_path: Path) -> None:
             Path("file1.py"),
             Path("file2.py"),
         ]
+
+
+def test_single_python_file(tmp_path: Path) -> None:
+    """Test that a single Python file can be passed directly."""
+    with run_within_dir(tmp_path):
+        create_files([Path("app.py"), Path("other.py")])
+
+        files = get_all_python_files_in((Path("app.py"),), exclude=(), extend_exclude=(), using_default_exclude=False)
+
+        assert files == [Path("app.py")]
+
+
+def test_single_notebook_file(tmp_path: Path) -> None:
+    """Test that a single notebook file can be passed directly."""
+    with run_within_dir(tmp_path):
+        create_files([Path("notebook.ipynb")])
+
+        # With ignore_notebooks=False, notebook should be included
+        files = get_all_python_files_in(
+            (Path("notebook.ipynb"),),
+            exclude=(),
+            extend_exclude=(),
+            using_default_exclude=False,
+            ignore_notebooks=False,
+        )
+        assert files == [Path("notebook.ipynb")]
+
+        # With ignore_notebooks=True, notebook should be excluded
+        files = get_all_python_files_in(
+            (Path("notebook.ipynb"),), exclude=(), extend_exclude=(), using_default_exclude=False, ignore_notebooks=True
+        )
+        assert files == []
+
+
+def test_single_non_python_file_excluded(tmp_path: Path) -> None:
+    """Test that a non-Python file is excluded when passed directly."""
+    with run_within_dir(tmp_path):
+        create_files([Path("readme.txt")])
+
+        files = get_all_python_files_in(
+            (Path("readme.txt"),), exclude=(), extend_exclude=(), using_default_exclude=False
+        )
+
+        assert files == []
