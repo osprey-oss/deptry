@@ -11,6 +11,8 @@ from deptry.violations.dep004_misplaced_dev.finder import DEP004MisplacedDevDepe
 from deptry.violations.dep004_misplaced_dev.violation import DEP004MisplacedDevDependencyViolation
 from deptry.violations.dep005_standard_library.finder import DEP005StandardLibraryDependenciesFinder
 from deptry.violations.dep005_standard_library.violation import DEP005StandardLibraryDependencyViolation
+from deptry.violations.dep006_optional_runtime.finder import DEP006OptionalDependencyPlacementFinder
+from deptry.violations.dep006_optional_runtime.violation import DEP006OptionalDependencyPlacementViolation
 
 __all__ = (
     "DEP001MissingDependenciesFinder",
@@ -23,6 +25,8 @@ __all__ = (
     "DEP004MisplacedDevDependencyViolation",
     "DEP005StandardLibraryDependenciesFinder",
     "DEP005StandardLibraryDependencyViolation",
+    "DEP006OptionalDependencyPlacementFinder",
+    "DEP006OptionalDependencyPlacementViolation",
     "Violation",
     "ViolationsFinder",
 )

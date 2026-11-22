@@ -68,6 +68,16 @@ group2 = [
         assert dependencies[7].name == "dep"
         assert "dep" in dependencies[7].top_levels
 
+        extract = getter.get()
+        assert set(extract.optional_group_dependencies) == {"group1", "group2"}
+        assert [dependency.name for dependency in extract.project_dependencies] == [
+            "qux",
+            "bar",
+            "optional-foo",
+            "conditional-bar",
+            "fox-python",
+        ]
+
 
 def test_dependency_getter_optional_dependencies_dev_groups(tmp_path: Path) -> None:
     fake_pyproject_toml = """[project]

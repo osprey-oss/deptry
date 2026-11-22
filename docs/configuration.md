@@ -392,6 +392,31 @@ optional_dependencies_dev_groups = ["test", "docs"]
 deptry . --optional-dependencies-dev-groups "test,docs"
 ```
 
+### Optional dependencies runtime
+
+By default, groups under `[project.optional-dependencies]` are treated as regular dependencies. Some of those groups are runtime extras: they should only be imported from a matching part of the package, such as `mypackage.snowflake` for extra `snowflake`.
+
+`--optional-dependencies-runtime` maps extra names to first-party module patterns. Imports of extra-only packages outside those modules are reported as [DEP006](rules-violations.md#optional-extra-placement-dep006).
+
+A trailing `.*` or `.**` matches the module and its descendants. Patterns also match a `src/` prefix, so `mypackage.snowflake` matches `src/mypackage/snowflake.py`.
+
+This is not the same as requiring `try` / `except ImportError` around optional imports.
+
+- Type: `dict[str, list[str] | str]`
+- Default: `{}`
+- `pyproject.toml` option name: `optional_dependencies_runtime`
+- CLI option name: `--optional-dependencies-runtime` (short: `-odr`)
+- `pyproject.toml` example:
+```toml
+[tool.deptry.optional_dependencies_runtime]
+snowflake = ["mypackage.snowflake", "mypackage.snowflake.*"]
+postgres = ["mypackage.postgres", "mypackage.postgres.*"]
+```
+- CLI example:
+```shell
+deptry . --optional-dependencies-runtime "snowflake=mypackage.snowflake|mypackage.snowflake.*"
+```
+
 ### PEP 621 dev dependency groups
 
 !!! warning
