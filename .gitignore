@@ -4,6 +4,11 @@ deptry.json
 .DS_Store
 .vscode
 
+# VS Code extension build artifacts
+vscode-extension/out/
+vscode-extension/node_modules/
+vscode-extension/*.vsix
+
 # From https://raw.githubusercontent.com/github/gitignore/main/Python.gitignore
 
  Byte-compiled / optimized / DLL files
