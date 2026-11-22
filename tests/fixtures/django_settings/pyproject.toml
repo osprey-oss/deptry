@@ -1,0 +1,21 @@
+[project]
+name = "mysite"
+version = "0.0.1"
+requires-python = ">=3.10"
+dependencies = [
+    "arrow==1.4.0",
+    "click==8.4.2",
+    "requests==2.34.2",
+]
+
+[project.optional-dependencies]
+dev = ["isort==8.0.1"]
+
+[build-system]
+requires = ["setuptools>=61.0.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.deptry]
+django_settings_module = "mysite.settings.dev"
+extend_exclude = ["build", "mysite/settings"]
+optional_dependencies_dev_groups = ["dev"]

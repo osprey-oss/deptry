@@ -7,6 +7,8 @@ from dataclasses import dataclass
 from typing import TYPE_CHECKING
 
 from deptry.dependency_getter.builder import DependencyGetterBuilder
+from deptry.exceptions import DjangoSettingsReadError
+from deptry.imports.django import get_imported_modules_from_django
 from deptry.imports.extract import get_imported_modules_from_list_of_files
 from deptry.module import ModuleBuilder, ModuleLocations
 from deptry.python_file_finder import get_all_python_files_in
@@ -44,6 +46,7 @@ class Core:
     enforce_posix_paths: bool
     github_output: bool
     github_warning_errors: tuple[str, ...]
+    django_settings_module: str | None
 
     def run(self) -> None:
         self._log_config()
@@ -66,6 +69,15 @@ class Core:
         local_modules = self._get_local_modules()
         standard_library_modules = self._get_standard_library_modules()
 
+        imported_modules = get_imported_modules_from_list_of_files(python_files)
+        if self.django_settings_module:
+            try:
+                django_imports = get_imported_modules_from_django(self.django_settings_module, self.config.parent)
+            except (OSError, UnicodeError, SyntaxError, ValueError) as error:
+                raise DjangoSettingsReadError(error) from error
+            for module, locations in django_imports.items():
+                imported_modules.setdefault(module, []).extend(locations)
+
         imported_modules_with_locations = [
             ModuleLocations(
                 ModuleBuilder(
@@ -77,7 +89,7 @@ class Core:
                 ).build(),
                 locations,
             )
-            for module, locations in get_imported_modules_from_list_of_files(python_files).items()
+            for module, locations in imported_modules.items()
         ]
 
         violations = find_violations(

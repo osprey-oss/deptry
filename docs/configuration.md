@@ -473,3 +473,27 @@ experimental_namespace_package = true
 ```shell
 deptry . --experimental-namespace-package
 ```
+
+### Django settings module
+
+Read `INSTALLED_APPS` from a Django settings module, and treat each app in it as an import, so that packages which are
+only referenced there are not reported as unused. The module is parsed statically and never imported, see
+[Django settings](usage.md#django-settings) for what is supported.
+
+The module is given as a dotted name, resolved beneath the directory that contains the file set with
+[`--config`](#config). If both `<module>/__init__.py` and `<module>.py` exist, the package is used. If the module cannot
+be found or parsed, _deptry_ exits with an error.
+
+- Type: `str`
+- Default: `None`
+- `pyproject.toml` option name: `django_settings_module`
+- CLI option name: `--django-settings-module`
+- `pyproject.toml` example:
+```toml
+[tool.deptry]
+django_settings_module = "mysite.settings"
+```
+- CLI example:
+```shell
+deptry . --django-settings-module mysite.settings
+```

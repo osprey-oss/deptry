@@ -26,3 +26,13 @@ class InvalidPyprojectTOMLOptionsError(UsageError):
         super().__init__(
             f"'[tool.deptry]' section in 'pyproject.toml' contains invalid configuration options: {invalid_options}."
         )
+
+
+class DjangoSettingsModuleNotFoundError(FileNotFoundError):
+    def __init__(self, module: str, root: Path) -> None:
+        super().__init__(f"Cannot locate Django settings module '{module}' beneath {root}")
+
+
+class DjangoSettingsReadError(UsageError):
+    def __init__(self, error: Exception) -> None:
+        super().__init__(f"Cannot read Django settings: {error}")

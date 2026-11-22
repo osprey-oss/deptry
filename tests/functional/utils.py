@@ -8,6 +8,7 @@ DEPTRY_WHEEL_DIRECTORY = "build/functional_tests/deptry"
 
 class Project(str, Enum):
     DEPRECATED_OPTIONS = "deprecated_options"
+    DJANGO_SETTINGS = "django_settings"
     EXAMPLE = "example"
     GITIGNORE = "gitignore"
     INLINE_IGNORES = "inline_ignores"
