@@ -70,14 +70,14 @@ def get_dependencies_from_requirements_file(
     dependencies = []
     requirements_file = Path(file_name)
 
-    with requirements_file.open() as requirements_file_content:
-        for requirement in requirements.parse(requirements_file_content):
-            if (
-                dependency := _build_dependency_from_requirement(
-                    requirement, requirements_file, package_module_name_map
-                )
-            ) is not None:
-                dependencies.append(dependency)
+    file_content = _read_requirements_file(requirements_file)
+    for requirement in requirements.parse(file_content):
+        if (
+            dependency := _build_dependency_from_requirement(
+                requirement, requirements_file, package_module_name_map
+            )
+        ) is not None:
+            dependencies.append(dependency)
 
     return dependencies
 
@@ -105,6 +105,18 @@ def _build_dependency_from_requirement(
         definition_file=requirements_file,
         module_names=package_module_name_map.get(dependency_name),
     )
+
+
+def _read_requirements_file(path: Path) -> str:
+    """Read a requirements file, handling various encodings (UTF-8, UTF-16 LE/BE, UTF-8 with BOM)."""
+    raw = path.read_bytes()
+
+    if raw.startswith((b"\xff\xfe", b"\xfe\xff")):
+        return raw.decode("utf-16")
+    if raw.startswith(b"\xef\xbb\xbf"):
+        return raw.decode("utf-8-sig")
+
+    return raw.decode("utf-8")
 
 
 def _extract_name_from_url(line: str) -> str | None:
